@@ -1,0 +1,18 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogs ul>li{
+    list-style-type: none
+}
+
+.dialog {
+    color: white;
+    text-decoration: none;
+}
+
+.active{
+    color: red;
+
+}
