@@ -1,0 +1,43 @@
+.default {
+    margin: 10px 5px;
+    background-color: #46b74b;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.default:disabled {
+    background-color: #e7e7e7;
+    color: black;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.default:disabled:hover {
+    background-color: #e7e7e7;
+    color: black;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.default:hover {
+    transition: 1s;
+    background-color: #1c641c;
+}
+
+.red {
+    background: red;
+    margin: 10px;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.red:hover {
+    transition: 1s;
+    background-color: #a21a1a;
+}

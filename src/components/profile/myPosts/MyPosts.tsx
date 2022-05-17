@@ -3,22 +3,17 @@ import {AddPost} from "./addPost/AddPost";
 import {MyPost} from "./myPost/MyPost";
 import {Description} from "../descripton/Description";
 import UserInfo from "../userInfo/UserInfo";
+import {PostPageType} from "../../../redux/state";
 
-export const MyPosts = () => {
+export const MyPosts = (props:PostPageType) => {
 
-    let posts =[
-        {id:1, massage:"sacasc", likes:4},
-        {id:2, massage:"sacasc", likes:4},
-        {id:3, massage:"sacasc", likes:4},
-        {id:4, massage:"sacasc", likes:4},
-    ]
 
-    let newPost=posts.map(item=> <MyPost key={item.id} massage={item.massage} likes={item.likes}/>)
+    let newPost=props.posts.map(item=> <MyPost key={item.id} massage={item.massage} likes={item.likes}/>)
     return (
         <div>
             <Description/>
             <UserInfo/>
-            <AddPost/>
+            <AddPost addPost={props.addPost}/>
             {newPost}
         </div>
     );

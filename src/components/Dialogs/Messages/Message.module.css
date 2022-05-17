@@ -1,0 +1,54 @@
+.message {
+    background-color: chartreuse;
+    max-width: 300px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    position: relative;
+}
+
+.avatar img {
+    max-width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.blockMessage {
+    background-color: #09593d;
+    margin: 5px 10px;
+    position: relative;
+    border-radius: 5px 5px 5px 0;
+    padding: 10px;
+    display: grid;
+    opacity: 0.8;
+}
+
+.blockMessage:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 15px solid #09593d;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    left: -10px;
+    bottom: 0;
+}
+
+.name {
+    color: aqua;
+}
+
+.messageText {
+    padding-right: 2px;
+}
+
+.time {
+    display: grid;
+    justify-content: end;
+}
