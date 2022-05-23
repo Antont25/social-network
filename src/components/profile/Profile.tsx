@@ -7,8 +7,7 @@ const Profile = (props:PostPageType) => {
         <div >
             <MyPosts newPostText={props.newPostText}
                      posts={props.posts}
-                     addPost={props.addPost}
-                     changeNewPostText={props.changeNewPostText}/>
+                     dispatch={props.dispatch}/>
         </div>
     );
 };

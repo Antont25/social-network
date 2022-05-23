@@ -21,24 +21,35 @@ export type PostsType = {
 export type PostPageType = {
     posts: Array<PostsType>
     newPostText: string
-    addPost?: (text: string) => void
-    changeNewPostText?: (text: string) => void
-
+    dispatch: (action: ActionTypeAddPost | ActionTypeNewPost) => void
+}
+export type PostType = {
+    posts: Array<PostsType>
+    newPostText: string
 }
 
 export type StateType = {
-    postPage: PostPageType
+    postPage: PostType
     dialogsPage: DialogsPageType
+
 }
 export type StoreType = {
     state: StateType
-    addPost: () => void
-    changeNewPostText: (text: string) => void
-    subscriber:(observer: () => void)=>void
-    render:()=>void
+    subscriber: (observer: () => void) => void
+    render: () => void
+    dispatch: (action: ActionTypeAddPost | ActionTypeNewPost) => void
 }
 
-export const store:StoreType = {
+
+export type ActionTypeAddPost = {
+    type: 'ADD-POST'
+}
+export  type ActionTypeNewPost = {
+    type: 'NEW-TEXT'
+    newText: string
+}
+
+export const store: StoreType = {
     state: {
         postPage: {
             posts: [
@@ -61,25 +72,30 @@ export const store:StoreType = {
         }
 
     },
-    render(){},
-    addPost() {
-        const newPost: PostsType = {
-            id: 4,
-            massage: this.state.postPage.newPostText,
-            likes: 4
-        }
-        this.state.postPage.posts.push(newPost)
-        this.render()
+    render() {
     },
-    changeNewPostText(text: string) {
-        this.state.postPage.newPostText = text
-        this.render()
 
-    },
     subscriber(observer: () => void) {
-       this.render= observer
+        this.render = observer
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost: PostsType = {
+                id: 4,
+                massage: this.state.postPage.newPostText,
+                likes: 4
+            }
+            this.state.postPage.posts.push(newPost)
+            this.render()
+        } else if (action.type === 'NEW-TEXT') {
+            this.state.postPage.newPostText = action.newText
+            this.render()
+        }
     }
 }
+
+
 
 
 

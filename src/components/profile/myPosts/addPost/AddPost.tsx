@@ -1,28 +1,26 @@
 import React, {useRef, MouseEvent} from 'react';
 import SuperButton from "../../../../common/SuperButton/SuperButton";
+import {ActionTypeAddPost, ActionTypeNewPost} from "../../../../redux/state";
 
 type AddPostPropsType = {
     newPostText: string
-    addPost?: (text: string) => void
-    changeNewPostText?: (text: string) => void
+    dispatch: (action: ActionTypeAddPost | ActionTypeNewPost) => void
 }
 
-export const AddPost: React.FC<AddPostPropsType> = ({addPost: addPost1, changeNewPostText, newPostText}) => {
+export const AddPost: React.FC<AddPostPropsType> = ({ newPostText, dispatch}) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
     function addPost() {
-        if (textareaRef.current && addPost1) {
-            addPost1(textareaRef.current.value)
-            if (changeNewPostText) {
-                changeNewPostText('')
-            }
+        if (textareaRef.current ) {
+            dispatch({type: 'ADD-POST'})
+            dispatch({type:'NEW-TEXT',newText:''})
         }
     }
 
     function onChangeNewTextHandler() {
         if (textareaRef.current) {
-            if (changeNewPostText) {
-                changeNewPostText(textareaRef.current.value)
+            if (dispatch) {
+                dispatch({type:'NEW-TEXT',newText:textareaRef.current.value})
             }
         }
 

@@ -18,8 +18,7 @@ const App: React.FC<StoreType> = (props) => {
                     <Routes>
                         <Route path='/' element={<Profile posts={props.state.postPage.posts}
                                                           newPostText={props.state.postPage.newPostText}
-                                                          addPost={props.addPost}
-                                                          changeNewPostText={props.changeNewPostText}/>}>
+                                                          dispatch={props.dispatch}/>}>
 
                         </Route>
                         <Route path='/dialogs/*'
