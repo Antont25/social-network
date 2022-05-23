@@ -5,7 +5,10 @@ import {PostPageType} from "../../redux/state";
 const Profile = (props:PostPageType) => {
     return (
         <div >
-            <MyPosts posts={props.posts} addPost={props.addPost}/>
+            <MyPosts newPostText={props.newPostText}
+                     posts={props.posts}
+                     addPost={props.addPost}
+                     changeNewPostText={props.changeNewPostText}/>
         </div>
     );
 };

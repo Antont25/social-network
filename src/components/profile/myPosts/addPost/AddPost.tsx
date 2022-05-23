@@ -1,22 +1,41 @@
-import React, {useRef,MouseEvent} from 'react';
+import React, {useRef, MouseEvent} from 'react';
 import SuperButton from "../../../../common/SuperButton/SuperButton";
 
-type AddPostPropsType={
-    addPost?:(text:string)=>void
+type AddPostPropsType = {
+    newPostText: string
+    addPost?: (text: string) => void
+    changeNewPostText?: (text: string) => void
 }
 
-export const AddPost: React.FC<AddPostPropsType> = (props) => {
+export const AddPost: React.FC<AddPostPropsType> = ({addPost: addPost1, changeNewPostText, newPostText}) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null)
-    const addPost=()=>{
-       if(textareaRef.current && props.addPost){
-          props.addPost(textareaRef.current.value)
-       }
+
+    function addPost() {
+        if (textareaRef.current && addPost1) {
+            addPost1(textareaRef.current.value)
+            if (changeNewPostText) {
+                changeNewPostText('')
+            }
+        }
     }
+
+    function onChangeNewTextHandler() {
+        if (textareaRef.current) {
+            if (changeNewPostText) {
+                changeNewPostText(textareaRef.current.value)
+            }
+        }
+
+    }
+
     return (
         <div>
-           <textarea ref={textareaRef}></textarea>
-            <SuperButton onClick={addPost}
-            >ADD</SuperButton>
+           <textarea ref={textareaRef}
+                     value={newPostText}
+                     onChange={onChangeNewTextHandler}/>
+            <SuperButton onClick={addPost}>
+                ADD
+            </SuperButton>
         </div>
     );
 };

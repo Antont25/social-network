@@ -13,7 +13,9 @@ export const MyPosts = (props:PostPageType) => {
         <div>
             <Description/>
             <UserInfo/>
-            <AddPost addPost={props.addPost}/>
+            <AddPost newPostText={props.newPostText}
+                     addPost={props.addPost}
+                     changeNewPostText={props.changeNewPostText}/>
             {newPost}
         </div>
     );

@@ -1,11 +1,20 @@
-import React, {ReactNode} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import './index.css';
+import ReactDOM from 'react-dom';
 import App from './App';
-import {addPost, store} from "./redux/state";
-import {render} from "./render";
+import { store,} from "./redux/state";
 
 
+export const render = () => {
+    ReactDOM.render(
+        <App state={store.state} addPost={store.addPost.bind(store)}
+        changeNewPostText={store.changeNewPostText.bind(store)}
+        subscriber={store.subscriber.bind(store)}
+        render={store.render}/>,
+        document.getElementById('root')
+    );
+}
 
+render()
 
-render(store)
+store.subscriber(render)
