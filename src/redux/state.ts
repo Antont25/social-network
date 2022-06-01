@@ -10,6 +10,7 @@ export type MassagesType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     massages: Array<MassagesType>
+    newTextMasseg:string
 }
 
 export type PostsType = {
@@ -21,7 +22,7 @@ export type PostsType = {
 export type PostPageType = {
     posts: Array<PostsType>
     newPostText: string
-    dispatch: (action: ActionTypeAddPost | ActionTypeNewPost) => void
+    dispatch: (action: ActionType) => void
 }
 export type PostType = {
     posts: Array<PostsType>
@@ -37,17 +38,13 @@ export type StoreType = {
     state: StateType
     subscriber: (observer: () => void) => void
     render: () => void
-    dispatch: (action: ActionTypeAddPost | ActionTypeNewPost) => void
+    dispatch: (action: ActionType) => void
 }
 
 
-export type ActionTypeAddPost = {
-    type: 'ADD-POST'
-}
-export  type ActionTypeNewPost = {
-    type: 'NEW-TEXT'
-    newText: string
-}
+export type ActionType = ReturnType<typeof addPostState> | ReturnType<typeof newTextPost> | ReturnType<typeof newMessageText> |  ReturnType<typeof addMessage>
+
+
 
 export const store: StoreType = {
     state: {
@@ -68,7 +65,8 @@ export const store: StoreType = {
             massages: [
                 {id: 1, message: 'yoooo'},
                 {id: 1, message: 'ysss'},
-            ]
+            ],
+            newTextMasseg:'f'
         }
 
     },
@@ -80,7 +78,7 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === 'ADD_POST') {
             let newPost: PostsType = {
                 id: 4,
                 massage: this.state.postPage.newPostText,
@@ -88,13 +86,33 @@ export const store: StoreType = {
             }
             this.state.postPage.posts.push(newPost)
             this.render()
-        } else if (action.type === 'NEW-TEXT') {
+        } else if (action.type === 'NEW_TEXT') {
             this.state.postPage.newPostText = action.newText
+            this.render()
+        }
+        else if (action.type === 'NEW_MESSAGE_TEXT') {
+            this.state.dialogsPage.newTextMasseg = action.newText
+            this.render()
+        }
+        else if (action.type === 'ADD_MESSAGE') {
+            let newMessage:MassagesType = {id:3,message: this.state.dialogsPage.newTextMasseg}
+            this.state.dialogsPage.massages.push(newMessage)
+            this.state.dialogsPage.newTextMasseg=''
             this.render()
         }
     }
 }
 
+const ADD_POST = 'ADD_POST';
+const NEW_TEXT = 'NEW_TEXT';
+const NEW_MESSAGE_TEXT= 'NEW_MESSAGE_TEXT';
+const ADD_MESSAGE = "ADD_MESSAGE";
+
+export  const addPostState=()=>({type: ADD_POST} as const )
+export  const newTextPost=(newText:string)=>({type: NEW_TEXT,newText:newText} as const)
+
+export  const newMessageText=(newText:string)=>({type: NEW_MESSAGE_TEXT,newText:newText} as const)
+export  const addMessage=()=>({type: ADD_MESSAGE} as const )
 
 
 

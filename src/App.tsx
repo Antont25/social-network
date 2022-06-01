@@ -16,14 +16,18 @@ const App: React.FC<StoreType> = (props) => {
                 <NavBar/>
                 <div className='appWraper'>
                     <Routes>
-                        <Route path='/' element={<Profile posts={props.state.postPage.posts}
+                        <Route path='/'
+                               element={<Profile posts={props.state.postPage.posts}
                                                           newPostText={props.state.postPage.newPostText}
                                                           dispatch={props.dispatch}/>}>
 
                         </Route>
                         <Route path='/dialogs/*'
                                element={<Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                                 massages={props.state.dialogsPage.massages}/>}>
+                                                 massages={props.state.dialogsPage.massages}
+                                                 textMasseg={props.state.dialogsPage.newTextMasseg}
+                                                 dispatch={props.dispatch}
+                               />}>
 
                         </Route>
                     </Routes>
