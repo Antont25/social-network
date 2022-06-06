@@ -2,8 +2,9 @@ import React from 'react';
 import style from './Dialogs.module.css'
 import Message from "./Messages/Message";
 import {DialogItems} from "./DialogItems";
-import {ActionType, addMessage, DialogsType, MassagesType, newMessageText} from "../../redux/state";
+import {ActionType, DialogsType, MassagesType} from "../../redux/state";
 import {Textarea} from "../../common/Textarea";
+import {addMessage, newMessageText} from "../../redux/dialogsReduser";
 
 type DialogsPropsType={
     dialogs: Array<DialogsType>

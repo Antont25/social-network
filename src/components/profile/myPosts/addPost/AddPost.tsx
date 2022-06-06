@@ -1,6 +1,7 @@
 import React from 'react';
-import {ActionType, addPostState, newTextPost} from "../../../../redux/state";
+import {ActionType, } from "../../../../redux/state";
 import {Textarea} from "../../../../common/Textarea";
+import {addPostState, newTextPost} from "../../../../redux/profileReduser";
 
 type AddPostPropsType = {
     newPostText: string

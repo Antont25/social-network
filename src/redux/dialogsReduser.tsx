@@ -1,18 +1,40 @@
 import React from 'react';
-import {ActionType, PostsType, PostType} from "./state";
+import {ActionType, MassagesType} from "./state";
 
-export  const DialogsReduser = (state:PostType, action:ActionType) => {
+type InitialStateType=typeof initialState
+type NewMessageTextType={
+    type: 'NEW_MESSAGE_TEXT'
+    newText:string
+}
+type AddMessageType={
+    type: 'ADD_MESSAGE'
+}
+
+const initialState={
+    dialogs: [
+        {id: 1, name: 'Amdrey'},
+        {id: 2, name: 'Any'}
+    ],
+    massages: [
+        {id: 1, message: 'yoooo'},
+        {id: 1, message: 'ysss'},
+    ],
+    newTextMasseg:'f'
+}
+
+export  const dialogsReduser = (state:InitialStateType = initialState, action:ActionType) => {
     switch (action.type) {
-        case  ADD_POST:
-            let newPost: PostsType = {
-                id: 4,
-                massage: state.newPostText,
-                likes: 4
+        case  ADD_MESSAGE:
+            let newMessage:MassagesType = {id:3,message: state.newTextMasseg}
+            return {
+                ...state,
+                massages:[newMessage,...state.massages]
             }
-            return state.posts.push(newPost)
 
-        case NEW_TEXT : {
-           return  state.newPostText = action.newText
+        case NEW_MESSAGE_TEXT :
+        return {
+            ...state,
+            newTextMasseg: action.newText
         }
         default: return state
     }
@@ -20,8 +42,9 @@ export  const DialogsReduser = (state:PostType, action:ActionType) => {
 
 
 
-const ADD_POST = 'ADD_POST';
-const NEW_TEXT = 'NEW_TEXT';
+const NEW_MESSAGE_TEXT= 'NEW_MESSAGE_TEXT';
+const ADD_MESSAGE = "ADD_MESSAGE";
 
-export  const addPostState=()=>({type: ADD_POST} as const )
-export  const newTextPost=(newText:string)=>({type: NEW_TEXT,newText:newText} as const)
+
+export  const newMessageText=(newText:string):NewMessageTextType=>({type: NEW_MESSAGE_TEXT,newText:newText} as const)
+export  const addMessage=():AddMessageType=>({type: ADD_MESSAGE} as const )

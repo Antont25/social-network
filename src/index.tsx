@@ -2,18 +2,16 @@ import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { store,} from "./redux/state";
+import {store} from "./redux/store";
 
 
-export const render = () => {
+export const render = (props:any) => {
     ReactDOM.render(
-        <App state={store.state} dispatch={store.dispatch.bind(store)}
-        subscriber={store.subscriber.bind(store)}
-        render={store.render}/>,
+        <App  dialogsPage={props.dialogsPage} postPage={props.postPage}/>,
         document.getElementById('root')
     );
 }
 
-render()
+render(store.getState())
 
-store.subscriber(render)
+store.subscribe(()=>render(store.getState()))
