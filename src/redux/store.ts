@@ -1,19 +1,30 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
-import {profileReduser} from "./profileReduser";
-import {dialogsReduser} from "./dialogsReduser";
-
-
-
+import {addPostState, newTextPost, profileReduser} from "./profileReduser";
+import {addMessage, dialogsReduser, newMessageText} from "./dialogsReduser";
+import {follow, setUsers, unFollow, usersReduser} from "./usersReduser";
 
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let rootReduser  = combineReducers({
+
+
+let rootReducer = combineReducers({
     postPage: profileReduser,
-    dialogsPage: dialogsReduser
+    dialogsPage: dialogsReduser,
+    usersPage: usersReduser
 });
-export const store = createStore(rootReduser, composeEnhancers(applyMiddleware(thunk)))
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
-type RootReduserType=typeof rootReduser
+export type ActionType =
+    ReturnType<typeof addPostState>
+    | ReturnType<typeof newTextPost>
+    | ReturnType<typeof newMessageText>
+    | ReturnType<typeof addMessage>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
 
-export type StoreAppType=ReturnType<RootReduserType>
+
+export type AppStoreType = ReturnType<typeof rootReducer>
+export type RootStateType = ReturnType<typeof store.getState>
+export type AppDispatchType = ReturnType<typeof store.dispatch>

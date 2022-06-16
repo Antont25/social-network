@@ -1,37 +1,27 @@
 import React from 'react';
-import {ActionType, } from "../../../../redux/state";
 import {Textarea} from "../../../../common/Textarea";
-import {addPostState, newTextPost} from "../../../../redux/profileReduser";
 
 type AddPostPropsType = {
     newPostText: string
-    dispatch: (action: ActionType) => void
+    addPostState: () => void
+    newTextPost: (newText: string) => void
 }
 
 export const AddPost: React.FC<AddPostPropsType> = (props) => {
-
-
     function addPost() {
-            props.dispatch(addPostState())
-            props.dispatch(newTextPost(''))
-
+        props.addPostState()
+        props.newTextPost('')
     }
 
-    function onChangeNewTextHandler(newtext:string) {
-        if (newtext) {
-            if (props.dispatch) {
-                props.dispatch(newTextPost(newtext))
-            }
-        }}
+    function onChangeNewTextHandler(newText: string) {
+        props.newTextPost(newText)
+    }
 
-
-
-return (
-    <div>
-        <Textarea text={ props.newPostText} add={addPost} onChangeHandler={onChangeNewTextHandler}/>
-
-    </div>
-);
+    return (
+        <div>
+            <Textarea text={props.newPostText} add={addPost} onChangeHandler={onChangeNewTextHandler}/>
+        </div>
+    );
 }
 
 

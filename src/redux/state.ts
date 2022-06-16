@@ -1,33 +1,35 @@
 import {addPostState, newTextPost} from "./profileReduser";
 import {addMessage, newMessageText} from "./dialogsReduser";
+import {follow, setUsers, unFollow} from "./usersReduser";
+import {ActionType} from "./store";
 
-export type DialogsType = {
+type DialogsType = {
     id: number
     name: string
 }
-export type MassagesType = {
+type MessagesType = {
     id: number
     message: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogsType>
-    massages: Array<MassagesType>
-    newTextMasseg:string
+    massages: Array<MessagesType>
+    newTextMasseg: string
 }
 
-export type PostsType = {
+type PostsType = {
     id: number
     massage: string
     likes: number
 }
 
-export type PostPageType = {
+type PostPageType = {
     posts: Array<PostsType>
     newPostText: string
     dispatch: (action: ActionType) => void
 }
-export type PostType = {
+type PostType = {
     posts: Array<PostsType>
     newPostText: string
 }
@@ -37,16 +39,12 @@ export type StateType = {
     dialogsPage: DialogsPageType
 
 }
-export type StoreType = {
+type StoreType = {
     state: StateType
     subscriber: (observer: () => void) => void
     render?: () => void
     dispatch: (action: ActionType) => void
 }
-
-
-export type ActionType = ReturnType<typeof addPostState> | ReturnType<typeof newTextPost> | ReturnType<typeof newMessageText> |  ReturnType<typeof addMessage>
-
 
 
 // export const store: StoreType = {
@@ -98,7 +96,7 @@ export type ActionType = ReturnType<typeof addPostState> | ReturnType<typeof new
 //             this.render()
 //         }
 //         else if (action.type === 'ADD_MESSAGE') {
-//             let newMessage:MassagesType = {id:3,message: this.state.dialogsPage.newTextMasseg}
+//             let newMessage:MessagesType = {id:3,message: this.state.dialogsPage.newTextMasseg}
 //             this.state.dialogsPage.massages.push(newMessage)
 //             this.state.dialogsPage.newTextMasseg=''
 //             this.render()

@@ -1,50 +1,58 @@
 import React from 'react';
-import {ActionType, MassagesType} from "./state";
+import {ActionType} from "./store";
 
-type InitialStateType=typeof initialState
-type NewMessageTextType={
-    type: 'NEW_MESSAGE_TEXT'
-    newText:string
+
+type NewMessageTextType = {
+    type: typeof NEW_MESSAGE_TEXT
+    payload: string
 }
-type AddMessageType={
-    type: 'ADD_MESSAGE'
+type AddMessageType = {
+    type: typeof ADD_MESSAGE
+}
+type InitialStateType = typeof initialState
+export type DialogsType = {
+    id: number
+    name: string
+}
+export type MessagesType = {
+    id: number
+    message: string
 }
 
-const initialState={
+const NEW_MESSAGE_TEXT = 'NEW_MESSAGE_TEXT';
+const ADD_MESSAGE = "ADD_MESSAGE";
+
+const initialState = {
     dialogs: [
         {id: 1, name: 'Amdrey'},
         {id: 2, name: 'Any'}
-    ],
-    massages: [
+    ] as Array<DialogsType>,
+    messages: [
         {id: 1, message: 'yoooo'},
         {id: 1, message: 'ysss'},
-    ],
-    newTextMasseg:'f'
+    ] as Array<MessagesType>,
+    newTextMessages: 'f'
 }
 
-export  const dialogsReduser = (state:InitialStateType = initialState, action:ActionType) => {
+export const dialogsReduser = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case  ADD_MESSAGE:
-            let newMessage:MassagesType = {id:3,message: state.newTextMasseg}
+            let newMessages: MessagesType = {id: 3, message: state.newTextMessages}
             return {
                 ...state,
-                massages:[newMessage,...state.massages]
+                messages: [newMessages, ...state.messages]
             }
 
         case NEW_MESSAGE_TEXT :
-        return {
-            ...state,
-            newTextMasseg: action.newText
-        }
-        default: return state
+            return {
+                ...state,
+                newTextMessages: action.payload
+            }
+        default:
+            return state
     }
 };
 
 
-
-const NEW_MESSAGE_TEXT= 'NEW_MESSAGE_TEXT';
-const ADD_MESSAGE = "ADD_MESSAGE";
-
-
-export  const newMessageText=(newText:string):NewMessageTextType=>({type: NEW_MESSAGE_TEXT,newText:newText} as const)
-export  const addMessage=():AddMessageType=>({type: ADD_MESSAGE} as const )
+export const newMessageText = (payload: string): NewMessageTextType => ({type: NEW_MESSAGE_TEXT, payload})
+export const addMessage = (): AddMessageType => ({type: ADD_MESSAGE})

@@ -1,16 +1,19 @@
 
-.list{
+.list {
     list-style-type: none;
+    padding-left: 10px;
 }
 
-.list li{
+.list li {
     margin-top: 10px;
 }
-.item{
-    color:  blue;
+
+.item {
+    color: blue;
     text-decoration: none;
 }
-.active{
-    color:  red;
+
+.active {
+    color: red;
     text-decoration: none;
 }
