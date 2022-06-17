@@ -6,7 +6,6 @@ import {Textarea} from "../../common/Textarea";
 import {addMessage, DialogsType, MessagesType, newMessageText} from "../../redux/dialogsReduser";
 import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/store";
-import {Dispatch} from "redux";
 
 type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 

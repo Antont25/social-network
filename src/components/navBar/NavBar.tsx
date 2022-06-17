@@ -1,12 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import style from './NavBar.module.css'
 import {NavLink} from 'react-router-dom'
 
+type NavBarProps = {
+    menuIsShow: boolean
+    screenWidth: number | null
+    showMenuHandler: () => void
+}
 
-export const NavBar = () => {
+const NavBar = (props: NavBarProps) => {
+    function onclickMenuHandler() {
+        if (props.screenWidth && props.screenWidth < 958) {
+            props.showMenuHandler()
+        }
+    }
+
+
     return (
         <div className={'navbar'}>
-            <ul className={style.list}>
+            <ul className={style.list} onClick={onclickMenuHandler}>
                 <li><NavLink to={'/'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>Profile</NavLink></li>
                 <li><NavLink to={'/dialogs'}
@@ -23,4 +35,7 @@ export const NavBar = () => {
         </div>
     );
 };
+
+
+export default NavBar;
 

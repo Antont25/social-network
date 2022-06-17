@@ -1,0 +1,29 @@
+.user {
+    margin-bottom: 20px;
+}
+
+.avatar {
+
+    height: 100px !important;
+    max-width: 100px !important;
+    width: 100% !important;
+}
+
+.user {
+    padding: 20px 10px;
+}
+
+.userBlock {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    flex-direction: column;
+}
+
+.button {
+    margin-top: 10px !important;
+}
+
+.userInfo {
+
+}

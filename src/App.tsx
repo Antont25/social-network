@@ -1,41 +1,57 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './App.css';
 import Header from "./components/header/Header";
-import {NavBar} from "./components/navBar/NavBar";
+import NavBar from "./components/navBar/NavBar";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Users from "./components/Users/Users";
 import {Container, Grid, Paper} from "@material-ui/core";
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import style from './components/navBar/NavBar.module.css'
+import {connect} from "react-redux";
+import {AppStoreType} from "./redux/store";
+import {screenWidthHandler, showMenuHandler} from "./redux/headerReduser";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        paper: {
-            padding: theme.spacing(2),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
-            backgroundColor: theme.palette.text.secondary,
-            marginRight: theme.spacing(1),
-        },
 
-    }),
-);
-const App = () => {
-    const classes = useStyles();
+type MapStateToProps = {
+    menuIsShow: boolean
+    screenWidth: number | null
+}
+
+type AppType = MapStateToProps & {
+    showMenuHandler: () => void
+    screenWidthHandler: (payload: number) => void
+}
+
+const App = (props: AppType) => {
+    useEffect(() => {
+        props.screenWidthHandler(window.screen.width)
+        props.screenWidth && props.screenWidth > 958 && props.showMenuHandler()
+        window.addEventListener('resize', () => {
+            props.screenWidthHandler(window.screen.width)
+            props.screenWidth && props.screenWidth > 958 && props.showMenuHandler()
+        });
+    }, [])
+
     return (
         <HashRouter>
             <Container>
                 <Header/>
-                <Grid container>
-                    <Grid item xs={2}>
-                        <Paper className={classes.paper}>xs=12</Paper>
-                        <NavBar/>
-                    </Grid>
-                    <Grid item xs={10}>
+                <Grid container className={'container'}>
+                    {props.menuIsShow &&
+                        <Grid item
+                              xs={12} md={3}
+                              className={style.navBarMenu}
+                        >
+                            <Paper className={style.navBar}>
+                                <NavBar menuIsShow={props.menuIsShow}
+                                        showMenuHandler={props.showMenuHandler}
+                                        screenWidth={props.screenWidth}
+                                />
+                            </Paper>
+                        </Grid>
+                    }
+                    <Grid item xs={12} md={9}>
                         <div className='appWraper'>
                             <Routes>
                                 <Route path='/'
@@ -60,4 +76,11 @@ const App = () => {
     );
 }
 
-export default App;
+function mapStateToProps(state: AppStoreType): MapStateToProps {
+    return {
+        menuIsShow: state.headerPage.menuIsShow,
+        screenWidth: state.headerPage.screenWidth
+    }
+}
+
+export default connect(mapStateToProps, {showMenuHandler, screenWidthHandler})(App);
