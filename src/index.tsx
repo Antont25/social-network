@@ -4,11 +4,22 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {store} from "./redux/store";
 import {Provider} from "react-redux";
+import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#41484f'
+        }
+    },
+});
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <ThemeProvider theme={theme}>
+            <App/>
+        </ThemeProvider>
     </Provider>,
     document.getElementById('root')
 );

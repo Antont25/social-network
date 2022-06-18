@@ -4,7 +4,7 @@ import {addPostState, newTextPost, profileReduser} from "./profileReduser";
 import {addMessage, dialogsReduser, newMessageText} from "./dialogsReduser";
 import {follow, setUsers, unFollow, usersReduser} from "./usersReduser";
 import {isLoading, isLoadingReduser} from "./isLoadingReduser";
-import {headerReduser, screenWidthHandler, showMenuHandler} from "./headerReduser";
+import {headerReduser, showMenuHandler} from "./headerReduser";
 
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -29,7 +29,6 @@ export type ActionType =
     | ReturnType<typeof unFollow>
     | ReturnType<typeof isLoading>
     | ReturnType<typeof showMenuHandler>
-    | ReturnType<typeof screenWidthHandler>
 
 
 export type AppStoreType = ReturnType<typeof rootReducer>

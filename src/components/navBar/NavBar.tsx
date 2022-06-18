@@ -1,37 +1,79 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import style from './NavBar.module.css'
 import {NavLink} from 'react-router-dom'
+import List from '@material-ui/core/List';
+import ListItem, {ListItemProps} from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/Inbox';
+import {Announcement, Message, MusicNote, People, Settings} from "@material-ui/icons";
 
 type NavBarProps = {
-    menuIsShow: boolean
-    screenWidth: number | null
-    showMenuHandler: () => void
+    handlerShowMenu?: () => void
 }
 
 const NavBar = (props: NavBarProps) => {
-    function onclickMenuHandler() {
-        if (props.screenWidth && props.screenWidth < 958) {
-            props.showMenuHandler()
-        }
-    }
 
 
     return (
         <div className={'navbar'}>
-            <ul className={style.list} onClick={onclickMenuHandler}>
-                <li><NavLink to={'/'}
-                             className={(({isActive}) => isActive ? style.active : style.item)}>Profile</NavLink></li>
-                <li><NavLink to={'/dialogs'}
-                             className={(({isActive}) => isActive ? style.active : style.item)}>Messages</NavLink></li>
-                <li><NavLink to={'/news'}
-                             className={(({isActive}) => isActive ? style.active : style.item)}>News</NavLink></li>
-                <li><NavLink to={'/music'}
-                             className={(({isActive}) => isActive ? style.active : style.item)}>Music</NavLink></li>
-                <li><NavLink to={'/users'}
-                             className={(({isActive}) => isActive ? style.active : style.item)}>Users</NavLink></li>
-                <li><NavLink to={'/setings'}
-                             className={(({isActive}) => isActive ? style.active : style.item)}>Settings</NavLink></li>
-            </ul>
+            <List component="nav" aria-label="main mailbox folders" className={style.list}
+                  onClick={props.handlerShowMenu}>
+                <ListItem button>
+                    <ListItemIcon>
+                        <InboxIcon/>
+                    </ListItemIcon>
+                    <NavLink to={'/'}
+                             className={(({isActive}) => isActive ? style.active : style.item)}>
+                        <ListItemText primary="Profile"/>
+                    </NavLink>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <Message/>
+                    </ListItemIcon>
+                    <NavLink to={'/dialogs'}
+                             className={(({isActive}) => isActive ? style.active : style.item)}>
+                        <ListItemText primary="Messages"/>
+                    </NavLink>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <Announcement/>
+                    </ListItemIcon>
+                    <NavLink to={'/news'}
+                             className={(({isActive}) => isActive ? style.active : style.item)}>
+                        <ListItemText primary="News"/>
+                    </NavLink>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <MusicNote/>
+                    </ListItemIcon>
+                    <NavLink to={'/music'}
+                             className={(({isActive}) => isActive ? style.active : style.item)}>
+                        <ListItemText primary="Music"/>
+                    </NavLink>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <People/>
+                    </ListItemIcon>
+                    <NavLink to={'/users'}
+                             className={(({isActive}) => isActive ? style.active : style.item)}>
+                        <ListItemText primary="Users"/>
+                    </NavLink>
+                </ListItem>
+                <ListItem button>
+                    <ListItemIcon>
+                        <Settings/>
+                    </ListItemIcon>
+                    <NavLink to={'/settings'}
+                             className={(({isActive}) => isActive ? style.active : style.item)}>
+                        <ListItemText primary="Settings"/>
+                    </NavLink>
+                </ListItem>
+            </List>
         </div>
     );
 };
