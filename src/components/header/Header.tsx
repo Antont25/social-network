@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import imgIcon from '../../img/logo.png'
+import imgIcon from '../../assest/img/logo.png'
 import {MenuOpen} from "@material-ui/icons";
 import style from './header.module.css'
 import {showMenuHandler} from "../../redux/headerReduser";

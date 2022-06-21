@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './MyPost.module.css'
-import ava from '../../../../img/ava.jpeg'
+import ava from '../../../../assest/img/ava.jpeg'
 
 type MyPostPropsType = {
     massage: string

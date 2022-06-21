@@ -1,6 +1,10 @@
 import {ActionType} from "./store";
 
-type InitialStateType = typeof initialState
+export type InitialStateUserPageType = {
+    items: Array<UserType>
+    totalCount: number
+    error: null
+}
 export type UserType = {
     name: string,
     id: number,
@@ -28,51 +32,29 @@ type UnFollowType = {
 const SET_USERS = 'SET_USERS'
 const FOLLOW = 'FOLLOW'
 const UN_FOLLOW = 'UN_FOLLOW'
-const initialState = {
-    users: [
-        {
-            name: "Shubert",
-            id: 1,
-            uniqueUrlName: null,
-            photos: {
-                small: null,
-                large: null
-            },
-            status: null,
-            followed: false
-        },
-        {
-            name: "Hacker",
-            id: 2,
-            photos: {
-                small: null,
-                large: null
-            },
-            status: null,
-            followed: false
-        }
-    ] as Array<UserType>,
+const initialStateUserPage = {
+    items: [] as Array<UserType>,
     totalCount: 30,
     error: null
 }
 
 
-export const usersReduser = (state = initialState, action: ActionType): InitialStateType => {
+export const usersReduser = (state = initialStateUserPage, action: ActionType): InitialStateUserPageType => {
     switch (action.type) {
         case SET_USERS:
             return {
                 ...state,
-                users: action.payload
+                items: action.payload
             }
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(item => item.id === action.payload ? {...item, followed: true} : item)
+                items: state.items.map(item => item.id === action.payload ? {...item, followed: true} : item)
             }
         case UN_FOLLOW:
             return {
                 ...state,
-                users: state.users.map(item => item.id === action.payload ? {...item, followed: false} : item)
+                items: state.items.map(item => item.id === action.payload ? {...item, followed: false} : item)
             }
         default:
             return state

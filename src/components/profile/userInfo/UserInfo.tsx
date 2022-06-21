@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './userInfo.module.css'
-import imgU from '../../../img/1616964943_27-p-fon-priroda-30.jpg'
+import imgU from '../../../assest/img/1616964943_27-p-fon-priroda-30.jpg'
+
 const UserInfo = () => {
     return (
         <div>
