@@ -1,21 +1,21 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from "redux-thunk";
-import {addPostState, newTextPost, profileReduser} from "./profileReduser";
-import {addMessage, dialogsReduser, newMessageText} from "./dialogsReduser";
-import {follow, setUsers, unFollow, usersReduser} from "./usersReduser";
-import {isLoading, isLoadingReduser} from "./isLoadingReduser";
-import {headerReduser, showMenuHandler} from "./headerReduser";
+import {addPostState, newTextPost, profileReducer, setUserProfile} from "./profileReduser";
+import {addMessage, dialogsReducer, newMessageText} from "./dialogsReduser";
+import {follow, setCurrentPage, setPortionsNumber, setUsers, unFollow, usersReducer} from "./usersReduser";
+import {isLoadingReducer, setIsLoading} from "./isLoadingReduser";
+import {headerReducer, showMenuHandler} from "./headerReduser";
 
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 let rootReducer = combineReducers({
-    postPage: profileReduser,
-    dialogsPage: dialogsReduser,
-    usersPage: usersReduser,
-    headerPage: headerReduser,
-    loading: isLoadingReduser,
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+    usersPage: usersReducer,
+    headerPage: headerReducer,
+    loading: isLoadingReducer,
 });
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
@@ -27,8 +27,11 @@ export type ActionType =
     | ReturnType<typeof setUsers>
     | ReturnType<typeof follow>
     | ReturnType<typeof unFollow>
-    | ReturnType<typeof isLoading>
+    | ReturnType<typeof setIsLoading>
     | ReturnType<typeof showMenuHandler>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setPortionsNumber>
+    | ReturnType<typeof setUserProfile>
 
 
 export type AppStoreType = ReturnType<typeof rootReducer>

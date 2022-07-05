@@ -12,7 +12,7 @@ let initialState = {
 
 const SHOW_MENU = 'SHOW_MENU'
 
-export const headerReduser = (state = initialState, action: ActionType): InitialStateType => {
+export const headerReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case SHOW_MENU:
             return {

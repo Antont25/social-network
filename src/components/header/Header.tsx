@@ -17,7 +17,7 @@ import NavBar from "../navBar/NavBar";
 
 type MapStateToPropsType = {
     menuIsShow: boolean
-    isLoading: boolean
+    authorized: boolean
 }
 type HeaderType = MapStateToPropsType & {
     showMenuHandler: () => void
@@ -77,7 +77,7 @@ const Header: React.FC<HeaderType> = (props) => {
                         <img style={{height: '20px'}} src={imgIcon} alt=""/>
                     </Typography>
                     {
-                        props.isLoading && (
+                        props.authorized && (
                             <div>
                                 <IconButton color="inherit">
                                     <AccountCircle/>
@@ -97,7 +97,7 @@ const Header: React.FC<HeaderType> = (props) => {
 let mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
         menuIsShow: state.headerPage.menuIsShow,
-        isLoading: state.loading.isLoading
+        authorized: state.loading.authorized
     }
 }
 

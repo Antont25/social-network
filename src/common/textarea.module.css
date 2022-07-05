@@ -1,0 +1,11 @@
+.textareaBloc {
+    outline: none !important;
+    border-radius: 10px !important;
+    min-width: 40% !important;
+    min-height: 80px !important;
+    resize: none !important;
+}
+
+.textareaBloc div {
+    min-height: 80px !important;
+}

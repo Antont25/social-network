@@ -5,17 +5,19 @@ import NavBar from "./components/navBar/NavBar";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
-import Users from "./components/Users/Users";
+import Users from "./components/users/Users";
 import {Container, Grid, Paper,} from "@material-ui/core";
 import style from './components/header/header.module.css'
 import {connect} from "react-redux";
 import {AppStoreType} from "./redux/store";
 import {showMenuHandler} from "./redux/headerReduser";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/footer/Footer";
+import {Loading} from "./common/loading/Loading";
 
 
 type MapStateToProps = {
     menuIsShow: boolean
+    isLoading: boolean
 }
 type AppType = MapStateToProps & {
     showMenuHandler: () => void
@@ -42,8 +44,9 @@ const App = (props: AppType) => {
                         <Grid item xs={12} sm={8} md={9}>
                             <div className='appWraper'>
                                 <Routes>
-                                    <Route path='/'
+                                    <Route path='/profile/*'
                                            element={<Profile/>}>
+                                        {/*<Route path=':id' element={<Profile/>}/>*/}
                                     </Route>
                                     <Route path='/dialogs/*'
                                            element={<Dialogs/>}>
@@ -65,6 +68,7 @@ const App = (props: AppType) => {
 function mapStateToProps(state: AppStoreType): MapStateToProps {
     return {
         menuIsShow: state.headerPage.menuIsShow,
+        isLoading: state.loading.isLoading
     }
 }
 

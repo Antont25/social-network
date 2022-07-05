@@ -23,7 +23,7 @@ const NavBar = (props: NavBarProps) => {
                     <ListItemIcon>
                         <InboxIcon/>
                     </ListItemIcon>
-                    <NavLink to={'/'}
+                    <NavLink to={'/profile'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>
                         <ListItemText primary="Profile"/>
                     </NavLink>

@@ -2,27 +2,24 @@ import {ActionType} from "./store";
 
 
 type InitialStateType = typeof initialState
-type IsLoadingType = {
-    type: typeof IS_LOADING
-}
-
 let initialState = {
-    isLoading: true
+    isLoading: false,
+    authorized: true
 }
 
 const IS_LOADING = 'IS_LOADING'
 
-export const isLoadingReduser = (state = initialState, action: ActionType) => {
+export const isLoadingReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case IS_LOADING:
             return {
                 ...state,
-                isLoading: true
+                isLoading: action.payload
             }
         default:
             return state
     }
 }
 
-export const isLoading = (): IsLoadingType => ({type: IS_LOADING})
+export const setIsLoading = (payload: boolean) => ({type: IS_LOADING, payload} as const)
 

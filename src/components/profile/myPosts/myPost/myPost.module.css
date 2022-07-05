@@ -1,0 +1,41 @@
+.img {
+    max-width: 70px !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 70px !important;
+    border-radius: 50%;
+}
+
+.postBloc {
+    margin: 20px 0;
+    display: flex;
+}
+
+.post {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+}
+
+.post span {
+    flex-grow: 1;
+}
+
+.likesBloc {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-right: 0 !important;
+}
+
+.likesBloc button {
+    position: relative;
+}
+
+.likes {
+    position: absolute;
+    font-size: 12px;
+    color: white;
+}
+

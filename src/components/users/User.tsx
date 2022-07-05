@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import avatar from '../../assest/img/avatar.png'
 import {Button, Grid, Paper} from "@material-ui/core";
 import style from './users.module.css'
 import {UserType} from "../../redux/usersReduser";
+import {NavLink} from "react-router-dom";
 
 
 type UserFCType = {
@@ -13,7 +14,9 @@ type UserFCType = {
 }
 const User: React.FC<UserFCType> = (props) => {
 
-    function onClickFollowedHandler() {
+    function onClickFollowedHandler(e: any) {
+
+
         if (props.users.followed) {
             props.unFollow(props.users.id)
         } else {
@@ -26,7 +29,9 @@ const User: React.FC<UserFCType> = (props) => {
             <Paper elevation={3}>
                 <Grid container className={style.user}>
                     <Grid item md={2} className={style.userBlock}>
-                        <Avatar className={style.avatar} alt="Remy Sharp" src={props.users.photos.small || avatar}/>
+                        <NavLink to={'/profile'}>
+                            <Avatar className={style.avatar} alt="Remy Sharp" src={props.users.photos.small || avatar}/>
+                        </NavLink>
                         <Button className={style.button}
                                 variant="outlined"
                                 color="primary"
@@ -37,13 +42,13 @@ const User: React.FC<UserFCType> = (props) => {
                         </Button>
                     </Grid>
                     <Grid item md={10} className={style.userInfo}>
-                        <div>Имя: {props.users.name}</div>
+                        <NavLink to={`/profile/${props.users.id}`}>
+                            <div>Имя: {props.users.name}</div>
+                        </NavLink>
                         <div>Статус: {props.users.status ? props.users.status : 'нет статуса'}</div>
                     </Grid>
                 </Grid>
             </Paper>
-
-
         </div>
     )
         ;

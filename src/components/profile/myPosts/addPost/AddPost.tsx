@@ -1,5 +1,6 @@
 import React from 'react';
 import {Textarea} from "../../../../common/Textarea";
+import style from './addPost.module.css'
 
 type AddPostPropsType = {
     newPostText: string
@@ -18,7 +19,7 @@ export const AddPost: React.FC<AddPostPropsType> = (props) => {
     }
 
     return (
-        <div>
+        <div className={style.addPostBloc}>
             <Textarea text={props.newPostText} add={addPost} onChangeHandler={onChangeNewTextHandler}/>
         </div>
     );

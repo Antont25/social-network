@@ -1,0 +1,12 @@
+.postBloc {
+    padding: 20px 20px 1px 20px;
+}
+
+.postBloc h2 {
+    text-align: center;
+}
+
+.addPostBloc {
+    display: flex;
+    margin-bottom: 20px;
+}

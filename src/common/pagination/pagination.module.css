@@ -1,0 +1,32 @@
+.listItemNum {
+    color: #2186c4 !important;
+    border-radius: 50% !important;
+}
+
+.listItemNum:hover {
+    color: white !important;
+    background-color: #2186c4 !important;
+
+}
+
+.paginationBlock span:hover {
+    color: white !important;
+    background-color: #2186c4 !important;
+    border-radius: 50% !important;
+}
+ 
+.active {
+    color: red !important;
+}
+
+
+.paginationBlock ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.paginationBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

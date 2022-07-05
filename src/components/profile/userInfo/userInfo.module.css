@@ -1,5 +1,47 @@
-.imgUser img{
-    max-height: 100px;
-    max-width: 100px;
-    border-radius: 10px;
+.img {
+    max-height: 250px !important;
+    max-width: 250px !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+}
+
+.avatarPaper {
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.avatarBloc {
+    width: 70%;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}
+
+.name {
+    color: #2186c4;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+}
+
+.contacts h2 {
+    text-align: center;
+}
+
+.contactItem {
+    display: flex;
+}
+
+.contactItem li {
+    display: block;
+    width: inherit;
+
 }

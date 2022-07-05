@@ -1,21 +1,36 @@
 import React from 'react';
-import style from './MyPost.module.css'
-import ava from '../../../../assest/img/ava.jpeg'
+import style from './myPost.module.css'
+import Paper from '@material-ui/core/Paper';
+import Avatar from "@material-ui/core/Avatar";
+import avatar from "../../../../assest/img/avatar.png";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import IconButton from "@material-ui/core/IconButton";
+
 
 type MyPostPropsType = {
     massage: string
     likes: number
+    photoUser: string | null
 }
 
 
-export const MyPost: React.FC<MyPostPropsType> = ({massage, likes}) => {
+export const MyPost: React.FC<MyPostPropsType> = ({massage, likes, photoUser}) => {
 
     return (
-        <div>
-            <img className={style.img} src={ava}/>
-            <span>{massage}</span>
-            <div>liks {likes}</div>
-        </div>
+        <Paper className={style.postBloc}>
+            <Avatar className={style.img} alt="Remy Sharp" src={photoUser || avatar}/>
+            <div className={style.post}>
+                <span>{massage}</span>
+
+                <div className={style.likesBloc}>
+                    <IconButton color="secondary" size={"small"}>
+                        <FavoriteIcon/>
+                        <span className={style.likes}>{likes}</span>
+
+                    </IconButton>
+                </div>
+            </div>
+        </Paper>
     );
 };
 

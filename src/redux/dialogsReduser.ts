@@ -34,7 +34,7 @@ const initialState = {
     newTextMessages: 'f'
 }
 
-export const dialogsReduser = (state = initialState, action: ActionType): InitialStateType => {
+export const dialogsReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case  ADD_MESSAGE:
             let newMessages: MessagesType = {id: 3, message: state.newTextMessages}
