@@ -18,7 +18,7 @@ export type UserType = {
     status: null | string,
     followed: boolean
 }
-export type fetchUserType = {
+export type FetchUserType = {
     items: Array<UserType>
     totalCount: number
     error: null
@@ -82,7 +82,7 @@ export const usersReducer = (state = initialStateUserPage, action: ActionType): 
     }
 }
 
-export const setUsers = (payload: fetchUserType) => ({type: SET_USERS, payload} as const)
+export const setUsers = (payload: FetchUserType) => ({type: SET_USERS, payload} as const)
 export const follow = (payload: number) => ({type: FOLLOW, payload} as const)
 export const unFollow = (payload: number) => ({type: UN_FOLLOW, payload} as const)
 export const setCurrentPage = (payload: number) => ({type: SET_CURRENT_PAGE, payload} as const)

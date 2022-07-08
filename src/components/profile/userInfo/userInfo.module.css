@@ -38,6 +38,15 @@
 
 .contactItem {
     display: flex;
+    justify-content: center;
+}
+
+.contactItem .contactHeader {
+    color: #525456;
+}
+
+.contactItem .contactBody {
+    color: #83878c;
 }
 
 .contactItem li {

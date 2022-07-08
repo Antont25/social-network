@@ -9,16 +9,20 @@ import {addPostState, newTextPost, PostsType, setUserProfile, UserProfileType} f
 import {Dispatch} from "redux";
 import axios from "axios";
 import {InitialStateUserPageType} from "../../redux/usersReduser";
-import {setIsLoading} from "../../redux/isLoadingReduser";
+import {AuthorizedUserType, setIsLoading} from "../../redux/authorizedReduser";
 import {Description} from "./descripton/Description";
 import UserInfo from "./userInfo/UserInfo";
 import {Loading} from "../../common/loading/Loading";
 import {useParams} from "react-router";
+import {useNavigate} from "react-router-dom";
+import {api} from "../../api/api";
 
 type MapStateToPropsType = {
     posts: Array<PostsType>
     newPostText: string
     userProfile: UserProfileType
+    authorized: number | null
+    authorizedUser: AuthorizedUserType
 }
 type MapDispatchToPropsType = {
     addPostState: () => void
@@ -30,17 +34,36 @@ type MapDispatchToPropsType = {
 type ProfileType = MapStateToPropsType & MapDispatchToPropsType
 
 const Profile = (props: ProfileType) => {
+
     let params = useParams<'*'>()
+    let paramsURL = Number(params['*'])
+    const navigate = useNavigate()
     useEffect(() => {
-        async function fetchUserProfile() {
-            props.setIsLoading(true)
-            let response = await axios.get<UserProfileType>(`https://social-network.samuraijs.com/api/1.0//profile/${params['*']}`)
-            props.setUserProfile(response.data)
-            props.setIsLoading(false)
+        if (!props.authorized && params['*'] === '') {
+            if (props.authorizedUser.id) paramsURL = props.authorizedUser.id
         }
 
-        fetchUserProfile()
-    }, [])
+        async function fetchUserProfile() {
+            try {
+                props.setIsLoading(true)
+                if (paramsURL) {
+                    let response = await api.getUserProfile(paramsURL)
+                    props.setUserProfile(response)
+                    props.setIsLoading(false)
+                }
+            } catch (er) {
+                console.log(er)
+
+            }
+        }
+
+        if (props.authorized === 0 || paramsURL) {
+            fetchUserProfile()
+        } else if (props.authorized === 1) {
+            navigate('/login')
+        }
+
+    }, [props.authorized, paramsURL])
 
     if (Object.keys(props.userProfile).length === 0) {
         return <Loading/>
@@ -62,7 +85,9 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
-        userProfile: state.profilePage.userProfile
+        userProfile: state.profilePage.userProfile,
+        authorized: state.authorized.authorized,
+        authorizedUser: state.authorized.authorizedUser,
     }
 }
 

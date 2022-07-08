@@ -3,8 +3,13 @@
 }
 
 .navBar {
-    height: 100vh;
+    height: 50vh;
     background: rgb(221 221 229) !important;
+}
+
+.menu {
+    top: 40px !important;
+    
 }
 
 @media (max-width: 600px) {

@@ -24,6 +24,8 @@ const UserInfo: React.FC<UserInfoType> = (props) => {
                 <div className={style.info}>
                     <div className={style.name}>{props.userProfile.fullName}</div>
                     <div>aboutMe: {props.userProfile.aboutMe || 'нету даных'}</div>
+
+
                 </div>
             </Grid>
 
@@ -32,15 +34,21 @@ const UserInfo: React.FC<UserInfoType> = (props) => {
                 <Grid item className={style.contactItem}>
                     <ListItem>
                         {
-                            Object.keys(props.userProfile.contacts).map(item => <ListItemText primary={item}/>)
+                            Object.keys(props.userProfile.contacts).map((item, index) => <ListItemText
+                                className={style.contactHeader}
+                                key={index}
+                                primary={item}/>)
                         }
                     </ListItem>
 
 
                     <ListItem>
                         {
-                            Object.values(props.userProfile.contacts).map(item => <ListItemText
-                                primary={!item && 'нету даных'}/>)
+                            Object.values(props.userProfile.contacts).map((item, index) => <ListItemText
+                                className={style.contactBody}
+                                key={index}
+                                primary={item || 'нету даных'}/>
+                            )
 
                         }
                     </ListItem>

@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import {addPostState, newTextPost, profileReducer, setUserProfile} from "./profileReduser";
 import {addMessage, dialogsReducer, newMessageText} from "./dialogsReduser";
 import {follow, setCurrentPage, setPortionsNumber, setUsers, unFollow, usersReducer} from "./usersReduser";
-import {isLoadingReducer, setIsLoading} from "./isLoadingReduser";
+import {authorizedReducer, setIsLoading} from "./authorizedReduser";
 import {headerReducer, showMenuHandler} from "./headerReduser";
 
 
@@ -15,7 +15,7 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     headerPage: headerReducer,
-    loading: isLoadingReducer,
+    authorized: authorizedReducer,
 });
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
@@ -27,7 +27,7 @@ export type ActionType =
     | ReturnType<typeof setUsers>
     | ReturnType<typeof follow>
     | ReturnType<typeof unFollow>
-    | ReturnType<typeof setIsLoading>
+    // | ReturnType<typeof setIsLoading>
     | ReturnType<typeof showMenuHandler>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setPortionsNumber>

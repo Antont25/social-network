@@ -6,7 +6,7 @@ import style from './loading.module.css'
 export const Loading = () => {
     return (
         <div className={style.loadingBloc}>
-            <CircularProgress className={style.loading}/>
+            <CircularProgress className={style.authorized}/>
         </div>
     );
 };

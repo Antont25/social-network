@@ -1,15 +1,8 @@
-import React from 'react';
 import {ActionType} from "./store";
 
 
 export type InitialSateType = typeof initialSate
-type AddPostStateType = {
-    type: typeof ADD_POST
-}
-type NewTextPostType = {
-    type: typeof NEW_TEXT
-    payload: string
-}
+
 export type PostsType = {
     id: number
     massage: string
