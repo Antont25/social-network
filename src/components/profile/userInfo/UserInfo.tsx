@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import {UserProfileType} from "../../../redux/profileReducer";
+import {Status} from "../../Users/Status";
 
 
 type UserInfoType = {
@@ -15,15 +16,17 @@ type UserInfoType = {
 const UserInfo: React.FC<UserInfoType> = (props) => {
 
 
+    function setStatusHandler(value: string) {
+        console.log(value)
+    }
+
     return (
         <Paper elevation={3} className={style.avatarPaper}>
             <Grid container className={style.avatarBloc}>
                 <Avatar className={style.img} alt="Remy Sharp" src={props.userProfile.photos.small || avatar}/>
                 <div className={style.info}>
                     <div className={style.name}>{props.userProfile.fullName}</div>
-                    <div>aboutMe: {props.userProfile.aboutMe || 'нету даных'}</div>
-
-
+                    <Status valueStatus={props.userProfile.aboutMe} callback={setStatusHandler}/>
                 </div>
             </Grid>
 

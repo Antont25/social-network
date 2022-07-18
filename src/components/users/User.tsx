@@ -4,35 +4,28 @@ import avatar from '../../assest/img/avatar.png'
 import {Button, Grid, Paper} from "@material-ui/core";
 import style from './users.module.css'
 import {NavLink} from "react-router-dom";
-import {api} from "../../api/api";
 import {UserType} from "../../redux/usersReducer";
 
 
 type UserFCType = {
     users: UserType
     authorizedCode: null | number
-    follow: (id: number) => void
-    unFollow: (id: number) => void
+    fetchUnFollowUser: (usersId: number) => void
+    fetchFollowUserUser: (usersId: number) => void
+    userSubscription: Array<number>
 }
 export const User: React.FC<UserFCType> = (props) => {
 
     function onClickFollowedHandler(e: any) {
         if (props.users.followed) {
-            api.unFollowUser(props.users.id).then(response => {
-                if (response.resultCode === 0) {
-                    props.unFollow(props.users.id)
-                }
-            })
+            props.fetchUnFollowUser(props.users.id)
         } else {
-            api.followUser(props.users.id).then(response => {
-                if (response.resultCode === 0) {
-                    props.follow(props.users.id)
-                }
-            })
-
-
+            props.fetchFollowUserUser(props.users.id)
         }
+
+
     }
+
 
     return (
         <div>
@@ -46,7 +39,7 @@ export const User: React.FC<UserFCType> = (props) => {
                                 variant="outlined"
                                 color="primary"
                                 size={"small"}
-                                disabled={props.authorizedCode === 1}
+                                disabled={props.authorizedCode === 1 || props.userSubscription.some(item => item === props.users.id)}
                                 onClick={onClickFollowedHandler}
                         >
                             {props.users.followed ? "Отписаться" : "Подписаться"}

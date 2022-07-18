@@ -63,12 +63,16 @@ export const usersReducer = (state = initialStateUserPage, action: ActionUserRed
         case FOLLOW:
             return {
                 ...state,
-                items: state.items.map(item => item.id === action.payload ? {...item, followed: true} : item)
+                items: state.items.map(item => item.id === action.payload
+                    ? {...item, followed: true}
+                    : item)
             }
         case UN_FOLLOW:
             return {
                 ...state,
-                items: state.items.map(item => item.id === action.payload ? {...item, followed: false} : item)
+                items: state.items.map(item => item.id === action.payload
+                    ? {...item, followed: false}
+                    : item)
             }
         case SET_CURRENT_PAGE:
             return {
@@ -80,7 +84,7 @@ export const usersReducer = (state = initialStateUserPage, action: ActionUserRed
                 ...state,
                 portionsNumber: action.payload
             }
-        case "ADD_USER_SUBSCRIPTION":
+        case ADD_USER_SUBSCRIPTION:
             return {
                 ...state,
                 userSubscription: action.isFollowing
@@ -116,6 +120,33 @@ export const fetchUserData = (currentPage: number): AppThunk => async dispatch =
         dispatch(setIsLoading(false))
     }
 
+}
+
+export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch => {
+    try {
+        dispatch(setUserSubscription(usersId, true))
+        let response = await api.unFollowUser(usersId)
+        if (response.resultCode === 0) {
+            dispatch(unFollow(usersId))
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(setUserSubscription(usersId, false))
+    }
+}
+export const fetchFollowUserUser = (usersId: number): AppThunk => async dispatch => {
+    try {
+        dispatch(setUserSubscription(usersId, true))
+        let response = await api.followUser(usersId)
+        if (response.follow === 0) {
+            dispatch(unFollow(usersId))
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(setUserSubscription(usersId, false))
+    }
 }
 
 

@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import style from './login.module.css'
 import SuperButton from "../../common/SuperButton/SuperButton";
+import {Input} from "../../common/input/Input";
 
 
 const validationSchema = yup.object({
@@ -32,27 +33,32 @@ export const Login = () => {
     return (
         <div className={style.loginBloc}>
             <form onSubmit={formik.handleSubmit}>
-                <TextField
-                    fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                {/*<TextField*/}
+                {/*    fullWidth*/}
+                {/*    id="email"*/}
+                {/*    name="email"*/}
+                {/*    label="Email"*/}
+                {/*    value={formik.values.email}*/}
+                {/*    onChange={formik.handleChange}*/}
+                {/*    error={formik.touched.email && Boolean(formik.errors.email)}*/}
+                {/*    helperText={formik.touched.email && formik.errors.email}*/}
+                {/*/>*/}
+                <Input id={"email"}
+                       name={"email"}
+                       label={"Email"}
+                       value={formik.values.email}
+                       onChange={formik.handleChange}
+                       error={formik.errors.email}
+                       touched={formik.touched.email}
                 />
-                <TextField
-                    style={{marginTop: '10px'}}
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    error={formik.touched.password && Boolean(formik.errors.password)}
-                    helperText={formik.touched.password && formik.errors.password}
+                <Input id="password"
+                       name="password"
+                       label="Password"
+                       type="password"
+                       value={formik.values.password}
+                       onChange={formik.handleChange}
+                       error={formik.errors.password}
+                       touched={formik.touched.password}
                 />
                 <SuperButton type="submit" className={style.loginBtn}>
                     Войти
