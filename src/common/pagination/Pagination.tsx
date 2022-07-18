@@ -1,10 +1,10 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import style from './pagination.module.css'
 import IconButton from "@material-ui/core/IconButton";
 import {ArrowBack, ArrowForward} from "@material-ui/icons";
 import List from '@material-ui/core/List';
 import {ListItem} from "@material-ui/core";
-
+import {setPortionsNumber} from "../../redux/usersReduser";
 
 type PaginationPropsType = {
     totalCount: number

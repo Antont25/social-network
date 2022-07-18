@@ -1,12 +1,7 @@
 import React, {useEffect} from 'react';
 import User from "./User";
 import {connect} from "react-redux";
-import {AppStoreType} from "../../redux/store";
-import {Pagination} from "../../common/pagination/Pagination";
-import {Loading} from "../../common/loading/Loading";
-import {api} from "../../api/api";
 import {
-    fetchUserData,
     FetchUserType,
     follow,
     setCurrentPage,
@@ -14,8 +9,12 @@ import {
     setUsers,
     unFollow,
     UserType
-} from "../../redux/usersReducer";
-import {setIsLoading} from "../../redux/authorizedReducer";
+} from "../../redux/usersReduser";
+import {AppStoreType} from "../../redux/store";
+import {Pagination} from "../../common/pagination/Pagination";
+import {Loading} from "../../common/loading/Loading";
+import {setIsLoading} from "../../redux/authorizedReduser";
+import {api} from "../../api/api";
 
 
 type MapStateToProps = {
@@ -30,15 +29,23 @@ type MapStateToProps = {
 type UsersType = MapStateToProps & {
     follow: (id: number) => void
     unFollow: (id: number) => void
+    setUsers: (payload: FetchUserType) => void
     setCurrentPage: (payload: number) => void
-    fetchUserData: (currentPage: number) => void
+    setIsLoading: (payload: boolean) => void
     setPortionsNumber: (payload: number) => void
 }
 
 
 const Users = (props: UsersType) => {
     useEffect(() => {
-        props.fetchUserData(props.currentPage)
+        async function fetchUser() {
+            props.setIsLoading(true)
+            let response = await api.getUser(props.currentPage)
+            props.setUsers(response)
+            props.setIsLoading(false)
+        }
+
+        fetchUser()
     }, [props.currentPage])
 
     const usersList = props.users.map(item => <User key={item.id}
@@ -80,7 +87,8 @@ function mapStateToProps(state: AppStoreType): MapStateToProps {
 export default connect(mapStateToProps, {
     follow,
     unFollow,
+    setUsers,
     setCurrentPage,
-    setPortionsNumber,
-    fetchUserData
+    setIsLoading,
+    setPortionsNumber
 })(Users);

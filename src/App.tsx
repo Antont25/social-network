@@ -10,11 +10,18 @@ import {Container, Grid, Paper,} from "@material-ui/core";
 import style from './components/header/header.module.css'
 import {connect} from "react-redux";
 import {AppStoreType} from "./redux/store";
+import {showMenuHandler} from "./redux/headerReduser";
 import Footer from "./components/footer/Footer";
+import axios from "axios";
+import {UserProfileType} from "./redux/profileReduser";
+import {
+    AuthorizedUserType,
+    setAuthorizedCode,
+    setAuthorizedProfileUser,
+    setAuthorizedUser,
+    setIsLoading
+} from "./redux/authorizedReduser";
 import {api} from "./api/api";
-import {AuthorizedUserType, fetchAuthorizedData} from "./redux/authorizedReducer";
-import {UserProfileType} from "./redux/profileReducer";
-import {Login} from "./components/login/Login";
 
 
 type MapStateToProps = {
@@ -22,7 +29,11 @@ type MapStateToProps = {
     isLoading: boolean
 }
 type AppType = MapStateToProps & {
-    fetchAuthorizedData: () => void
+    showMenuHandler: () => void
+    setIsLoading: (payload: boolean) => void
+    setAuthorizedUser: (payload: AuthorizedUserType) => void
+    setAuthorizedProfileUser: (payload: UserProfileType) => void
+    setAuthorizedCode: (payload: number) => void
 }
 
 
@@ -30,7 +41,28 @@ const App = (props: AppType) => {
 
 
     useEffect(() => {
-        props.fetchAuthorizedData()
+        async function fetchAuthorized() {
+            try {
+                props.setIsLoading(true)
+                let response = await api.authorizedMe()
+                if (response.resultCode === 0) {
+                    props.setAuthorizedUser(response.data)
+                    props.setAuthorizedCode(0)
+                } else {
+                    props.setAuthorizedCode(1)
+
+                }
+                let responseUser = await api.getUserProfile(response.data.id)
+                props.setAuthorizedProfileUser(responseUser)
+                props.setIsLoading(false)
+            } catch (er) {
+                console.log(er)
+
+            }
+
+        }
+
+        fetchAuthorized()
     }, [])
 
 
@@ -53,20 +85,17 @@ const App = (props: AppType) => {
                             </Paper>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>
-                            <div className='appWrapper'>
+                            <div className='appWraper'>
                                 <Routes>
-                                    <Route path='/'
+                                    <Route path='/profile/*'
                                            element={<Profile/>}>
-                                        <Route path='/profile/*' element={<Profile/>}/>
+                                        {/*<Route path=':id' element={<Profile/>}/>*/}
                                     </Route>
                                     <Route path='/dialogs/*'
                                            element={<Dialogs/>}>
                                     </Route>
                                     <Route path='/users/'
                                            element={<Users/>}>
-                                    </Route>
-                                    <Route path='/login/'
-                                           element={<Login/>}>
                                     </Route>
                                 </Routes>
                             </div>
@@ -86,4 +115,10 @@ function mapStateToProps(state: AppStoreType): MapStateToProps {
     }
 }
 
-export default connect(mapStateToProps, {fetchAuthorizedData})(App);
+export default connect(mapStateToProps, {
+    showMenuHandler,
+    setIsLoading,
+    setAuthorizedUser,
+    setAuthorizedProfileUser,
+    setAuthorizedCode
+})(App);
