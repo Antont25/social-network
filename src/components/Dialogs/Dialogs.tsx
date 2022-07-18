@@ -3,10 +3,9 @@ import style from './Dialogs.module.css'
 import Message from "./Messages/Message";
 import {DialogItems} from "./DialogItems";
 import {Textarea} from "../../common/Textarea";
+import {addMessage, DialogsType, MessagesType, newMessageText} from "../../redux/dialogsReduser";
 import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/store";
-import {addMessage, DialogsType, MessagesType, newMessageText} from "../../redux/dialogsReducer";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -62,4 +61,4 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
 }
 
 
-export default withAuthRedirect(connect(mapStateToProps, {addMessage, newMessageText})(Dialogs));
+export default connect(mapStateToProps, {addMessage, newMessageText})(Dialogs);

@@ -18,9 +18,6 @@ a div:hover, a:hover {
     text-decoration: none;
 }
 
-.appWrapper {
-    min-height: calc(100vh - 174px);
-}
 
 @media (max-width: 598px) {
     .navBarApp {

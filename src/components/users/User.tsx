@@ -3,9 +3,9 @@ import Avatar from '@material-ui/core/Avatar';
 import avatar from '../../assest/img/avatar.png'
 import {Button, Grid, Paper} from "@material-ui/core";
 import style from './users.module.css'
+import {UserType} from "../../redux/usersReduser";
 import {NavLink} from "react-router-dom";
 import {api} from "../../api/api";
-import {UserType} from "../../redux/usersReducer";
 
 
 type UserFCType = {
@@ -38,7 +38,7 @@ const User: React.FC<UserFCType> = (props) => {
             <Paper elevation={3}>
                 <Grid container className={style.user}>
                     <Grid item md={2} className={style.userBlock}>
-                        <NavLink to={`/profile/${props.users.id}`}>
+                        <NavLink to={'/profile'}>
                             <Avatar className={style.avatar} alt="Remy Sharp" src={props.users.photos.small || avatar}/>
                         </NavLink>
                         <Button className={style.button}
