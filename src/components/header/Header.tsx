@@ -1,5 +1,5 @@
 import {AppBar, Paper} from '@material-ui/core';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,35 +8,32 @@ import MenuIcon from '@material-ui/icons/Menu';
 import imgIcon from '../../assest/img/logo.png'
 import {MenuOpen} from "@material-ui/icons";
 import style from './header.module.css'
-import {showMenuHandler} from "../../redux/headerReduser";
+
 import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/store";
 import NavBar from "../navBar/NavBar";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import axios from "axios";
 import {
     AuthorizedUserType,
     setAuthorizedProfileUser,
     setAuthorizedUser,
     setIsLoading
-} from "../../redux/authorizedReduser";
-import {UserProfileType} from "../../redux/profileReduser";
+} from "../../redux/authorizedReducer";
+import {UserProfileType} from "../../redux/profileReducer";
+import {showMenuHandler} from "../../redux/headerReducer";
 
 
 type MapStateToPropsType = {
     menuIsShow: boolean
-    authorized: null | number
+    authorizedCode: null | number
     userFoto: string | null | undefined
 }
 type HeaderType = MapStateToPropsType & {
     showMenuHandler: () => void
-    setIsLoading: (payload: boolean) => void
-    setAuthorizedUser: (payload: AuthorizedUserType) => void
-    setAuthorizedProfileUser: (payload: UserProfileType) => void
 }
 
 
@@ -103,7 +100,7 @@ const Header: React.FC<HeaderType> = (props) => {
                     <Typography className={classes.title}>
                         <img style={{height: '20px'}} src={imgIcon} alt=""/>
                     </Typography>
-                    {props.authorized === 0
+                    {props.authorizedCode === 0
                         ? <div>
                             <IconButton color="inherit"
                                         aria-label="account of current user"
@@ -152,7 +149,7 @@ const Header: React.FC<HeaderType> = (props) => {
 let mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
         menuIsShow: state.headerPage.menuIsShow,
-        authorized: state.authorized.authorized,
+        authorizedCode: state.authorized.authorizedCode,
         userFoto: state.authorized.authorizedProfileUser.photos.small,
 
     }
@@ -160,7 +157,4 @@ let mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
 
 export default connect(mapStateToProps, {
     showMenuHandler,
-    setIsLoading,
-    setAuthorizedUser,
-    setAuthorizedProfileUser
 })(Header);
