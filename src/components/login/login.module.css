@@ -1,0 +1,41 @@
+.loginBloc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.loginBloc form label {
+    color: #2186c4 !important;
+}
+
+.loginBloc form div:before {
+    border-bottom: 1px solid #2186c4;
+}
+
+.loginBloc form div:after {
+    border-bottom: 1px solid #2186c4;
+}
+
+.loginBloc form div:hover :before {
+    border-bottom: 3px solid #2186c4 !important;
+}
+
+
+.loginBloc form {
+    height: 425px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    max-width: 425px;
+    width: 100%;
+    padding: 0px 50px;
+    border-radius: 15px;
+}
+
+.loginBtn {
+    width: 300px;
+    margin: 20px 0 0 0;
+}
+
