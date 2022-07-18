@@ -1,20 +1,12 @@
 import React, {useEffect} from 'react';
-import User from "./User";
+
 import {connect} from "react-redux";
-import {
-    FetchUserType,
-    follow,
-    setCurrentPage,
-    setPortionsNumber,
-    setUsers,
-    unFollow,
-    UserType
-} from "../../redux/usersReduser";
 import {AppStoreType} from "../../redux/store";
 import {Pagination} from "../../common/pagination/Pagination";
 import {Loading} from "../../common/loading/Loading";
-import {setIsLoading} from "../../redux/authorizedReduser";
-import {api} from "../../api/api";
+import {fetchUserData, follow, setCurrentPage, setPortionsNumber, unFollow, UserType} from "../../redux/usersReducer";
+// @ts-ignore
+import {User} from "./User";
 
 
 type MapStateToProps = {
@@ -23,35 +15,29 @@ type MapStateToProps = {
     pageSize: number
     currentPage: number
     isLoading: boolean
+    authorizedCode: null | number
     portionsNumber: number
 
 }
 type UsersType = MapStateToProps & {
     follow: (id: number) => void
     unFollow: (id: number) => void
-    setUsers: (payload: FetchUserType) => void
     setCurrentPage: (payload: number) => void
-    setIsLoading: (payload: boolean) => void
+    fetchUserData: (currentPage: number) => void
     setPortionsNumber: (payload: number) => void
 }
 
 
 const Users = (props: UsersType) => {
     useEffect(() => {
-        async function fetchUser() {
-            props.setIsLoading(true)
-            let response = await api.getUser(props.currentPage)
-            props.setUsers(response)
-            props.setIsLoading(false)
-        }
-
-        fetchUser()
+        props.fetchUserData(props.currentPage)
     }, [props.currentPage])
 
     const usersList = props.users.map(item => <User key={item.id}
                                                     users={item}
                                                     unFollow={props.unFollow}
                                                     follow={props.follow}
+                                                    authorizedCode={props.authorizedCode}
     />)
     if (props.isLoading) {
         return <Loading/>
@@ -80,6 +66,7 @@ function mapStateToProps(state: AppStoreType): MapStateToProps {
         currentPage: state.usersPage.currentPage,
         isLoading: state.authorized.isLoading,
         portionsNumber: state.usersPage.portionsNumber,
+        authorizedCode: state.authorized.authorizedCode,
     }
 }
 
@@ -87,8 +74,7 @@ function mapStateToProps(state: AppStoreType): MapStateToProps {
 export default connect(mapStateToProps, {
     follow,
     unFollow,
-    setUsers,
     setCurrentPage,
-    setIsLoading,
-    setPortionsNumber
+    setPortionsNumber,
+    fetchUserData
 })(Users);

@@ -1,6 +1,3 @@
-import {addPostState, newTextPost} from "./profileReduser";
-import {addMessage, newMessageText} from "./dialogsReduser";
-import {follow, setUsers, unFollow} from "./usersReduser";
 import {ActionType} from "./store";
 
 type DialogsType = {

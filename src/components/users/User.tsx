@@ -3,17 +3,18 @@ import Avatar from '@material-ui/core/Avatar';
 import avatar from '../../assest/img/avatar.png'
 import {Button, Grid, Paper} from "@material-ui/core";
 import style from './users.module.css'
-import {UserType} from "../../redux/usersReduser";
 import {NavLink} from "react-router-dom";
 import {api} from "../../api/api";
+import {UserType} from "../../redux/usersReducer";
 
 
 type UserFCType = {
     users: UserType
+    authorizedCode: null | number
     follow: (id: number) => void
     unFollow: (id: number) => void
 }
-const User: React.FC<UserFCType> = (props) => {
+export const User: React.FC<UserFCType> = (props) => {
 
     function onClickFollowedHandler(e: any) {
         if (props.users.followed) {
@@ -38,13 +39,14 @@ const User: React.FC<UserFCType> = (props) => {
             <Paper elevation={3}>
                 <Grid container className={style.user}>
                     <Grid item md={2} className={style.userBlock}>
-                        <NavLink to={'/profile'}>
+                        <NavLink to={`/profile/${props.users.id}`}>
                             <Avatar className={style.avatar} alt="Remy Sharp" src={props.users.photos.small || avatar}/>
                         </NavLink>
                         <Button className={style.button}
                                 variant="outlined"
                                 color="primary"
                                 size={"small"}
+                                disabled={props.authorizedCode === 1}
                                 onClick={onClickFollowedHandler}
                         >
                             {props.users.followed ? "Отписаться" : "Подписаться"}
@@ -63,4 +65,3 @@ const User: React.FC<UserFCType> = (props) => {
         ;
 };
 
-export default User;
