@@ -1,9 +1,9 @@
 import React from 'react';
 import {AddPost} from "./addPost/AddPost";
 import {MyPost} from "./myPost/MyPost";
-import {PostsType} from "../../../redux/profileReduser";
 import {Paper} from "@material-ui/core";
 import style from './addPost/addPost.module.css'
+import {PostsType} from "../../../redux/profileReducer";
 
 type PostPageType = {
     posts: Array<PostsType>
