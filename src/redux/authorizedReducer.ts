@@ -92,6 +92,31 @@ export const fetchAuthorizedData = (): AppThunk => async dispatch => {
     } finally {
         dispatch(setIsLoading(false))
     }
+}
 
-
+export const fetchAuthorization = (email: string, password: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setIsLoading(true))
+        let response = await api.authorize(email, password)
+        if (response.resultCode === 0) {
+            dispatch(fetchAuthorizedData())
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(setIsLoading(false))
+    }
+}
+export const fetchLogout = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setIsLoading(true))
+        let response = await api.logout()
+        if (response.resultCode === 0) {
+            dispatch(fetchAuthorizedData())
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(setIsLoading(false))
+    }
 }

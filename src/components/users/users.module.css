@@ -27,3 +27,26 @@
 .userName {
     color: #2186c4;
 }
+
+.textStatus {
+    cursor: pointer;
+
+}
+
+.statusBloc > span {
+    padding-left: 5px;
+}
+
+.statusBloc {
+    display: flex;
+    margin-top: 40px;
+}
+
+.statusInput {
+    margin-left: 10px !important;
+    margin-top: 0px !important;
+}
+
+.statusInput > div {
+    height: 21px;
+}

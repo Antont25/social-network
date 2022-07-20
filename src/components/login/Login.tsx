@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
-import TextField from '@material-ui/core/TextField';
 import style from './login.module.css'
-import SuperButton from "../../common/SuperButton/SuperButton";
-import {Input} from "../../common/input/Input";
+import SuperButton from "../SuperButton/SuperButton";
+import {Input} from "../input/Input";
+import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
+import {fetchAuthorization} from "../../redux/authorizedReducer";
+import {Navigate, useNavigate} from "react-router-dom";
 
 
 const validationSchema = yup.object({
@@ -19,30 +21,27 @@ const validationSchema = yup.object({
 });
 
 export const Login = () => {
+    const dispatch = useAppDispatch()
+    const authorizedCode = useAppSelector(state => state.authorized.authorizedCode)
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (authorizedCode === 0) navigate('/')
+    }, [authorizedCode])
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+            dispatch(fetchAuthorization(values.email, values.password));
         },
     });
 
     return (
         <div className={style.loginBloc}>
             <form onSubmit={formik.handleSubmit}>
-                {/*<TextField*/}
-                {/*    fullWidth*/}
-                {/*    id="email"*/}
-                {/*    name="email"*/}
-                {/*    label="Email"*/}
-                {/*    value={formik.values.email}*/}
-                {/*    onChange={formik.handleChange}*/}
-                {/*    error={formik.touched.email && Boolean(formik.errors.email)}*/}
-                {/*    helperText={formik.touched.email && formik.errors.email}*/}
-                {/*/>*/}
                 <Input id={"email"}
                        name={"email"}
                        label={"Email"}

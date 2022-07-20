@@ -1,10 +1,11 @@
 import React, {ChangeEvent, FC} from 'react';
 import TextField from "@material-ui/core/TextField";
+import style from './input.module.css'
 
 type InputType = {
     id: string
     name: string
-    label: string
+    label?: string
     value: string | null
     type?: string
     error?: string | undefined
@@ -12,9 +13,11 @@ type InputType = {
     touched?: boolean | undefined
     onChange: (e: ChangeEvent<any>) => void
     onBlur?: () => void
+    className?: string
 }
 
 export const Input: FC<InputType> = (props) => {
+    const finalClassName = props.className ? `${style.inputBloc} ${props.className}` : `${style.inputBloc}`
     return (
         <TextField
             fullWidth
@@ -29,17 +32,9 @@ export const Input: FC<InputType> = (props) => {
             style={{marginTop: '10px'}}
             onBlur={props.onBlur}
             autoFocus={props.autoFocus}
+            className={finalClassName}
         />
-    );
-};
 
-// <TextField
-//     fullWidth
-//     id="email"
-//     name="email"
-//     label="Email"
-//     value={formik.values.email}
-//     onChange={formik.handleChange}
-//     error={formik.touched.email && Boolean(formik.errors.email)}
-//     helperText={formik.touched.email && formik.errors.email}
-// />
+
+    )
+}

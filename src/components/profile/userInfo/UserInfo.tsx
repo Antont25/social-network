@@ -12,12 +12,15 @@ import {Status} from "../../Users/Status";
 
 type UserInfoType = {
     userProfile: UserProfileType
+    authorizedUserId: number | null
+    userStatus: string | null
+    fetchStatusUpdates: (newStatus: string, userId: number) => void
 }
 const UserInfo: React.FC<UserInfoType> = (props) => {
 
 
     function setStatusHandler(value: string) {
-        console.log(value)
+        props.fetchStatusUpdates(value, props.userProfile.userId)
     }
 
     return (
@@ -26,7 +29,9 @@ const UserInfo: React.FC<UserInfoType> = (props) => {
                 <Avatar className={style.img} alt="Remy Sharp" src={props.userProfile.photos.small || avatar}/>
                 <div className={style.info}>
                     <div className={style.name}>{props.userProfile.fullName}</div>
-                    <Status valueStatus={props.userProfile.aboutMe} callback={setStatusHandler}/>
+                    <Status valueStatus={props.userStatus}
+                            callback={setStatusHandler}
+                            isAuthorizedUser={props.authorizedUserId === props.userProfile.userId}/>
                 </div>
             </Grid>
 

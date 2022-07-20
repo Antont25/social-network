@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SuperButton from "./SuperButton/SuperButton";
+import SuperButton from "../SuperButton/SuperButton";
 import style from './textarea.module.css'
 import TextField from '@material-ui/core/TextField';
 
@@ -13,7 +13,7 @@ type TextareaPropsType = {
 export const Textarea: React.FC<TextareaPropsType> = (props) => {
     return (
         < >
-            
+
             <TextField
                 label="новый пост"
                 placeholder="новый пост"

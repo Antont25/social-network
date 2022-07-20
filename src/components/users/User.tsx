@@ -11,16 +11,16 @@ type UserFCType = {
     users: UserType
     authorizedCode: null | number
     fetchUnFollowUser: (usersId: number) => void
-    fetchFollowUserUser: (usersId: number) => void
+    fetchFollowUser: (usersId: number) => void
     userSubscription: Array<number>
 }
 export const User: React.FC<UserFCType> = (props) => {
 
-    function onClickFollowedHandler(e: any) {
+    function onClickFollowedHandler() {
         if (props.users.followed) {
             props.fetchUnFollowUser(props.users.id)
         } else {
-            props.fetchFollowUserUser(props.users.id)
+            props.fetchFollowUser(props.users.id)
         }
 
 
@@ -49,7 +49,7 @@ export const User: React.FC<UserFCType> = (props) => {
                         <NavLink to={`/profile/${props.users.id}`}>
                             <div className={style.userName}>{props.users.name}</div>
                         </NavLink>
-                        <div>Статус: {props.users.status ? props.users.status : 'нет статуса'}</div>
+                        <div>Информация про меня: {props.users.status ? props.users.status : 'нету данных'}</div>
                     </Grid>
                 </Grid>
             </Paper>

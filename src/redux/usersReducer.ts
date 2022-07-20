@@ -135,12 +135,12 @@ export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch =
         dispatch(setUserSubscription(usersId, false))
     }
 }
-export const fetchFollowUserUser = (usersId: number): AppThunk => async dispatch => {
+export const fetchFollowUser = (usersId: number): AppThunk => async dispatch => {
     try {
         dispatch(setUserSubscription(usersId, true))
         let response = await api.followUser(usersId)
-        if (response.follow === 0) {
-            dispatch(unFollow(usersId))
+        if (response.resultCode === 0) {
+            dispatch(follow(usersId))
         }
     } catch (error) {
         console.log(error)

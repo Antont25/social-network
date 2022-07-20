@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import './App.css';
-import Header from "./components/header/Header";
+
 import NavBar from "./components/navBar/NavBar";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/profile/Profile";
@@ -13,7 +13,8 @@ import Footer from "./components/footer/Footer";
 import {fetchAuthorizedData} from "./redux/authorizedReducer";
 import {Login} from "./components/login/Login";
 import Users from "./components/Users/Users";
-import {Loading} from "./common/loading/Loading";
+import {Loading} from "./components/loading/Loading";
+import {Header} from "./components/header/Header";
 
 
 type MapStateToProps = {

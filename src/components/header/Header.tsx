@@ -1,5 +1,5 @@
 import {AppBar, Paper} from '@material-ui/core';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -14,17 +14,12 @@ import {AppStoreType} from "../../redux/store";
 import NavBar from "../navBar/NavBar";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {
-    AuthorizedUserType,
-    setAuthorizedProfileUser,
-    setAuthorizedUser,
-    setIsLoading
-} from "../../redux/authorizedReducer";
-import {UserProfileType} from "../../redux/profileReducer";
+import {fetchLogout} from "../../redux/authorizedReducer";
 import {showMenuHandler} from "../../redux/headerReducer";
+import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
 
 
 type MapStateToPropsType = {
@@ -52,12 +47,22 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Header: React.FC<HeaderType> = (props) => {
+export const Header: React.FC = () => {
     const classes = useStyles();
+    const {authorizedCode, userFoto, menuIsShow} = useAppSelector(state => ({
+        authorizedCode: state.authorized.authorizedCode,
+        userFoto: state.authorized.authorizedProfileUser.photos.small,
+        menuIsShow: state.headerPage.menuIsShow,
+    }))
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (authorizedCode === 1) navigate('/')
+    }, [authorizedCode])
 
+    const dispatch = useAppDispatch()
 
     const handlerShowMenu = () => {
-        props.showMenuHandler()
+        showMenuHandler()
     };
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -71,8 +76,13 @@ const Header: React.FC<HeaderType> = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    return (
 
+    function onclickLogoutHandler() {
+        handleClose()
+        dispatch(fetchLogout())
+    }
+
+    return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
@@ -83,13 +93,13 @@ const Header: React.FC<HeaderType> = (props) => {
                                     onClick={handlerShowMenu}
                         >
                             <div>
-                                {props.menuIsShow
+                                {menuIsShow
                                     ? <MenuOpen/>
                                     : <MenuIcon/>
                                 }
                             </div>
                         </IconButton>
-                        {props.menuIsShow &&
+                        {menuIsShow &&
                             <div className={style.navBarMenu}>
                                 <Paper className={style.navBar}>
                                     <NavBar handlerShowMenu={handlerShowMenu}/>
@@ -100,14 +110,14 @@ const Header: React.FC<HeaderType> = (props) => {
                     <Typography className={classes.title}>
                         <img style={{height: '20px'}} src={imgIcon} alt=""/>
                     </Typography>
-                    {props.authorizedCode === 0
+                    {authorizedCode === 0
                         ? <div>
                             <IconButton color="inherit"
                                         aria-label="account of current user"
                                         aria-controls="menu-appbar"
                                         aria-haspopup="true"
                                         onClick={handleMenu}>
-                                {props.userFoto && <Avatar alt="Cindy Baker" src={props.userFoto}/>}
+                                {userFoto && <Avatar alt="Cindy Baker" src={userFoto}/>}
                             </IconButton>
                             <Menu className={style.menu}
                                   id="menu-appbar"
@@ -128,7 +138,7 @@ const Header: React.FC<HeaderType> = (props) => {
                                     <MenuItem onClick={handleClose}>Мой рофиль</MenuItem>
                                 </NavLink>
                                 <NavLink to={'/profile'}>
-                                    <MenuItem onClick={handleClose}>Выйти</MenuItem>
+                                    <MenuItem onClick={onclickLogoutHandler}>Выйти</MenuItem>
                                 </NavLink>
 
                             </Menu>
@@ -146,15 +156,3 @@ const Header: React.FC<HeaderType> = (props) => {
 };
 
 
-let mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
-    return {
-        menuIsShow: state.headerPage.menuIsShow,
-        authorizedCode: state.authorized.authorizedCode,
-        userFoto: state.authorized.authorizedProfileUser.photos.small,
-
-    }
-}
-
-export default connect(mapStateToProps, {
-    showMenuHandler,
-})(Header);

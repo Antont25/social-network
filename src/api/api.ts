@@ -30,5 +30,21 @@ export const api = {
         const response = await instance.post(`follow/${usersId}`)
         return response.data
     },
+    async statusUpdates(newStatus: string) {
+        const response = await instance.put(`profile/status`, {status: newStatus})
+        return response.data
+    },
+    async getStatusUser(userId: number) {
+        const response = await instance.get(`profile/status/${userId}`)
+        return response.data
+    },
+    async authorize(email: string, password: string) {
+        const response = await instance.post(`auth/login`, {email, password})
+        return response.data
+    },
+    async logout() {
+        const response = await instance.delete(`auth/login`)
+        return response.data
+    },
 
 }

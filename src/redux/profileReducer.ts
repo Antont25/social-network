@@ -1,17 +1,10 @@
 import {api} from "../api/api";
 import {setIsLoading} from "./authorizedReducer";
 import {AppThunk} from "./store";
+import {unFollow} from "./usersReducer";
 
 
 export type InitialSateType = typeof initialSate
-type AddPostStateType = {
-    type: typeof ADD_POST
-}
-type NewTextPostType = {
-    type: typeof NEW_TEXT
-    payload: string
-}
-
 export type PostsType = {
     id: number
     massage: string
@@ -42,11 +35,13 @@ export type ActionProfileReducerType =
     ReturnType<typeof addPostState>
     | ReturnType<typeof newTextPost>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatusUpdates>
 
 
 const ADD_POST = 'ADD_POST';
 const NEW_TEXT = 'NEW_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS_UPDATES = 'SET_STATUS_UPDATES';
 const initialSate = {
     posts: [
         {id: 1, massage: "sacasc", likes: 4},
@@ -55,7 +50,8 @@ const initialSate = {
         {id: 4, massage: "sacasc", likes: 4},
     ] as Array<PostsType>,
     userProfile: {} as UserProfileType,
-    newPostText: ''
+    newPostText: '',
+    userStatus: null as null | string
 }
 
 export const profileReducer = (state = initialSate, action: ActionProfileReducerType): InitialSateType => {
@@ -81,6 +77,11 @@ export const profileReducer = (state = initialSate, action: ActionProfileReducer
                 ...state,
                 userProfile: action.payload
             }
+        case SET_STATUS_UPDATES:
+            return {
+                ...state,
+                userStatus: action.payload
+            }
         default:
             return state
     }
@@ -90,6 +91,7 @@ export const profileReducer = (state = initialSate, action: ActionProfileReducer
 export const addPostState = () => ({type: ADD_POST} as const)
 export const newTextPost = (payload: string) => ({type: NEW_TEXT, payload} as const)
 export const setUserProfile = (payload: UserProfileType) => ({type: SET_USER_PROFILE, payload} as const)
+export const setStatusUpdates = (payload: string) => ({type: SET_STATUS_UPDATES, payload} as const)
 
 
 export const fetchUserProfileData = (paramsURL: number): AppThunk => async dispatch => {
@@ -98,6 +100,22 @@ export const fetchUserProfileData = (paramsURL: number): AppThunk => async dispa
         if (paramsURL) {
             let response = await api.getUserProfile(paramsURL)
             dispatch(setUserProfile(response))
+            let responseStatus = await api.getStatusUser(response.userId)
+            dispatch(setStatusUpdates(responseStatus))
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(setIsLoading(false))
+    }
+}
+export const fetchStatusUpdates = (newStatus: string, usersId: number): AppThunk => async dispatch => {
+    try {
+        dispatch(setIsLoading(true))
+        let response = await api.statusUpdates(newStatus)
+        if (response.resultCode === 0) {
+            let responseNewStatus = await api.getStatusUser(usersId)
+            dispatch(setStatusUpdates(responseNewStatus))
         }
     } catch (error) {
         console.log(error)

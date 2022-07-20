@@ -1,20 +1,16 @@
 import React, {useEffect} from 'react';
-
 import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/store";
-import {Pagination} from "../../common/pagination/Pagination";
-import {Loading} from "../../common/loading/Loading";
+import {Pagination} from "../pagination/Pagination";
+import {Loading} from "../loading/Loading";
 import {
-    fetchFollowUserUser,
+    fetchFollowUser,
     fetchUnFollowUser,
     fetchUserData,
-    follow,
     setCurrentPage,
     setPortionsNumber,
-    unFollow,
     UserType
 } from "../../redux/usersReducer";
-// @ts-ignore
 import {User} from "./User";
 
 
@@ -31,7 +27,7 @@ type MapStateToProps = {
 }
 type UsersType = MapStateToProps & {
     fetchUnFollowUser: (usersId: number) => void
-    fetchFollowUserUser: (usersId: number) => void
+    fetchFollowUser: (usersId: number) => void
     setCurrentPage: (payload: number) => void
     fetchUserData: (currentPage: number) => void
     setPortionsNumber: (payload: number) => void
@@ -46,7 +42,7 @@ const Users = (props: UsersType) => {
     const usersList = props.users.map(item => <User key={item.id}
                                                     users={item}
                                                     fetchUnFollowUser={props.fetchUnFollowUser}
-                                                    fetchFollowUserUser={props.fetchFollowUserUser}
+                                                    fetchFollowUser={props.fetchFollowUser}
                                                     authorizedCode={props.authorizedCode}
                                                     userSubscription={props.userSubscription}
     />)
@@ -85,7 +81,7 @@ function mapStateToProps(state: AppStoreType): MapStateToProps {
 
 export default connect(mapStateToProps, {
     fetchUnFollowUser,
-    fetchFollowUserUser,
+    fetchFollowUser,
     setCurrentPage,
     setPortionsNumber,
     fetchUserData

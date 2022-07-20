@@ -1,5 +1,5 @@
 import React from 'react';
-import {Textarea} from "../../../../common/Textarea";
+import {Textarea} from "../../../textarea/Textarea";
 import style from './addPost.module.css'
 
 type AddPostPropsType = {

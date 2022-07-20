@@ -28,8 +28,6 @@ export type ActionType =
 
 
 export type AppStoreType = ReturnType<typeof rootReducer>
-export type RootStateType = ReturnType<typeof store.getState>
-export type AppDispatchType = ReturnType<typeof store.dispatch>
 
 export type AppDispatch = ThunkDispatch<AppStoreType, unknown, ActionType>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStoreType, unknown, ActionType>

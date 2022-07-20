@@ -1,0 +1,16 @@
+.inputBloc label {
+    color: #2186c4 !important;
+}
+
+
+.inputBloc div:after {
+    border-bottom: 1px solid #2186c4 !important;
+}
+
+.inputBloc div:hover:before {
+    border-bottom: 3px solid #2186c4 !important;
+}
+
+.inputBloc div:before {
+    border-bottom: 1px solid #2186c4;
+}
