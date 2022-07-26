@@ -1,7 +1,8 @@
 import React, {ComponentType} from 'react';
-import {AppStoreType} from "../redux/store";
+
 import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
+import {AppStoreType} from "../redux/store";
 
 
 type MSTPType = {

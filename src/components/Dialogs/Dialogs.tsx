@@ -1,4 +1,4 @@
-import React, {ComponentType} from 'react';
+import React from 'react';
 import style from './Dialogs.module.css'
 import Message from "./Messages/Message";
 import {DialogItems} from "./DialogItems";
@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/store";
 import {addMessage, DialogsType, MessagesType, newMessageText} from "../../redux/dialogsReducer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {compose} from "redux";
+
 
 type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -63,7 +63,4 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
 }
 
 
-export default compose<React.FC>(
-    connect(mapStateToProps, {addMessage, newMessageText}),
-    withAuthRedirect
-)(Dialogs)
+export default withAuthRedirect(connect(mapStateToProps, {addMessage, newMessageText})(Dialogs));

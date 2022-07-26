@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import SuperButton from "../SuperButton/SuperButton";
+import React from 'react';
 import style from './textarea.module.css'
 import TextField from '@material-ui/core/TextField';
+import SuperButton from "../SuperButton/SuperButton";
 
 
 type TextareaPropsType = {
@@ -13,7 +13,7 @@ type TextareaPropsType = {
 export const Textarea: React.FC<TextareaPropsType> = (props) => {
     return (
         < >
-
+            
             <TextField
                 label="новый пост"
                 placeholder="новый пост"
@@ -23,6 +23,7 @@ export const Textarea: React.FC<TextareaPropsType> = (props) => {
                 className={style.textareaBloc}
                 onChange={(e) => props.onChangeHandler(e.currentTarget.value)}
             />
+            {/* eslint-disable-next-line react/jsx-no-undef */}
             <SuperButton onClick={props.add}>
                 ADD
             </SuperButton>
