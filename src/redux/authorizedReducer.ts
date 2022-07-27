@@ -12,13 +12,13 @@ type InitialStateType = typeof initialState
 export type ActionAuthorizedReducerType =
     ReturnType<typeof setIsLoading>
     | ReturnType<typeof setAuthorizedUser>
-    | ReturnType<typeof setAuthorizedCode>
+    | ReturnType<typeof setAuthorizedStatus>
     | ReturnType<typeof setAuthorizedProfileUser>
 
 
 let initialState = {
     isLoading: false,
-    authorizedCode: null as null | number,
+    authorizedStatus: 'initialization' as StatusAuthorizedType,
     authorizedUser: {
         id: null,
         email: null,
@@ -54,21 +54,19 @@ export const authorizedReducer = (state = initialState, action: ActionAuthorized
         case SET_AUTHORIZED_CODE:
             return {
                 ...state,
-                authorizedCode: action.payload
+                authorizedStatus: action.payload
             }
         default:
             return state
     }
 }
 
+export type StatusAuthorizedType = 'successfully' | 'initialization' | 'fail'
+
 
 export const setIsLoading = (payload: boolean) => ({type: IS_LOADING, payload}) as const
-export const setAuthorizedUser = (user: AuthorizedUserType, authorizedCode: boolean) => ({
-    type: SET_AUTHORIZED_USER,
-    user,
-    authorizedCode
-}) as const
-export const setAuthorizedCode = (payload: number) => ({type: SET_AUTHORIZED_CODE, payload}) as const
+export const setAuthorizedUser = (user: AuthorizedUserType) => ({type: SET_AUTHORIZED_USER, user}) as const
+export const setAuthorizedStatus = (payload: StatusAuthorizedType) => ({type: SET_AUTHORIZED_CODE, payload}) as const
 export const setAuthorizedProfileUser = (payload: UserProfileType) => ({
     type: SET_AUTHORIZED_PROFILE_USER,
     payload
@@ -80,12 +78,12 @@ export const fetchAuthorizedData = (): AppThunk => async dispatch => {
         dispatch(setIsLoading(true))
         let response = await api.authorizedMe()
         if (response.resultCode === 0) {
-            dispatch(setAuthorizedUser(response.data, true))
-            dispatch(setAuthorizedCode(0))
+            dispatch(setAuthorizedUser(response.data))
+            dispatch(setAuthorizedStatus('successfully'))
             let responseUser = await api.getUserProfile(response.data.id)
             dispatch(setAuthorizedProfileUser(responseUser))
         } else {
-            dispatch(setAuthorizedCode(1))
+            dispatch(setAuthorizedStatus('fail'))
         }
     } catch (error) {
         console.log(error)
@@ -94,12 +92,14 @@ export const fetchAuthorizedData = (): AppThunk => async dispatch => {
     }
 }
 
-export const fetchAuthorization = (email: string, password: string): AppThunk => async dispatch => {
+export const fetchAuthorization = (email: string, password: string, setStatus: any): AppThunk => async dispatch => {
     try {
         dispatch(setIsLoading(true))
         let response = await api.authorize(email, password)
         if (response.resultCode === 0) {
             dispatch(fetchAuthorizedData())
+        } else if (response.resultCode !== 0) {
+            setStatus(response.messages[0])
         }
     } catch (error) {
         console.log(error)

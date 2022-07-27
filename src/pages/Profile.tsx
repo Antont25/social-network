@@ -1,33 +1,30 @@
 import React, {useEffect} from 'react';
-import {MyPosts} from "./myPosts/MyPosts";
+import {MyPosts} from "../components/profile/myPosts/MyPosts";
 import {connect} from "react-redux";
-import {AppStoreType,} from "../../redux/store";
-import UserInfo from "./userInfo/UserInfo";
-import {Loading} from "../loading/Loading";
+import {AppStoreType,} from "../redux/store";
+import UserInfo from "../components/profile/userInfo/UserInfo";
+import {Loading} from "../components/common/loading/Loading";
 import {useParams} from "react-router";
 import {useNavigate} from "react-router-dom";
 import {
-    addPostState,
+    addPost,
     fetchStatusUpdates,
     fetchUserProfileData,
-    newTextPost,
     PostsType,
     UserProfileType
-} from "../../redux/profileReducer";
-import {AuthorizedUserType} from "../../redux/authorizedReducer";
+} from "../redux/profileReducer";
+import {AuthorizedUserType, StatusAuthorizedType} from "../redux/authorizedReducer";
 
 type MapStateToPropsType = {
     posts: Array<PostsType>
-    newPostText: string
     userProfile: UserProfileType
-    authorizedCode: null | number
+    authorizedStatus: StatusAuthorizedType
     authorizedUser: AuthorizedUserType
     isLoading: boolean
     userStatus: null | string
 }
 type MapDispatchToPropsType = {
-    addPostState: () => void
-    newTextPost: (newText: string) => void
+    addPost: (value: string) => void
     fetchUserProfileData: (paramsURL: number) => void
     fetchStatusUpdates: (newStatus: string, userId: number) => void
 }
@@ -40,16 +37,16 @@ const Profile = (props: ProfileType) => {
     let paramsURL = Number(params['*'])
     const navigate = useNavigate()
     useEffect(() => {
-        if (props.authorizedCode === 0 && !params['*']) {
+        if (props.authorizedStatus === 'successfully' && !params['*']) {
             if (props.authorizedUser.id) paramsURL = props.authorizedUser.id
         }
-        if (props.authorizedCode === 0 || paramsURL) {
+        if (props.authorizedStatus === 'successfully' || paramsURL) {
             props.fetchUserProfileData(paramsURL)
-        } else if (props.authorizedCode === 1) {
+        } else if (props.authorizedStatus === 'fail') {
             navigate('/login')
         }
 
-    }, [props.authorizedCode, paramsURL])
+    }, [props.authorizedStatus, paramsURL])
 
     if (Object.keys(props.userProfile).length === 0) {
         return <Loading/>
@@ -60,11 +57,9 @@ const Profile = (props: ProfileType) => {
                       authorizedUserId={props.authorizedUser.id}
                       fetchStatusUpdates={props.fetchStatusUpdates}
                       userStatus={props.userStatus}/>
-            <MyPosts newPostText={props.newPostText}
-                     photoUser={props.userProfile.photos.small}
+            <MyPosts photoUser={props.userProfile.photos.small}
                      posts={props.posts}
-                     addPostState={props.addPostState}
-                     newTextPost={props.newTextPost}
+                     addPost={props.addPost}
             />
         </>);
 };
@@ -72,9 +67,8 @@ const Profile = (props: ProfileType) => {
 const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText,
         userProfile: state.profilePage.userProfile,
-        authorizedCode: state.authorized.authorizedCode,
+        authorizedStatus: state.authorized.authorizedStatus,
         authorizedUser: state.authorized.authorizedUser,
         isLoading: state.authorized.isLoading,
         userStatus: state.profilePage.userStatus,
@@ -83,8 +77,7 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
 
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStoreType>(mapStateToProps, {
-    addPostState,
-    newTextPost,
+    addPost,
     fetchUserProfileData,
     fetchStatusUpdates
 })(Profile);

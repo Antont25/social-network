@@ -17,14 +17,14 @@ import Button from '@material-ui/core/Button';
 import {NavLink, useNavigate} from "react-router-dom";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {fetchLogout} from "../../redux/authorizedReducer";
+import {fetchLogout, StatusAuthorizedType} from "../../redux/authorizedReducer";
 import {showMenuHandler} from "../../redux/headerReducer";
-import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
+import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
 
 
 type MapStateToPropsType = {
     menuIsShow: boolean
-    authorizedCode: null | number
+    authorizedStatus: StatusAuthorizedType
     userFoto: string | null | undefined
 }
 type HeaderType = MapStateToPropsType & {
@@ -49,15 +49,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Header: React.FC = () => {
     const classes = useStyles();
-    const {authorizedCode, userFoto, menuIsShow} = useAppSelector(state => ({
-        authorizedCode: state.authorized.authorizedCode,
+    const {authorizedStatus, userFoto, menuIsShow} = useAppSelector(state => ({
+        authorizedStatus: state.authorized.authorizedStatus,
         userFoto: state.authorized.authorizedProfileUser.photos.small,
         menuIsShow: state.headerPage.menuIsShow,
     }))
     const navigate = useNavigate()
     useEffect(() => {
-        if (authorizedCode === 1) navigate('/')
-    }, [authorizedCode])
+        if (authorizedStatus === 'fail') navigate('/')
+    }, [authorizedStatus])
 
     const dispatch = useAppDispatch()
 
@@ -110,7 +110,7 @@ export const Header: React.FC = () => {
                     <Typography className={classes.title}>
                         <img style={{height: '20px'}} src={imgIcon} alt=""/>
                     </Typography>
-                    {authorizedCode === 0
+                    {authorizedStatus === 'successfully'
                         ? <div>
                             <IconButton color="inherit"
                                         aria-label="account of current user"

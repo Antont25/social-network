@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Input} from "../input/Input";
+import {Input} from "../common/input/Input";
 import style from './users.module.css'
 
 type StatusType = {

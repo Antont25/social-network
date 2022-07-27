@@ -5,11 +5,12 @@ import {Button, Grid, Paper} from "@material-ui/core";
 import style from './users.module.css'
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../redux/usersReducer";
+import {StatusAuthorizedType} from "../../redux/authorizedReducer";
 
 
 type UserFCType = {
     users: UserType
-    authorizedCode: null | number
+    authorizedStatus: StatusAuthorizedType
     fetchUnFollowUser: (usersId: number) => void
     fetchFollowUser: (usersId: number) => void
     userSubscription: Array<number>
@@ -39,7 +40,7 @@ export const User: React.FC<UserFCType> = (props) => {
                                 variant="outlined"
                                 color="primary"
                                 size={"small"}
-                                disabled={props.authorizedCode === 1 || props.userSubscription.some(item => item === props.users.id)}
+                                disabled={props.authorizedStatus === 'fail' || props.userSubscription.some(item => item === props.users.id)}
                                 onClick={onClickFollowedHandler}
                         >
                             {props.users.followed ? "Отписаться" : "Подписаться"}

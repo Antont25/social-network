@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/store";
-import {Pagination} from "../pagination/Pagination";
-import {Loading} from "../loading/Loading";
+import {Pagination} from "../common/pagination/Pagination";
+import {Loading} from "../common/loading/Loading";
 import {
     fetchFollowUser,
     fetchUnFollowUser,
@@ -12,6 +12,7 @@ import {
     UserType
 } from "../../redux/usersReducer";
 import {User} from "./User";
+import {StatusAuthorizedType} from "../../redux/authorizedReducer";
 
 
 type MapStateToProps = {
@@ -20,7 +21,7 @@ type MapStateToProps = {
     pageSize: number
     currentPage: number
     isLoading: boolean
-    authorizedCode: null | number
+    authorizedStatus: StatusAuthorizedType
     portionsNumber: number
     userSubscription: Array<number>
 
@@ -43,7 +44,7 @@ const Users = (props: UsersType) => {
                                                     users={item}
                                                     fetchUnFollowUser={props.fetchUnFollowUser}
                                                     fetchFollowUser={props.fetchFollowUser}
-                                                    authorizedCode={props.authorizedCode}
+                                                    authorizedStatus={props.authorizedStatus}
                                                     userSubscription={props.userSubscription}
     />)
     if (props.isLoading) {
@@ -73,7 +74,7 @@ function mapStateToProps(state: AppStoreType): MapStateToProps {
         currentPage: state.usersPage.currentPage,
         isLoading: state.authorized.isLoading,
         portionsNumber: state.usersPage.portionsNumber,
-        authorizedCode: state.authorized.authorizedCode,
+        authorizedStatus: state.authorized.authorizedStatus,
         userSubscription: state.usersPage.userSubscription,
     }
 }

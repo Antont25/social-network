@@ -1,44 +1,34 @@
 import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
-import * as yup from 'yup';
 import style from './login.module.css'
-import SuperButton from "../SuperButton/SuperButton";
-import {Input} from "../input/Input";
-import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
+import Button from "../common/button/Button";
+import {Input} from "../common/input/Input";
+import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
 import {fetchAuthorization} from "../../redux/authorizedReducer";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {validationLogin} from "../../utils/validation/validation";
 
-
-const validationSchema = yup.object({
-    email: yup
-        .string()
-        .email('Enter a valid email')
-        .required('Email is required'),
-    password: yup
-        .string()
-        .min(4, 'Password should be of minimum 8 characters length')
-        .required('Password is required'),
-});
 
 export const Login = () => {
     const dispatch = useAppDispatch()
-    const authorizedCode = useAppSelector(state => state.authorized.authorizedCode)
+    const authorizedStatus = useAppSelector(state => state.authorized.authorizedStatus)
     const navigate = useNavigate()
+
     useEffect(() => {
-        if (authorizedCode === 0) navigate('/')
-    }, [authorizedCode])
+        if (authorizedStatus === 'successfully') navigate('/')
+    }, [authorizedStatus])
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
-        validationSchema: validationSchema,
-        onSubmit: async (values) => {
-            dispatch(fetchAuthorization(values.email, values.password));
+        validationSchema: validationLogin,
+        onSubmit: (values, {setStatus}) => {
+            dispatch(fetchAuthorization(values.email, values.password, setStatus));
         },
     });
-
+    const disabled = (formik.touched.password && formik.touched.email && !!(formik.errors.email || formik.errors.password))
     return (
         <div className={style.loginBloc}>
             <form onSubmit={formik.handleSubmit}>
@@ -49,6 +39,7 @@ export const Login = () => {
                        onChange={formik.handleChange}
                        error={formik.errors.email}
                        touched={formik.touched.email}
+                       onBlur={() => formik.setFieldTouched('email', true)}
                 />
                 <Input id="password"
                        name="password"
@@ -56,12 +47,16 @@ export const Login = () => {
                        type="password"
                        value={formik.values.password}
                        onChange={formik.handleChange}
-                       error={formik.errors.password}
+                       error={formik.errors.password || formik.status}
                        touched={formik.touched.password}
+                       onBlur={() => formik.setFieldTouched('password', true)}
                 />
-                <SuperButton type="submit" className={style.loginBtn}>
+                <Button type="submit"
+                        className={style.loginBtn}
+                        disabled={disabled}
+                >
                     Войти
-                </SuperButton>
+                </Button>
             </form>
         </div>
     );

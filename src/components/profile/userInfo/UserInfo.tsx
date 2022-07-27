@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import {UserProfileType} from "../../../redux/profileReducer";
-import {Status} from "../../Users/Status";
+import {Status} from "../../users/Status";
 
 
 type UserInfoType = {

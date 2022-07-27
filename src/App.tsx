@@ -3,8 +3,8 @@ import './App.css';
 import {Header} from "./components/header/Header";
 import NavBar from "./components/navBar/NavBar";
 import {HashRouter, Route, Routes} from "react-router-dom";
-import Profile from "./components/profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+import Profile from "./pages/Profile";
+import Dialogs from "./pages/Dialogs";
 import {Container, Grid, Paper,} from "@material-ui/core";
 import style from './components/header/header.module.css'
 import {connect} from "react-redux";
@@ -12,8 +12,8 @@ import {AppStoreType} from "./redux/store";
 import Footer from "./components/footer/Footer";
 import {fetchAuthorizedData} from "./redux/authorizedReducer";
 import {Login} from "./components/login/Login";
-import Users from "./components/Users/Users";
-import {Loading} from "./components/loading/Loading";
+import Users from "./components/users/Users";
+import {Loading} from "./components/common/loading/Loading";
 
 
 type MapStateToProps = {

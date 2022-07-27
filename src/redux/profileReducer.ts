@@ -1,7 +1,6 @@
 import {api} from "../api/api";
 import {setIsLoading} from "./authorizedReducer";
 import {AppThunk} from "./store";
-import {unFollow} from "./usersReducer";
 
 
 export type InitialSateType = typeof initialSate
@@ -32,14 +31,12 @@ export type UserProfileType = {
     }
 }
 export type ActionProfileReducerType =
-    ReturnType<typeof addPostState>
-    | ReturnType<typeof newTextPost>
+    ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatusUpdates>
 
 
 const ADD_POST = 'ADD_POST';
-const NEW_TEXT = 'NEW_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS_UPDATES = 'SET_STATUS_UPDATES';
 const initialSate = {
@@ -50,7 +47,6 @@ const initialSate = {
         {id: 4, massage: "sacasc", likes: 4},
     ] as Array<PostsType>,
     userProfile: {} as UserProfileType,
-    newPostText: '',
     userStatus: null as null | string
 }
 
@@ -59,18 +55,12 @@ export const profileReducer = (state = initialSate, action: ActionProfileReducer
         case ADD_POST :
             let newPost: PostsType = {
                 id: 4,
-                massage: state.newPostText,
+                massage: action.payload,
                 likes: 4
             }
             return {
                 ...state,
                 posts: [newPost, ...state.posts],
-            }
-
-        case NEW_TEXT :
-            return {
-                ...state,
-                newPostText: action.payload
             }
         case SET_USER_PROFILE:
             return {
@@ -88,8 +78,7 @@ export const profileReducer = (state = initialSate, action: ActionProfileReducer
 };
 
 
-export const addPostState = () => ({type: ADD_POST} as const)
-export const newTextPost = (payload: string) => ({type: NEW_TEXT, payload} as const)
+export const addPost = (payload: string) => ({type: ADD_POST, payload} as const)
 export const setUserProfile = (payload: UserProfileType) => ({type: SET_USER_PROFILE, payload} as const)
 export const setStatusUpdates = (payload: string) => ({type: SET_STATUS_UPDATES, payload} as const)
 
