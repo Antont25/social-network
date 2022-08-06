@@ -9,10 +9,10 @@ import {
     fetchUserData,
     setCurrentPage,
     setPortionsNumber,
-    UserType
 } from "../../redux/usersReducer";
 import {User} from "./User";
 import {StatusAuthorizedType} from "../../redux/authorizedReducer";
+import {UserType} from "../../api/api";
 
 
 type MapStateToProps = {

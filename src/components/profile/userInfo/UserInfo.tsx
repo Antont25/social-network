@@ -6,8 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
-import {UserProfileType} from "../../../redux/profileReducer";
 import {Status} from "../../users/Status";
+import {UserProfileType} from "../../../api/api";
 
 
 type UserInfoType = {

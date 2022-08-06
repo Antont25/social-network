@@ -1,18 +1,10 @@
-type InitialStateType = typeof initialState
-type ShowMenuType = {
-    type: typeof SHOW_MENU
-}
-export type ActionHeaderReducerType = ReturnType<typeof showMenuHandler>
-
 let initialState = {
     menuIsShow: false,
 }
 
-const SHOW_MENU = 'SHOW_MENU'
-
 export const headerReducer = (state = initialState, action: ActionHeaderReducerType): InitialStateType => {
     switch (action.type) {
-        case SHOW_MENU:
+        case 'SHOW_MENU':
             return {
                 ...state,
                 menuIsShow: !state.menuIsShow
@@ -22,6 +14,10 @@ export const headerReducer = (state = initialState, action: ActionHeaderReducerT
     }
 }
 
+//action
+export const showMenuHandler = () => ({type: 'SHOW_MENU'} as const)
 
-export const showMenuHandler = (): ShowMenuType => ({type: SHOW_MENU})
+//type
+export type ActionHeaderReducerType = ReturnType<typeof showMenuHandler>
+type InitialStateType = typeof initialState
 

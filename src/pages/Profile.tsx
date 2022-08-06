@@ -11,9 +11,9 @@ import {
     fetchStatusUpdates,
     fetchUserProfileData,
     PostsType,
-    UserProfileType
 } from "../redux/profileReducer";
-import {AuthorizedUserType, StatusAuthorizedType} from "../redux/authorizedReducer";
+import {StatusAuthorizedType} from "../redux/authorizedReducer";
+import {AuthorizedUserType, UserProfileType} from "../api/api";
 
 type MapStateToPropsType = {
     posts: Array<PostsType>

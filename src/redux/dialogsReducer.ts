@@ -9,9 +9,6 @@ export type MessagesType = {
 }
 export type ActionDialogsReducerType = ReturnType<typeof addMessage>
 
-
-const ADD_MESSAGE = "ADD_MESSAGE";
-
 const initialState = {
     dialogs: [
         {id: 1, name: 'Amdrey'},
@@ -25,7 +22,7 @@ const initialState = {
 
 export const dialogsReducer = (state = initialState, action: ActionDialogsReducerType): InitialStateType => {
     switch (action.type) {
-        case  ADD_MESSAGE:
+        case  'ADD_MESSAGE':
             let newMessages: MessagesType = {id: 3, message: action.payload}
             return {
                 ...state,
@@ -38,4 +35,4 @@ export const dialogsReducer = (state = initialState, action: ActionDialogsReduce
 };
 
 
-export const addMessage = (payload: string) => ({type: ADD_MESSAGE, payload}) as const
+export const addMessage = (payload: string) => ({type: 'ADD_MESSAGE', payload} as const)

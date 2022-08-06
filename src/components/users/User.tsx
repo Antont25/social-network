@@ -4,8 +4,8 @@ import avatar from '../../assest/img/avatar.png'
 import {Button, Grid, Paper} from "@material-ui/core";
 import style from './users.module.css'
 import {NavLink} from "react-router-dom";
-import {UserType} from "../../redux/usersReducer";
 import {StatusAuthorizedType} from "../../redux/authorizedReducer";
+import {UserType} from "../../api/api";
 
 
 type UserFCType = {
