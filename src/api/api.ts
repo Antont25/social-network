@@ -1,11 +1,11 @@
-import axios, {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from 'axios';
 
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        "API-KEY": "b68e1396-946f-405d-92ed-906f9f26a9d8"
+        'API-KEY': 'b68e1396-946f-405d-92ed-906f9f26a9d8'
     }
 })
 
@@ -84,13 +84,14 @@ export type UserProfileType = {
     }
 }
 export type UserType = {
-    name: string,
-    id: number,
+    name: string
+    id: number
+    uniqueUrlName: null
     photos: {
-        small: null | string,
+        small: null | string
         large: null | string
     },
-    status: null | string,
+    status: null | string
     followed: boolean
 }
 export type FetchUserType = {

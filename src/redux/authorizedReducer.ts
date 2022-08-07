@@ -1,7 +1,7 @@
 import {api, AuthorizedUserType, UserProfileType} from '../api/api';
 import {AppThunk} from './store';
 
-let initialState = {
+let initialStateAuthorized = {
     isLoading: false,
     authorizedStatus: 'initialization' as StatusAuthorizedType,
     authorizedUser: {
@@ -14,24 +14,24 @@ let initialState = {
     } as UserProfileType,
 }
 
-export const authorizedReducer = (state = initialState, action: ActionAuthorizedReducerType): InitialStateType => {
+export const authorizedReducer = (state = initialStateAuthorized, action: ActionAuthorizedReducerType): InitialStateTypeAuthorized => {
     switch (action.type) {
-        case 'IS_LOADING':
+        case 'AUTHORIZED/IS_LOADING':
             return {
                 ...state,
                 isLoading: action.payload
             }
-        case 'SET_AUTHORIZED_USER':
+        case 'AUTHORIZED/SET_AUTHORIZED_USER':
             return {
                 ...state,
                 authorizedUser: {...action.user},
             }
-        case 'SET_AUTHORIZED_PROFILE_USER':
+        case 'AUTHORIZED/SET_AUTHORIZED_PROFILE_USER':
             return {
                 ...state,
                 authorizedProfileUser: action.payload
             }
-        case 'SET_AUTHORIZED_STATUS':
+        case 'AUTHORIZED/SET_AUTHORIZED_STATUS':
             return {
                 ...state,
                 authorizedStatus: action.payload
@@ -42,12 +42,12 @@ export const authorizedReducer = (state = initialState, action: ActionAuthorized
 }
 
 //action
-export const setIsLoading = (payload: boolean) => ({type: 'IS_LOADING', payload} as const)
-export const setAuthorizedUser = (user: AuthorizedUserType) => ({type: 'SET_AUTHORIZED_USER', user} as const)
+export const setIsLoading = (payload: boolean) => ({type: 'AUTHORIZED/IS_LOADING', payload} as const)
+export const setAuthorizedUser = (user: AuthorizedUserType) => ({type: 'AUTHORIZED/SET_AUTHORIZED_USER', user} as const)
 export const setAuthorizedStatus = (payload: StatusAuthorizedType) =>
-    ({type: 'SET_AUTHORIZED_STATUS', payload} as const)
+    ({type: 'AUTHORIZED/SET_AUTHORIZED_STATUS', payload} as const)
 export const setAuthorizedProfileUser = (payload: UserProfileType) =>
-    ({type: 'SET_AUTHORIZED_PROFILE_USER', payload} as const)
+    ({type: 'AUTHORIZED/SET_AUTHORIZED_PROFILE_USER', payload} as const)
 
 //thunk
 export const fetchAuthorizedData = (): AppThunk => async dispatch => {
@@ -100,7 +100,7 @@ export const fetchLogout = (): AppThunk => async dispatch => {
 }
 
 //type
-export type InitialStateType = typeof initialState
+export type InitialStateTypeAuthorized = typeof initialStateAuthorized
 export type StatusAuthorizedType = 'successfully' | 'initialization' | 'fail'
 export type ActionAuthorizedReducerType =
     ReturnType<typeof setIsLoading>

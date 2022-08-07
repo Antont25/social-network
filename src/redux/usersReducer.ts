@@ -2,7 +2,6 @@ import {api, FetchUserType, UserType} from '../api/api';
 import {setIsLoading} from './authorizedReducer';
 import {AppThunk} from './store';
 
-
 const initialStateUserPage = {
     items: [] as Array<UserType>,
     totalCount: 0,
@@ -15,38 +14,38 @@ const initialStateUserPage = {
 
 export const usersReducer = (state = initialStateUserPage, action: ActionUserReducerType): InitialStateUserPageType => {
     switch (action.type) {
-        case 'SET_USERS':
+        case 'USERS/SET_USERS':
             return {
                 ...state,
                 items: action.payload.items,
                 totalCount: action.payload.totalCount,
                 error: action.payload.error
             }
-        case 'FOLLOW':
+        case 'USERS/FOLLOW':
             return {
                 ...state,
                 items: state.items.map(item => item.id === action.payload
                     ? {...item, followed: true}
                     : item)
             }
-        case 'UN_FOLLOW':
+        case 'USERS/UN_FOLLOW':
             return {
                 ...state,
                 items: state.items.map(item => item.id === action.payload
                     ? {...item, followed: false}
                     : item)
             }
-        case 'SET_CURRENT_PAGE':
+        case 'USERS/SET_CURRENT_PAGE':
             return {
                 ...state,
                 currentPage: action.payload
             }
-        case 'SET_PORTION_NUMBER':
+        case 'USERS/SET_PORTION_NUMBER':
             return {
                 ...state,
                 portionsNumber: action.payload
             }
-        case 'ADD_USER_SUBSCRIPTION':
+        case 'USERS/ADD_USER_SUBSCRIPTION':
             return {
                 ...state,
                 userSubscription: action.isFollowing
@@ -59,17 +58,18 @@ export const usersReducer = (state = initialStateUserPage, action: ActionUserRed
 }
 
 //action
-export const setUsers = (payload: FetchUserType) => ({type: 'SET_USERS', payload} as const)
-export const follow = (payload: number) => ({type: 'FOLLOW', payload} as const)
-export const unFollow = (payload: number) => ({type: 'UN_FOLLOW', payload} as const)
-export const setCurrentPage = (payload: number) => ({type: 'SET_CURRENT_PAGE', payload} as const)
-export const setPortionsNumber = (payload: number) => ({type: 'SET_PORTION_NUMBER', payload} as const)
+export const setUsers = (payload: FetchUserType) => ({type: 'USERS/SET_USERS', payload} as const)
+export const follow = (payload: number) => ({type: 'USERS/FOLLOW', payload} as const)
+export const unFollow = (payload: number) => ({type: 'USERS/UN_FOLLOW', payload} as const)
+export const setCurrentPage = (payload: number) => ({type: 'USERS/SET_CURRENT_PAGE', payload} as const)
+export const setPortionsNumber = (payload: number) => ({type: 'USERS/SET_PORTION_NUMBER', payload} as const)
 export const setUserSubscription = (userId: number, isFollowing: boolean) =>
-    ({type: 'ADD_USER_SUBSCRIPTION', userId, isFollowing} as const)
+    ({type: 'USERS/ADD_USER_SUBSCRIPTION', userId, isFollowing} as const)
 
 //thunk
 export const fetchUserData = (currentPage: number): AppThunk => async dispatch => {
     try {
+        debugger
         dispatch(setIsLoading(true))
         let response = await api.getUser(currentPage)
         dispatch(setUsers(response))
@@ -80,13 +80,12 @@ export const fetchUserData = (currentPage: number): AppThunk => async dispatch =
     }
 
 }
-
-export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch => {
+export const fetchFollowUser = (usersId: number): AppThunk => async dispatch => {
     try {
         dispatch(setUserSubscription(usersId, true))
-        let response = await api.unFollowUser(usersId)
+        let response = await api.followUser(usersId)
         if (response.resultCode === 0) {
-            dispatch(unFollow(usersId))
+            dispatch(follow(usersId))
         }
     } catch (error) {
         console.log(error)
@@ -94,12 +93,12 @@ export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch =
         dispatch(setUserSubscription(usersId, false))
     }
 }
-export const fetchFollowUser = (usersId: number): AppThunk => async dispatch => {
+export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch => {
     try {
         dispatch(setUserSubscription(usersId, true))
-        let response = await api.followUser(usersId)
+        let response = await api.unFollowUser(usersId)
         if (response.resultCode === 0) {
-            dispatch(follow(usersId))
+            dispatch(unFollow(usersId))
         }
     } catch (error) {
         console.log(error)

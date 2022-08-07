@@ -22,7 +22,7 @@ const initialState = {
 
 export const dialogsReducer = (state = initialState, action: ActionDialogsReducerType): InitialStateType => {
     switch (action.type) {
-        case  'ADD_MESSAGE':
+        case  'DIALOGS/ADD_MESSAGE':
             let newMessages: MessagesType = {id: 3, message: action.payload}
             return {
                 ...state,
@@ -35,4 +35,4 @@ export const dialogsReducer = (state = initialState, action: ActionDialogsReduce
 };
 
 
-export const addMessage = (payload: string) => ({type: 'ADD_MESSAGE', payload} as const)
+export const addMessage = (payload: string) => ({type: 'DIALOGS/ADD_MESSAGE', payload} as const)
