@@ -1,19 +1,22 @@
 import React, {useEffect} from 'react'
 import './App.css';
-import {Header} from "./components/header/Header";
-import NavBar from "./components/navBar/NavBar";
-import {HashRouter, Route, Routes} from "react-router-dom";
-import Profile from "./pages/Profile";
-import Dialogs from "./pages/Dialogs";
-import {Container, Grid, Paper,} from "@material-ui/core";
+import {Header} from './components/header/Header';
+import NavBar from './components/navBar/NavBar';
+import {Route, Routes} from 'react-router-dom';
+import {Profile} from './pages/Profile';
+import Dialogs from './pages/Dialogs';
+import {Container, Grid, Paper,} from '@material-ui/core';
 import style from './components/header/header.module.css'
-import {connect} from "react-redux";
-import {AppStoreType} from "./redux/store";
-import Footer from "./components/footer/Footer";
-import {fetchAuthorizedData} from "./redux/authorizedReducer";
-import {Login} from "./components/login/Login";
-import Users from "./components/users/Users";
-import {Loading} from "./components/common/loading/Loading";
+import {connect} from 'react-redux';
+import {AppStoreType} from './redux/store';
+import Footer from './components/footer/Footer';
+import {fetchAuthorizedData} from './redux/appReducer';
+import {Login} from './components/login/Login';
+import {Users} from './pages/Users';
+import {Loading} from './components/common/loading/Loading';
+import {ErrorSnackbar} from './components/common/ErrorSnackbar/ErrorSnackbar';
+import {WitchRouting} from './components/WitchRouting';
+import {Page404} from './components/page404/Page404';
 
 
 type MapStateToProps = {
@@ -38,50 +41,40 @@ const App = (props: AppType) => {
     // }
 
     return (
-        <HashRouter>
-            <Container>
-                <Header/>
-                <div className={'containerBorder'}>
-                    <Grid container spacing={2} className={'container'}>
-                        <Grid item
-                              sm={4} md={3}
-                              className={'navBarApp'}
-                        >
-                            <Paper className={style.navBar}>
-                                <NavBar/>
-                            </Paper>
+        <>
+            <Routes>
+                <Route path="/*" element={<Container>
+                    <Header/>
+                    <div className={'containerBorder'}>
+                        <Grid container spacing={2} className={'container'}>
+                            <Grid item
+                                  sm={4} md={3}
+                                  className={'navBarApp'}
+                            >
+                                <Paper className={style.navBar}>
+                                    <NavBar/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} sm={8} md={9}>
+                                <div className="appWrapper">
+                                    <WitchRouting/>
+                                </div>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
-                            <div className='appWrapper'>
-                                <Routes>
-                                    <Route path='/'
-                                           element={<Profile/>}>
-                                        <Route path='/profile/*' element={<Profile/>}/>
-                                    </Route>
-                                    <Route path='/dialogs/*'
-                                           element={<Dialogs/>}>
-                                    </Route>
-                                    <Route path='/users/'
-                                           element={<Users/>}>
-                                    </Route>
-                                    <Route path='/login/'
-                                           element={<Login/>}>
-                                    </Route>
-                                </Routes>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
-                <Footer/>
-            </Container>
-        </HashRouter>
+                    </div>
+                    <Footer/>
+                </Container>}/>
+                <Route path="/not-found" element={<Page404/>}/>
+            </Routes>
+            <ErrorSnackbar/>
+        </>
     );
 }
 
 function mapStateToProps(state: AppStoreType): MapStateToProps {
     return {
         menuIsShow: state.headerPage.menuIsShow,
-        isLoading: state.authorized.isLoading,
+        isLoading: state.app.isLoading,
     }
 }
 

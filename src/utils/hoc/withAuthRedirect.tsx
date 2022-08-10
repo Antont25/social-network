@@ -1,9 +1,9 @@
 import React, {ComponentType} from 'react';
 
-import {connect} from "react-redux";
-import {Navigate} from "react-router-dom";
-import {AppStoreType} from "../../redux/store";
-import {StatusAuthorizedType} from "../../redux/authorizedReducer";
+import {connect} from 'react-redux';
+import {Navigate} from 'react-router-dom';
+import {AppStoreType} from '../../redux/store';
+import {StatusAuthorizedType} from '../../redux/appReducer';
 
 
 type MSTPType = {
@@ -12,7 +12,7 @@ type MSTPType = {
 }
 const MSTP = (state: AppStoreType): MSTPType => {
     return {
-        authorizedStatus: state.authorized.authorizedStatus
+        authorizedStatus: state.app.authorizedStatus
     }
 }
 

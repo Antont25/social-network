@@ -1,6 +1,8 @@
 import {api, UserProfileType} from '../api/api';
-import {setIsLoading} from './authorizedReducer';
+import {setIsLoading} from './appReducer';
 import {AppThunk} from './store';
+import {AxiosError} from 'axios';
+import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
 
 const initialSateProfile = {
     posts: [
@@ -55,8 +57,9 @@ export const fetchUserProfileData = (paramsURL: number): AppThunk => async dispa
             let responseStatus = await api.getStatusUser(response.userId)
             dispatch(setStatusUpdates(responseStatus))
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setIsLoading(false))
     }
@@ -69,8 +72,9 @@ export const fetchStatusUpdates = (newStatus: string, usersId: number): AppThunk
             let responseNewStatus = await api.getStatusUser(usersId)
             dispatch(setStatusUpdates(responseNewStatus))
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setIsLoading(false))
     }

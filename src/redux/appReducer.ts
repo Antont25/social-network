@@ -1,7 +1,9 @@
 import {api, AuthorizedUserType, UserProfileType} from '../api/api';
 import {AppThunk} from './store';
+import axios, {AxiosError} from 'axios';
+import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
 
-let initialStateAuthorized = {
+let initialStateApp = {
     isLoading: false,
     authorizedStatus: 'initialization' as StatusAuthorizedType,
     authorizedUser: {
@@ -12,47 +14,52 @@ let initialStateAuthorized = {
     authorizedProfileUser: {
         photos: {small: null}
     } as UserProfileType,
+    serverError: null as null | string
 }
 
-export const authorizedReducer = (state = initialStateAuthorized, action: ActionAuthorizedReducerType): InitialStateTypeAuthorized => {
+export const appReducer = (state = initialStateApp, action: ActionAppReducerType): InitialStateTypeApp => {
     switch (action.type) {
-        case 'AUTHORIZED/IS_LOADING':
+        case 'APP/IS_LOADING':
             return {
                 ...state,
                 isLoading: action.payload
             }
-        case 'AUTHORIZED/SET_AUTHORIZED_USER':
+        case 'APP/SET_AUTHORIZED_USER':
             return {
                 ...state,
                 authorizedUser: {...action.user},
             }
-        case 'AUTHORIZED/SET_AUTHORIZED_PROFILE_USER':
+        case 'APP/SET_AUTHORIZED_PROFILE_USER':
             return {
                 ...state,
                 authorizedProfileUser: action.payload
             }
-        case 'AUTHORIZED/SET_AUTHORIZED_STATUS':
+        case 'APP/SET_AUTHORIZED_STATUS':
             return {
                 ...state,
                 authorizedStatus: action.payload
             }
+        case 'APP/SET-SERVER-ERROR':
+            return {...state, serverError: action.payload}
         default:
             return state
     }
 }
 
 //action
-export const setIsLoading = (payload: boolean) => ({type: 'AUTHORIZED/IS_LOADING', payload} as const)
-export const setAuthorizedUser = (user: AuthorizedUserType) => ({type: 'AUTHORIZED/SET_AUTHORIZED_USER', user} as const)
+export const setIsLoading = (payload: boolean) => ({type: 'APP/IS_LOADING', payload} as const)
+export const setAuthorizedUser = (user: AuthorizedUserType) => ({type: 'APP/SET_AUTHORIZED_USER', user} as const)
 export const setAuthorizedStatus = (payload: StatusAuthorizedType) =>
-    ({type: 'AUTHORIZED/SET_AUTHORIZED_STATUS', payload} as const)
+    ({type: 'APP/SET_AUTHORIZED_STATUS', payload} as const)
 export const setAuthorizedProfileUser = (payload: UserProfileType) =>
-    ({type: 'AUTHORIZED/SET_AUTHORIZED_PROFILE_USER', payload} as const)
+    ({type: 'APP/SET_AUTHORIZED_PROFILE_USER', payload} as const)
+export const setServerError = (payload: string | null) => ({type: 'APP/SET-SERVER-ERROR', payload} as const)
 
 //thunk
 export const fetchAuthorizedData = (): AppThunk => async dispatch => {
     try {
         dispatch(setIsLoading(true))
+
         let response = await api.authorizedMe()
         if (response.resultCode === 0) {
             dispatch(setAuthorizedUser(response.data))
@@ -64,8 +71,9 @@ export const fetchAuthorizedData = (): AppThunk => async dispatch => {
         } else {
             dispatch(setAuthorizedStatus('fail'))
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setIsLoading(false))
     }
@@ -79,8 +87,9 @@ export const fetchAuthorization = (email: string, password: string, setStatus: a
         } else if (response.resultCode !== 0) {
             setStatus(response.messages[0])
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setIsLoading(false))
     }
@@ -92,19 +101,21 @@ export const fetchLogout = (): AppThunk => async dispatch => {
         if (response.resultCode === 0) {
             dispatch(fetchAuthorizedData())
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setIsLoading(false))
     }
 }
 
 //type
-export type InitialStateTypeAuthorized = typeof initialStateAuthorized
+export type InitialStateTypeApp = typeof initialStateApp
 export type StatusAuthorizedType = 'successfully' | 'initialization' | 'fail'
-export type ActionAuthorizedReducerType =
+export type ActionAppReducerType =
     ReturnType<typeof setIsLoading>
     | ReturnType<typeof setAuthorizedUser>
     | ReturnType<typeof setAuthorizedStatus>
     | ReturnType<typeof setAuthorizedProfileUser>
+    | ReturnType<typeof setServerError>
 

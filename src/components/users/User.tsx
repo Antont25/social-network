@@ -1,32 +1,32 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import avatar from '../../assest/img/avatar.png'
-import {Button, Grid, Paper} from "@material-ui/core";
+import {Button, Grid, Paper} from '@material-ui/core';
 import style from './users.module.css'
-import {NavLink} from "react-router-dom";
-import {StatusAuthorizedType} from "../../redux/authorizedReducer";
-import {UserType} from "../../api/api";
+import {NavLink} from 'react-router-dom';
+import {StatusAuthorizedType} from '../../redux/appReducer';
+import {UserType} from '../../api/api';
+import {useAppDispatch} from '../../utils/hooks/hooks';
+import {fetchFollowUser, fetchUnFollowUser} from '../../redux/usersReducer';
 
 
 type UserFCType = {
     users: UserType
     authorizedStatus: StatusAuthorizedType
-    fetchUnFollowUser: (usersId: number) => void
-    fetchFollowUser: (usersId: number) => void
     userSubscription: Array<number>
 }
-export const User: React.FC<UserFCType> = (props) => {
+export const User: React.FC<UserFCType> = React.memo((props) => {
+    const dispatch = useAppDispatch()
 
     function onClickFollowedHandler() {
         if (props.users.followed) {
-            props.fetchUnFollowUser(props.users.id)
+            dispatch(fetchUnFollowUser(props.users.id))
         } else {
-            props.fetchFollowUser(props.users.id)
+            dispatch(fetchFollowUser(props.users.id))
         }
 
 
     }
-
 
     return (
         <div>
@@ -39,11 +39,11 @@ export const User: React.FC<UserFCType> = (props) => {
                         <Button className={style.button}
                                 variant="outlined"
                                 color="primary"
-                                size={"small"}
+                                size={'small'}
                                 disabled={props.authorizedStatus === 'fail' || props.userSubscription.some(item => item === props.users.id)}
                                 onClick={onClickFollowedHandler}
                         >
-                            {props.users.followed ? "Отписаться" : "Подписаться"}
+                            {props.users.followed ? 'Отписаться' : 'Подписаться'}
                         </Button>
                     </Grid>
                     <Grid item md={10} className={style.userInfo}>
@@ -57,5 +57,5 @@ export const User: React.FC<UserFCType> = (props) => {
         </div>
     )
         ;
-};
+});
 

@@ -1,13 +1,15 @@
 import {AuthorizedUserType, UserProfileType} from '../../api/api';
 import {
-    authorizedReducer, InitialStateTypeAuthorized,
-    setAuthorizedProfileUser, setAuthorizedStatus,
+    appReducer,
+    InitialStateTypeApp,
+    setAuthorizedProfileUser,
+    setAuthorizedStatus,
     setAuthorizedUser,
     setIsLoading,
     StatusAuthorizedType
-} from '../authorizedReducer';
+} from '../appReducer';
 
-let initialState = {} as InitialStateTypeAuthorized
+let initialState = {} as InitialStateTypeApp
 
 beforeEach(() => {
     initialState = {
@@ -21,12 +23,13 @@ beforeEach(() => {
         authorizedProfileUser: {
             photos: {small: null}
         } as UserProfileType,
+        serverError: null as null | string,
     }
 })
 
 test('Checking is progress loading', () => {
 
-    const newState = authorizedReducer(initialState, setIsLoading(true))
+    const newState = appReducer(initialState, setIsLoading(true))
 
     expect(newState.isLoading).toBe(true)
 })
@@ -37,7 +40,7 @@ test('User authorization check', () => {
         login: 'freeUser'
     }
 
-    const newState = authorizedReducer(initialState, setAuthorizedUser(user))
+    const newState = appReducer(initialState, setAuthorizedUser(user))
 
     expect(newState.authorizedUser.id).toBe(23)
     expect(newState.authorizedUser.email).toBe('freeuser@gmail.com')
@@ -66,7 +69,7 @@ test('Add information of user', () => {
         }
     }
 
-    const newState = authorizedReducer(initialState, setAuthorizedProfileUser(user))
+    const newState = appReducer(initialState, setAuthorizedProfileUser(user))
 
     expect(newState.authorizedProfileUser.aboutMe).toBe(null)
     expect(newState.authorizedProfileUser.contacts.vk).toBe(null)
@@ -80,7 +83,7 @@ test('Add information of user', () => {
 })
 test('Authorized status change', () => {
 
-    const newState = authorizedReducer(initialState, setAuthorizedStatus('successfully'))
+    const newState = appReducer(initialState, setAuthorizedStatus('successfully'))
 
     expect(newState.authorizedStatus).toBe('successfully')
 })

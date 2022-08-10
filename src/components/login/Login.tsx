@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
 import style from './login.module.css'
-import Button from "../common/button/Button";
-import {Input} from "../common/input/Input";
-import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
-import {fetchAuthorization} from "../../redux/authorizedReducer";
-import {useNavigate} from "react-router-dom";
-import {validationLogin} from "../../utils/validation/validation";
+import Button from '../common/button/Button';
+import {Input} from '../common/input/Input';
+import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
+import {fetchAuthorization} from '../../redux/appReducer';
+import {useNavigate} from 'react-router-dom';
+import {validationLogin} from '../../utils/validation/validation';
 
 
 export const Login = () => {
     const dispatch = useAppDispatch()
-    const authorizedStatus = useAppSelector(state => state.authorized.authorizedStatus)
+    const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -32,9 +32,9 @@ export const Login = () => {
     return (
         <div className={style.loginBloc}>
             <form onSubmit={formik.handleSubmit}>
-                <Input id={"email"}
-                       name={"email"}
-                       label={"Email"}
+                <Input id={'email'}
+                       name={'email'}
+                       label={'Email'}
                        value={formik.values.email}
                        onChange={formik.handleChange}
                        error={formik.errors.email}

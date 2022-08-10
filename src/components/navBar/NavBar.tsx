@@ -2,23 +2,25 @@ import React from 'react';
 import style from './NavBar.module.css'
 import {NavLink} from 'react-router-dom'
 import List from '@material-ui/core/List';
-import ListItem, {ListItemProps} from '@material-ui/core/ListItem';
+import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/Inbox';
-import {Announcement, Message, MusicNote, People, Settings} from "@material-ui/icons";
+import {Announcement, Message, MusicNote, People, Settings} from '@material-ui/icons';
 
 type NavBarProps = {
-    handlerShowMenu?: () => void
+    isShowNavBarMenu?: (isShow: boolean) => void
+
 }
 
+
 const NavBar = (props: NavBarProps) => {
-
-
+    
     return (
         <div className={'navbar'}>
             <List component="nav" aria-label="main mailbox folders" className={style.list}
-                  onClick={props.handlerShowMenu}>
+                  onClick={() => props.isShowNavBarMenu && props.isShowNavBarMenu(false)}
+            >
                 <ListItem button>
                     <ListItemIcon>
                         <InboxIcon/>
@@ -76,7 +78,7 @@ const NavBar = (props: NavBarProps) => {
             </List>
         </div>
     );
-};
+}
 
 
 export default NavBar;

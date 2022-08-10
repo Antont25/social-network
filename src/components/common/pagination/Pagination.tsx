@@ -1,9 +1,11 @@
 import React, {useMemo} from 'react';
 import style from './pagination.module.css'
-import IconButton from "@material-ui/core/IconButton";
-import {ArrowBack, ArrowForward} from "@material-ui/icons";
+import IconButton from '@material-ui/core/IconButton';
+import {ArrowBack, ArrowForward} from '@material-ui/icons';
 import List from '@material-ui/core/List';
-import {ListItem} from "@material-ui/core";
+import {ListItem} from '@material-ui/core';
+import {useAppDispatch} from '../../../utils/hooks/hooks';
+import {setCurrentPage, setPortionsNumber} from '../../../redux/usersReducer';
 
 
 type PaginationPropsType = {
@@ -11,19 +13,17 @@ type PaginationPropsType = {
     pageSize: number
     currentPage: number
     portionsNumber: number
-    setCurrentPage: (payload: number) => void
-    setPortionsNumber: (payload: number) => void
 }
 
 export const Pagination: React.FC<PaginationPropsType> = React.memo((props) => {
-
+        const dispatch = useAppDispatch()
         let {portions, arrayPages} = useMemo((): { portions: number, arrayPages: Array<number>, } => {
             let pages = Math.ceil(props.totalCount / props.pageSize)
             let arrayPages = []
             for (let i = 1; i <= pages; i++) {
                 arrayPages.push(i)
             }
-            console.log('use')
+
             return {
                 portions: Math.ceil(pages / 10),
                 arrayPages,
@@ -35,20 +35,21 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo((props) => {
         let leftPortions = (props.portionsNumber - 1) * 10 + 1
         let rightPortions = props.portionsNumber * 10
         let showPage = arrayPages.filter((item: number) => item >= leftPortions && item <= rightPortions)
-            .map(item => <ListItem button
-                                   className={item === props.currentPage ? `${style.active} ${style.listItemNum}` : style.listItemNum}
-                                   onClick={() => props.setCurrentPage(item)}
+            .map((item, index) => <ListItem button
+                                            key={index}
+                                            className={item === props.currentPage ? `${style.active} ${style.listItemNum}` : style.listItemNum}
+                                            onClick={() => dispatch(setCurrentPage(item))}
             >
                 {item}
             </ListItem>)
 
 
         function onClickLeftHandler() {
-            props.setPortionsNumber(props.portionsNumber - 1)
+            dispatch(setPortionsNumber(props.portionsNumber - 1))
         }
 
         function onClickRightHandler() {
-            props.setPortionsNumber(props.portionsNumber + 1)
+            dispatch(setPortionsNumber(props.portionsNumber + 1))
         }
 
 
@@ -68,7 +69,7 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo((props) => {
                 <IconButton color="primary"
                             aria-label="upload picture"
                             component="span"
-                            disabled={props.portionsNumber == portions}
+                            disabled={props.portionsNumber === portions}
                             onClick={onClickRightHandler}
                 >
                     <ArrowForward/>

@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {ActionProfileReducerType, profileReducer} from './profileReducer';
 import {ActionHeaderReducerType, headerReducer} from './headerReducer';
-import {ActionAuthorizedReducerType, authorizedReducer} from './authorizedReducer';
+import {ActionAppReducerType, appReducer} from './appReducer';
 import {ActionDialogsReducerType, dialogsReducer} from './dialogsReducer';
 import {ActionUserReducerType, usersReducer} from './usersReducer';
 
@@ -13,7 +13,7 @@ let rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     headerPage: headerReducer,
-    authorized: authorizedReducer,
+    app: appReducer,
 });
 
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
@@ -22,7 +22,7 @@ export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(t
 export type ActionType =
     ActionProfileReducerType
     | ActionHeaderReducerType
-    | ActionAuthorizedReducerType
+    | ActionAppReducerType
     | ActionDialogsReducerType
     | ActionUserReducerType
 

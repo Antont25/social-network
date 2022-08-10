@@ -8,19 +8,22 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import {Status} from "../../users/Status";
 import {UserProfileType} from "../../../api/api";
+import {useAppDispatch} from '../../../utils/hooks/hooks';
+import {fetchStatusUpdates} from '../../../redux/profileReducer';
 
 
 type UserInfoType = {
     userProfile: UserProfileType
     authorizedUserId: number | null
     userStatus: string | null
-    fetchStatusUpdates: (newStatus: string, userId: number) => void
+
 }
 const UserInfo: React.FC<UserInfoType> = (props) => {
 
+    const dispatch = useAppDispatch()
 
     function setStatusHandler(value: string) {
-        props.fetchStatusUpdates(value, props.userProfile.userId)
+        dispatch(fetchStatusUpdates(value, props.userProfile.userId))
     }
 
     return (

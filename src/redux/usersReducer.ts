@@ -1,6 +1,8 @@
 import {api, FetchUserType, UserType} from '../api/api';
-import {setIsLoading} from './authorizedReducer';
+import {setIsLoading} from './appReducer';
 import {AppThunk} from './store';
+import {AxiosError} from 'axios';
+import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
 
 const initialStateUserPage = {
     items: [] as Array<UserType>,
@@ -69,12 +71,12 @@ export const setUserSubscription = (userId: number, isFollowing: boolean) =>
 //thunk
 export const fetchUserData = (currentPage: number): AppThunk => async dispatch => {
     try {
-        debugger
         dispatch(setIsLoading(true))
         let response = await api.getUser(currentPage)
         dispatch(setUsers(response))
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setIsLoading(false))
     }
@@ -87,8 +89,9 @@ export const fetchFollowUser = (usersId: number): AppThunk => async dispatch => 
         if (response.resultCode === 0) {
             dispatch(follow(usersId))
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setUserSubscription(usersId, false))
     }
@@ -100,8 +103,9 @@ export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch =
         if (response.resultCode === 0) {
             dispatch(unFollow(usersId))
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
     } finally {
         dispatch(setUserSubscription(usersId, false))
     }

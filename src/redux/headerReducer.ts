@@ -7,7 +7,7 @@ export const headerReducer = (state = initialStateHeader, action: ActionHeaderRe
         case 'HEADER/SHOW_MENU':
             return {
                 ...state,
-                menuIsShow: !state.menuIsShow
+                menuIsShow: action.payload
             }
         default:
             return state
@@ -15,7 +15,7 @@ export const headerReducer = (state = initialStateHeader, action: ActionHeaderRe
 }
 
 //action
-export const showMenuHandler = () => ({type: 'HEADER/SHOW_MENU'} as const)
+export const showMenuHandler = (payload: boolean) => ({type: 'HEADER/SHOW_MENU', payload} as const)
 
 //type
 export type ActionHeaderReducerType = ReturnType<typeof showMenuHandler>

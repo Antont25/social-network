@@ -10,7 +10,7 @@ beforeEach(() => {
 
 test('Authorized status change', () => {
 
-    const newState = headerReducer(initialStateHeader, showMenuHandler())
+    const newState = headerReducer(initialStateHeader, showMenuHandler(true))
 
     expect(newState.menuIsShow).toBe(true)
 })
