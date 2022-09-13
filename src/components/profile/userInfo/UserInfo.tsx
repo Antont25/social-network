@@ -6,10 +6,11 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
-import {Status} from "../../users/Status";
-import {UserProfileType} from "../../../api/api";
+import {Status} from '../../users/Status';
+import {UserProfileType} from '../../../api/api';
 import {useAppDispatch} from '../../../utils/hooks/hooks';
 import {fetchStatusUpdates} from '../../../redux/profileReducer';
+import {AvatarUser} from './Avatar/AvatarUser';
 
 
 type UserInfoType = {
@@ -29,12 +30,14 @@ const UserInfo: React.FC<UserInfoType> = (props) => {
     return (
         <Paper elevation={3} className={style.avatarPaper}>
             <Grid container className={style.avatarBloc}>
-                <Avatar className={style.img} alt="Remy Sharp" src={props.userProfile.photos.small || avatar}/>
+
+                <AvatarUser src={props.userProfile.photos.small || avatar}/>
+
                 <div className={style.info}>
                     <div className={style.name}>{props.userProfile.fullName}</div>
                     <Status valueStatus={props.userStatus}
                             callback={setStatusHandler}
-                            isAuthorizedUser={props.authorizedUserId === props.userProfile.userId}/>
+                            isOwner={props.authorizedUserId === props.userProfile.userId}/>
                 </div>
             </Grid>
 

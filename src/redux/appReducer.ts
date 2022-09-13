@@ -2,6 +2,7 @@ import {api, AuthorizedUserType, UserProfileType} from '../api/api';
 import {AppThunk} from './store';
 import axios, {AxiosError} from 'axios';
 import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
+import {updateAvatarSuccess} from './profileReducer';
 
 let initialStateApp = {
     isLoading: false,
@@ -41,6 +42,16 @@ export const appReducer = (state = initialStateApp, action: ActionAppReducerType
             }
         case 'APP/SET-SERVER-ERROR':
             return {...state, serverError: action.payload}
+        case 'PROFILE/UPDATE_AVATAR_SUCCESS': {
+            const photos = {...action.payload}
+            return {
+                ...state,
+                authorizedProfileUser: {
+                    ...state.authorizedProfileUser,
+                    photos: photos
+                }
+            }
+        }
         default:
             return state
     }
@@ -118,4 +129,5 @@ export type ActionAppReducerType =
     | ReturnType<typeof setAuthorizedStatus>
     | ReturnType<typeof setAuthorizedProfileUser>
     | ReturnType<typeof setServerError>
+    | ReturnType<typeof updateAvatarSuccess>
 

@@ -10,19 +10,19 @@ import {useAppDispatch, useAppSelector} from '../utils/hooks/hooks';
 
 export const Profile = () => {
     const dispatch = useAppDispatch()
-    const {authorizedStatus, authorizedUser, isLoading, posts, userProfile, userStatus} = useAppSelector(state =>
-        ({
-            authorizedStatus: state.app.authorizedStatus,
-            authorizedUser: state.app.authorizedUser,
-            isLoading: state.app.isLoading,
-            posts: state.profilePage.posts,
-            userProfile: state.profilePage.userProfile,
-            userStatus: state.profilePage.userStatus,
-        }))
+
+    const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
+    const authorizedUser = useAppSelector(state => state.app.authorizedUser)
+    const isLoading = useAppSelector(state => state.app.isLoading)
+    const posts = useAppSelector(state => state.profilePage.posts)
+    const userProfile = useAppSelector(state => state.profilePage.userProfile)
+    const userStatus = useAppSelector(state => state.profilePage.userStatus)
 
     let params = useParams<'id'>()
     let paramsURL = Number(params['id'])
+
     const navigate = useNavigate()
+
     useEffect(() => {
         if (authorizedStatus === 'successfully' && !params['id']) {
             if (authorizedUser.id) paramsURL = authorizedUser.id

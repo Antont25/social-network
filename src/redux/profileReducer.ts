@@ -1,4 +1,4 @@
-import {api, UserProfileType} from '../api/api';
+import {api, PhotosType, UserProfileType} from '../api/api';
 import {setIsLoading} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
@@ -37,24 +37,34 @@ export const profileReducer = (state = initialSateProfile, action: ActionProfile
                 ...state,
                 userStatus: action.payload
             }
+        case 'PROFILE/UPDATE_AVATAR_SUCCESS':
+            return {
+                ...state,
+                userProfile: {...state.userProfile, photos: action.payload}
+            }
         default:
             return state
     }
 };
 
 //action
-export const addPost = (payload: string) => ({type: 'PROFILE/ADD_POST', payload} as const)
-export const setUserProfile = (payload: UserProfileType) => ({type: 'PROFILE/SET_USER_PROFILE', payload} as const)
-export const setStatusUpdates = (payload: string | null) => ({type: 'PROFILE/SET_STATUS_UPDATES', payload} as const)
+export const addPost = (payload: string) =>
+    ({type: 'PROFILE/ADD_POST', payload} as const)
+export const setUserProfile = (payload: UserProfileType) =>
+    ({type: 'PROFILE/SET_USER_PROFILE', payload} as const)
+export const setStatusUpdates = (payload: string | null) =>
+    ({type: 'PROFILE/SET_STATUS_UPDATES', payload} as const)
+export const updateAvatarSuccess = (payload: PhotosType) =>
+    ({type: 'PROFILE/UPDATE_AVATAR_SUCCESS', payload} as const)
 
 //thunk
 export const fetchUserProfileData = (paramsURL: number): AppThunk => async dispatch => {
     try {
         dispatch(setIsLoading(true))
         if (paramsURL) {
-            let response = await api.getUserProfile(paramsURL)
-            dispatch(setUserProfile(response))
-            let responseStatus = await api.getStatusUser(response.userId)
+            const res = await api.getUserProfile(paramsURL)
+            dispatch(setUserProfile(res))
+            const responseStatus = await api.getStatusUser(res.userId)
             dispatch(setStatusUpdates(responseStatus))
         }
     } catch (e) {
@@ -67,10 +77,24 @@ export const fetchUserProfileData = (paramsURL: number): AppThunk => async dispa
 export const fetchStatusUpdates = (newStatus: string, usersId: number): AppThunk => async dispatch => {
     try {
         dispatch(setIsLoading(true))
-        let response = await api.statusUpdates(newStatus)
-        if (response.resultCode === 0) {
-            let responseNewStatus = await api.getStatusUser(usersId)
+        const res = await api.statusUpdates(newStatus)
+        if (res.resultCode === 0) {
+            const responseNewStatus = await api.getStatusUser(usersId)
             dispatch(setStatusUpdates(responseNewStatus))
+        }
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
+    } finally {
+        dispatch(setIsLoading(false))
+    }
+}
+export const updateAvatar = (image: any): AppThunk => async (dispatch, getState) => {
+    try {
+        dispatch(setIsLoading(true))
+        const res = await api.savePhoto(image)
+        if (res.resultCode === 0) {
+            dispatch(updateAvatarSuccess(res.data.photos))
         }
     } catch (e) {
         const error = e as Error | AxiosError
@@ -91,3 +115,4 @@ export type ActionProfileReducerType =
     ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatusUpdates>
+    | ReturnType<typeof updateAvatarSuccess>

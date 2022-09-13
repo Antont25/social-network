@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from 'axios';
+import axios from 'axios';
 
 
 const instance = axios.create({
@@ -47,10 +47,28 @@ export const api = {
         const response = await instance.delete<ResponseType>(`auth/login`)
         return response.data
     },
+    async savePhoto(image: string) {
+        const bodyFormData = new FormData();
+        bodyFormData.append('image', image)
+
+        const response = await instance.put<ResponseType<PhotosTypeResponse>>(`profile/photo`, bodyFormData, {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }
+            ,)
+        return response.data
+    },
 
 }
 
 //type
+export type PhotosTypeResponse = {
+    photos: PhotosType
+
+}
+export type PhotosType = {
+    small: string
+    large: string
+}
 export type ResponseType<T = {}> = {
     resultCode: number
     messages: string[]

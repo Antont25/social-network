@@ -1,5 +1,5 @@
 import {AppBar, Paper} from '@material-ui/core';
-import React, {LegacyRef, MouseEvent, RefObject, useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,16 +8,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import imgIcon from '../../assest/img/logo.png'
 import {MenuOpen} from '@material-ui/icons';
 import style from './header.module.css'
-
-import {connect} from 'react-redux';
-import {AppStoreType} from '../../redux/store';
 import NavBar from '../navBar/NavBar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import {NavLink, useNavigate} from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {fetchLogout, StatusAuthorizedType} from '../../redux/appReducer';
+import {fetchLogout} from '../../redux/appReducer';
 import {showMenuHandler} from '../../redux/headerReducer';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
 
@@ -45,23 +42,21 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Header: React.FC = () => {
         const dispatch = useAppDispatch()
         const classes = useStyles();
-        const {authorizedStatus, userFoto, menuIsShow} = useAppSelector(state => ({
-            authorizedStatus: state.app.authorizedStatus,
-            userFoto: state.app.authorizedProfileUser.photos.small,
-            menuIsShow: state.headerPage.menuIsShow,
-        }))
-        const navigate = useNavigate()
-        useEffect(() => {
-            if (authorizedStatus === 'fail') navigate('/')
-        }, [authorizedStatus])
-
-        const isShowNavBarMenu = useCallback((isShow: boolean) => {
-            dispatch(showMenuHandler(isShow))
-        }, [dispatch]);
 
         const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
         const open = Boolean(anchorEl);
 
+        const ref = useRef<HTMLInputElement | null>(null)
+
+        const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
+        const userFoto = useAppSelector(state => state.app.authorizedProfileUser.photos.small)
+        const menuIsShow = useAppSelector(state => state.headerPage.menuIsShow)
+
+        const navigate = useNavigate()
+
+        const isShowNavBarMenu = useCallback((isShow: boolean) => {
+            dispatch(showMenuHandler(isShow))
+        }, [dispatch]);
 
         const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
             setAnchorEl(event.currentTarget);
@@ -76,8 +71,6 @@ export const Header: React.FC = () => {
             dispatch(fetchLogout())
         }
 
-
-        const ref = useRef<HTMLInputElement | null>(null)
 
         function navBarMenuClicked(event: any) {
             let path = event.path || (event.composedPath && event.composedPath())
@@ -96,6 +89,10 @@ export const Header: React.FC = () => {
 
             }
         }, [menuIsShow])
+
+        useEffect(() => {
+            if (authorizedStatus === 'fail') navigate('/')
+        }, [authorizedStatus])
 
         return (
             <div className={classes.root}>

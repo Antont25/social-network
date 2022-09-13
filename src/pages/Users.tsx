@@ -6,28 +6,16 @@ import {User} from '../components/users/User';
 import {useAppDispatch, useAppSelector} from '../utils/hooks/hooks';
 
 
-export const Users = () => {
+const Users = () => {
     const dispatch = useAppDispatch()
-    const {
-        users,
-        totalCount,
-        pageSize,
-        currentPage,
-        userSubscription,
-        portionsNumber,
-        isLoading,
-        authorizedStatus
-    } = useAppSelector(state =>
-        ({
-            users: state.usersPage.items,
-            totalCount: state.usersPage.totalCount,
-            pageSize: state.usersPage.pageSize,
-            currentPage: state.usersPage.currentPage,
-            userSubscription: state.usersPage.userSubscription,
-            portionsNumber: state.usersPage.portionsNumber,
-            isLoading: state.app.isLoading,
-            authorizedStatus: state.app.authorizedStatus,
-        }))
+    const users = useAppSelector(state => state.usersPage.items)
+    const totalCount = useAppSelector(state => state.usersPage.totalCount)
+    const pageSize = useAppSelector(state => state.usersPage.pageSize)
+    const currentPage = useAppSelector(state => state.usersPage.currentPage)
+    const userSubscription = useAppSelector(state => state.usersPage.userSubscription)
+    const portionsNumber = useAppSelector(state => state.usersPage.portionsNumber)
+    const isLoading = useAppSelector(state => state.app.isLoading)
+    const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
 
 
     useEffect(() => {
@@ -54,6 +42,7 @@ export const Users = () => {
         </div>
     );
 };
+export default Users
 
 
 

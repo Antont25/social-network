@@ -29,8 +29,9 @@
 }
 
 .textStatus {
-    cursor: pointer;
-
+    font-size: 1.2rem;
+    max-width: 200px;
+    overflow-wrap: break-word;
 }
 
 .statusBloc > span {
@@ -40,13 +41,17 @@
 .statusBloc {
     display: flex;
     margin-top: 40px;
+    align-items: center;
+}
+
+.icon {
+    color: #2186c4;
+    font-size: 1rem !important;
+    margin: 4px 5px 0 5px;
+    cursor: pointer;
 }
 
 .statusInput {
     margin-left: 10px !important;
     margin-top: 0px !important;
-}
-
-.statusInput > div {
-    height: 21px;
 }
