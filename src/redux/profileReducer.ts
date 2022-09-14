@@ -1,4 +1,4 @@
-import {api, PhotosType, UserProfileType} from '../api/api';
+import {api, ContactsType, PhotosType, UpdateDateType, UserProfileType} from '../api/api';
 import {setIsLoading} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
@@ -103,6 +103,54 @@ export const updateAvatar = (image: any): AppThunk => async (dispatch, getState)
         dispatch(setIsLoading(false))
     }
 }
+export const updateContacts = (contacts?: ContactsType, fullName?: string): AppThunk => async (dispatch, getState) => {
+
+
+    const data = {
+        aboutMe: getState().profilePage.userProfile.aboutMe,
+        lookingForAJobDescription: getState().profilePage.userProfile.lookingForAJobDescription,
+        fullName: fullName || getState().profilePage.userProfile.fullName,
+        contacts: contacts || getState().profilePage.userProfile.contacts
+    }
+
+    try {
+        dispatch(setIsLoading(true))
+        const res = await api.updateContacts(data)
+        if (res.resultCode === 0) {
+            const paramsURL = getState().app.authorizedProfileUser.userId
+            dispatch(fetchUserProfileData(paramsURL))
+        }
+    } catch (e) {
+        const error = e as Error | AxiosError
+        errorFromStatusCodeOrApplication(error, dispatch)
+    } finally {
+        dispatch(setIsLoading(false))
+    }
+}
+// export const updateName = (fullName: string): AppThunk => async (dispatch, getState) => {
+//
+//
+//     const data = {
+//         aboutMe: getState().profilePage.userProfile.aboutMe,
+//         lookingForAJobDescription: getState().profilePage.userProfile.lookingForAJobDescription,
+//         fullName,
+//         contacts:getState().profilePage.userProfile.contacts
+//     }
+//
+//     try {
+//         dispatch(setIsLoading(true))
+//         const res = await api.updateContacts(data)
+//         if (res.resultCode === 0) {
+//             const paramsURL = getState().app.authorizedProfileUser.userId
+//             dispatch(fetchUserProfileData(paramsURL))
+//         }
+//     } catch (e) {
+//         const error = e as Error | AxiosError
+//         errorFromStatusCodeOrApplication(error, dispatch)
+//     } finally {
+//         dispatch(setIsLoading(false))
+//     }
+// }
 
 //type
 export type InitialSateProfileType = typeof initialSateProfile

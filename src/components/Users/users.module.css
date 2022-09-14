@@ -30,8 +30,9 @@
 
 .textStatus {
     font-size: 1.2rem;
-    max-width: 200px;
     overflow-wrap: break-word;
+    margin-left: 10px;
+    max-width: 238px;
 }
 
 .statusBloc > span {
@@ -55,3 +56,10 @@
     margin-left: 10px !important;
     margin-top: 0px !important;
 }
+
+@media (max-width: 600px) {
+    .textStatus {
+        max-width: 100px;
+    }
+}
+

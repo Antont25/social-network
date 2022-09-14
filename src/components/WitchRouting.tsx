@@ -2,10 +2,11 @@ import React, {Suspense} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Profile} from '../pages/Profile';
 import Dialogs from '../pages/Dialogs';
-import {Login} from './login/Login';
-import {Page404} from './page404/Page404';
-import {Layout} from './layout/Layout';
-import {Loading} from './common/loading/Loading';
+import {Login} from './Login/Login';
+import {Page404} from './Page404/Page404';
+import {Layout} from './Layout/Layout';
+import {Loading} from './common/Loading/Loading';
+import {InDeveloping} from './InDeveloping/InDeveloping';
 
 const Users = React.lazy(() => import('../pages/Users'));
 
@@ -22,6 +23,7 @@ export const WitchRouting = () => {
                     <Route path="/dialogs" element={<Dialogs/>}/>
                     <Route path="/users" element={<Users/>}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/in-developing" element={<InDeveloping/>}/>
                     <Route path="*" element={<Navigate to={'not-found'}/>}/>
                 </Route>
                 <Route path="/not-found" element={<Page404/>}/>

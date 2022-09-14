@@ -21,7 +21,7 @@ export function withAuthRedirect<T>(Component: ComponentType<T>) {
     const AuthRedirect = (props: MSTPType) => {
         const {authorizedStatus, ...restProps} = props
         if (authorizedStatus === 'fail') {
-            return <Navigate to={'/login'}/>
+            return <Navigate to={'/Login'}/>
         }
 
 

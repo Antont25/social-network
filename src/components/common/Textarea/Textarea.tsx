@@ -1,8 +1,8 @@
 import React from 'react';
 import style from './textarea.module.css'
 import TextField from '@material-ui/core/TextField';
-import Button from "../button/Button";
-import {useFormik} from "formik";
+import Button from '../Button/Button';
+import {useFormik} from 'formik';
 
 
 type TextareaPropsType = {
@@ -40,7 +40,8 @@ export const Textarea: React.FC<TextareaPropsType> = (props) => {
                     inputProps={{maxLength: 101}}
                 />
 
-                <Button type="submit">
+                <Button type="submit"
+                        className={style.addBtn}>
                     Добавить
                 </Button>
             </div>

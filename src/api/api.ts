@@ -57,6 +57,10 @@ export const api = {
             ,)
         return response.data
     },
+    async updateContacts(data: UpdateDateType) {
+        const response = await instance.put<ResponseType>(`profile`, data)
+        return response.data
+    },
 
 }
 
@@ -80,18 +84,27 @@ export type AuthorizedUserType = {
     login: null | string
 
 }
+export type UpdateDateType = {
+    aboutMe: string | null
+    contacts: ContactsType,
+    lookingForAJob?: boolean
+    lookingForAJobDescription: string | null
+    fullName: string | null
+    userId?: number
+}
+export type ContactsType = {
+    facebook: string | null
+    website: string | null
+    vk: string | null
+    twitter: string | null
+    instagram: string | null
+    youtube: string | null,
+    github: string | null
+    mainLink: string | null
+};
 export type UserProfileType = {
     aboutMe: string | null
-    contacts: {
-        facebook: string | null
-        website: string | null
-        vk: string | null
-        twitter: string | null
-        instagram: string | null
-        youtube: string | null,
-        github: string | null
-        mainLink: string | null
-    },
+    contacts: ContactsType,
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
     fullName: string | null

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
 import style from './login.module.css'
-import Button from '../common/button/Button';
-import {Input} from '../common/input/Input';
+import Button from '../common/Button/Button';
+import {Input} from '../common/Input/Input';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
 import {fetchAuthorization} from '../../redux/appReducer';
 import {useNavigate} from 'react-router-dom';
@@ -33,20 +33,16 @@ export const Login = () => {
         <div className={style.loginBloc}>
             <form onSubmit={formik.handleSubmit}>
                 <Input id={'email'}
-                       name={'email'}
                        label={'Email'}
-                       value={formik.values.email}
-                       onChange={formik.handleChange}
+                       {...formik.getFieldProps('email')}
                        error={formik.errors.email}
                        touched={formik.touched.email}
                        onBlur={() => formik.setFieldTouched('email', true)}
                 />
                 <Input id="password"
-                       name="password"
                        label="Password"
                        type="password"
-                       value={formik.values.password}
-                       onChange={formik.handleChange}
+                       {...formik.getFieldProps('password')}
                        error={formik.errors.password || formik.status}
                        touched={formik.touched.password}
                        onBlur={() => formik.setFieldTouched('password', true)}

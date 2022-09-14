@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './NavBar.module.css'
+import style from './navBar.module.css'
 import {NavLink} from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,7 +15,7 @@ type NavBarProps = {
 
 
 const NavBar = (props: NavBarProps) => {
-    
+
     return (
         <div className={'navbar'}>
             <List component="nav" aria-label="main mailbox folders" className={style.list}
@@ -25,7 +25,7 @@ const NavBar = (props: NavBarProps) => {
                     <ListItemIcon>
                         <InboxIcon/>
                     </ListItemIcon>
-                    <NavLink to={'/profile'}
+                    <NavLink to={'/Profile'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>
                         <ListItemText primary="Profile"/>
                     </NavLink>
@@ -43,7 +43,7 @@ const NavBar = (props: NavBarProps) => {
                     <ListItemIcon>
                         <Announcement/>
                     </ListItemIcon>
-                    <NavLink to={'/news'}
+                    <NavLink to={'/in-developing'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>
                         <ListItemText primary="News"/>
                     </NavLink>
@@ -52,7 +52,7 @@ const NavBar = (props: NavBarProps) => {
                     <ListItemIcon>
                         <MusicNote/>
                     </ListItemIcon>
-                    <NavLink to={'/music'}
+                    <NavLink to={'/in-developing'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>
                         <ListItemText primary="Music"/>
                     </NavLink>
@@ -61,7 +61,7 @@ const NavBar = (props: NavBarProps) => {
                     <ListItemIcon>
                         <People/>
                     </ListItemIcon>
-                    <NavLink to={'/users'}
+                    <NavLink to={'/Users'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>
                         <ListItemText primary="Users"/>
                     </NavLink>
@@ -70,7 +70,7 @@ const NavBar = (props: NavBarProps) => {
                     <ListItemIcon>
                         <Settings/>
                     </ListItemIcon>
-                    <NavLink to={'/settings'}
+                    <NavLink to={'/in-developing'}
                              className={(({isActive}) => isActive ? style.active : style.item)}>
                         <ListItemText primary="Settings"/>
                     </NavLink>

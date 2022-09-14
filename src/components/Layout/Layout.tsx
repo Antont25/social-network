@@ -1,9 +1,9 @@
 import {Container, Grid, Paper} from '@material-ui/core';
-import {Header} from '../header/Header';
-import style from '../header/header.module.css';
-import NavBar from '../navBar/NavBar';
+import {Header} from '../Header/Header';
+import style from '../Header/header.module.css';
+import NavBar from '../NavBar/NavBar';
 import {Outlet} from 'react-router-dom';
-import Footer from '../footer/Footer';
+import Footer from '../Footer/Footer';
 import React from 'react';
 
 export const Layout = () => {

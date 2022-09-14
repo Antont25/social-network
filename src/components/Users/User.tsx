@@ -50,7 +50,8 @@ export const User: React.FC<UserFCType> = React.memo((props) => {
                         <NavLink to={`/profile/${props.users.id}`}>
                             <div className={style.userName}>{props.users.name}</div>
                         </NavLink>
-                        <div>Информация про меня: {props.users.status ? props.users.status : 'нету данных'}</div>
+                        <div>Информация про
+                            пользователя: {props.users.status ? props.users.status : 'нету данных'}</div>
                     </Grid>
                 </Grid>
             </Paper>

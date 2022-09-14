@@ -16,3 +16,17 @@
 .textareaBloc div {
     min-height: 80px !important;
 }
+
+.addBtn {
+    margin-left: 20px;
+}
+
+@media (max-width: 600px) {
+    .addTextBloc {
+        flex-direction: column;
+    }
+
+    .addBtn {
+        margin: 20px 0 0 0;
+    }
+}

@@ -27,7 +27,7 @@ beforeEach(() => {
     }
 })
 
-test('Checking is progress loading', () => {
+test('Checking is progress Loading', () => {
 
     const newState = appReducer(initialState, setIsLoading(true))
 

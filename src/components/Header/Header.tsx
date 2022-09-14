@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import imgIcon from '../../assest/img/logo.png'
 import {MenuOpen} from '@material-ui/icons';
 import style from './header.module.css'
-import NavBar from '../navBar/NavBar';
+import NavBar from '../NavBar/NavBar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import {NavLink, useNavigate} from 'react-router-dom';
@@ -17,11 +17,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {fetchLogout} from '../../redux/appReducer';
 import {showMenuHandler} from '../../redux/headerReducer';
 import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
-
-
-type HeaderType = {
-    showMenuHandler: () => void
-}
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -147,16 +142,16 @@ export const Header: React.FC = () => {
                                       open={open}
                                       onClose={handleClose}
                                 >
-                                    <NavLink to={'/profile'}>
+                                    <NavLink to={'/Profile'}>
                                         <MenuItem onClick={handleClose}>Мой рофиль</MenuItem>
                                     </NavLink>
-                                    <NavLink to={'/profile'}>
+                                    <NavLink to={'/Profile'}>
                                         <MenuItem onClick={onclickLogoutHandler}>Выйти</MenuItem>
                                     </NavLink>
 
                                 </Menu>
                             </div>
-                            : <NavLink to={'/login'}>
+                            : <NavLink to={'/Login'}>
                                 <Button color="inherit">Login</Button>
                             </NavLink>
                         }

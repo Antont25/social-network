@@ -1,4 +1,4 @@
-import style from './Page404.module.css';
+import style from './page404.module.css';
 import {NavLink} from 'react-router-dom';
 
 export const Page404 = () => {

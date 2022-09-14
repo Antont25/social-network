@@ -32,7 +32,7 @@ beforeEach(() => {
     }
 })
 
-test('Adding array users', () => {
+test('Adding array Users', () => {
     const arrayUser = {
         items: [{
             name: 'Kety',
@@ -80,7 +80,7 @@ test('Change current page and portion number', () => {
     expect(newStatePortionsNumber.currentPage).toBe(2)
     expect(newStatePortionsNumber.portionsNumber).toBe(3)
 })
-test('Adding and deletions users to the subscriber array', () => {
+test('Adding and deletions Users to the subscriber array', () => {
     const newState = usersReducer(initialStateUserPage, setUserSubscription(2, true))
 
     expect(newState.items.length).toBe(1)

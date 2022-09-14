@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {MyPosts} from '../components/profile/myPosts/MyPosts';
-import UserInfo from '../components/profile/userInfo/UserInfo';
-import {Loading} from '../components/common/loading/Loading';
+import {MyPosts} from '../components/Profile/MyPosts/MyPosts';
+import UserInfo from '../components/Profile/UserInfo/UserInfo';
+import {Loading} from '../components/common/Loading/Loading';
 import {useParams} from 'react-router';
 import {useNavigate} from 'react-router-dom';
 import {fetchUserProfileData,} from '../redux/profileReducer';
@@ -30,7 +30,7 @@ export const Profile = () => {
         if (authorizedStatus === 'successfully' || paramsURL) {
             dispatch(fetchUserProfileData(paramsURL))
         } else if (authorizedStatus === 'fail') {
-            navigate('/login')
+            navigate('/Login')
         }
 
     }, [authorizedStatus, paramsURL])

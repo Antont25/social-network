@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import {Pagination} from '../components/common/pagination/Pagination';
-import {Loading} from '../components/common/loading/Loading';
+import {Pagination} from '../components/common/Pagination/Pagination';
+import {Loading} from '../components/common/Loading/Loading';
 import {fetchUserData,} from '../redux/usersReducer';
-import {User} from '../components/users/User';
+import {User} from '../components/Users/User';
 import {useAppDispatch, useAppSelector} from '../utils/hooks/hooks';
 
 

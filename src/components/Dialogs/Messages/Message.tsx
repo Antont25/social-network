@@ -1,5 +1,5 @@
 import React from 'react'
-import style from './Message.module.css'
+import style from './message.module.css'
 
 type MessageType = {
     avatar?: string

@@ -1,9 +1,9 @@
 import React from 'react';
-import {MyPost} from './myPost/MyPost';
+import {MyPost} from './MyPost/MyPost';
 import {Paper} from '@material-ui/core';
 import style from './myPosts.module.css'
 import {addPost, PostsType} from '../../../redux/profileReducer';
-import {Textarea} from '../../common/textarea/Textarea';
+import {Textarea} from '../../common/Textarea/Textarea';
 import {validationPostAndDialog} from '../../../utils/validation/validation';
 import {useAppDispatch} from '../../../utils/hooks/hooks';
 
