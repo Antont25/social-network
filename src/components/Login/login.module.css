@@ -35,7 +35,15 @@
 }
 
 .loginBtn {
-    width: 300px;
+    max-width: 300px;
+    width: 100%;
     margin: 20px 0 0 0;
+}
+
+.testBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 

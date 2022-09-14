@@ -31,7 +31,13 @@ export const Login = () => {
     const disabled = (formik.touched.password && formik.touched.email && !!(formik.errors.email || formik.errors.password))
     return (
         <div className={style.loginBloc}>
+
             <form onSubmit={formik.handleSubmit}>
+                <div className={style.testBlock}>
+                    <span>Данные тестового аккаунта:</span>
+                    <div>Email: free@samuraijs.com</div>
+                    <div>Password: free</div>
+                </div>
                 <Input id={'email'}
                        label={'Email'}
                        {...formik.getFieldProps('email')}

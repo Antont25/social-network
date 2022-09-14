@@ -33,6 +33,7 @@
     overflow-wrap: break-word;
     margin-left: 10px;
     max-width: 238px;
+    line-height: 1.1;
 }
 
 .statusBloc > span {
