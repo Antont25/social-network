@@ -24,6 +24,7 @@ beforeEach(() => {
             photos: {small: null}
         } as UserProfileType,
         serverError: null as null | string,
+        captchaUrl: null
     }
 })
 

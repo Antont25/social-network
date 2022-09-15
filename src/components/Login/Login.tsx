@@ -12,6 +12,7 @@ import {validationLogin} from '../../utils/validation/validation';
 export const Login = () => {
     const dispatch = useAppDispatch()
     const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
+    const captchaUrl = useAppSelector(state => state.app.captchaUrl)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -22,10 +23,11 @@ export const Login = () => {
         initialValues: {
             email: '',
             password: '',
+            captcha: '',
         },
         validationSchema: validationLogin,
         onSubmit: (values, {setStatus}) => {
-            dispatch(fetchAuthorization(values.email, values.password, setStatus));
+            dispatch(fetchAuthorization(values.email, values.password, setStatus, values.captcha));
         },
     });
     const disabled = (formik.touched.password && formik.touched.email && !!(formik.errors.email || formik.errors.password))
@@ -53,6 +55,20 @@ export const Login = () => {
                        touched={formik.touched.password}
                        onBlur={() => formik.setFieldTouched('password', true)}
                 />
+                {
+                    captchaUrl &&
+                    <div>
+                        <img src={captchaUrl} alt="captcha" className={style.captchaImg}/>
+                        <Input id="captcha"
+                               label="captcha"
+                               type="captcha"
+                               {...formik.getFieldProps('captcha')}
+                               error={formik.errors.captcha || formik.status}
+                               touched={formik.touched.captcha}
+                               onBlur={() => formik.setFieldTouched('captcha', true)}
+                        />
+                    </div>
+                }
                 <Button type="submit"
                         className={style.loginBtn}
                         disabled={disabled}
@@ -63,3 +79,4 @@ export const Login = () => {
         </div>
     );
 };
+

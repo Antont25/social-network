@@ -39,8 +39,8 @@ export const api = {
         const response = await instance.get<string | null>(`profile/status/${userId}`)
         return response.data
     },
-    async authorize(email: string, password: string) {
-        const response = await instance.post<ResponseType<{ id: number }>>(`auth/login`, {email, password})
+    async authorize(email: string, password: string, captcha: string) {
+        const response = await instance.post<ResponseType<{ id: number }>>(`auth/login`, {email, password, captcha})
         return response.data
     },
     async logout() {
@@ -59,6 +59,10 @@ export const api = {
     },
     async updateContacts(data: UpdateDateType) {
         const response = await instance.put<ResponseType>(`profile`, data)
+        return response.data
+    },
+    async getCaptchaURL() {
+        const response = await instance.get<{ url: string }>(`security/get-captcha-url`)
         return response.data
     },
 
