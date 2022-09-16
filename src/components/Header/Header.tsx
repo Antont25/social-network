@@ -77,11 +77,8 @@ export const Header: React.FC = () => {
         useEffect(() => {
             let navbar = document.getElementById('navBarMenu')
             navbar && navbar.addEventListener('click', navBarMenuClicked)
-            console.log('start')
             return () => {
                 navbar && navbar.removeEventListener('click', navBarMenuClicked)
-                console.log('closed')
-
             }
         }, [menuIsShow])
 

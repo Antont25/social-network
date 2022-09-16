@@ -1,5 +1,5 @@
-import {api, ContactsType, PhotosType, UpdateDateType, UserProfileType} from '../api/api';
-import {setIsLoading} from './appReducer';
+import {api, ContactsType, PhotosType, UserProfileType} from '../api/api';
+import {setIsLoading, setServerError} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
 import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
@@ -81,6 +81,8 @@ export const fetchStatusUpdates = (newStatus: string, usersId: number): AppThunk
         if (res.resultCode === 0) {
             const responseNewStatus = await api.getStatusUser(usersId)
             dispatch(setStatusUpdates(responseNewStatus))
+        } else {
+            dispatch(setServerError(res.messages[0]))
         }
     } catch (e) {
         const error = e as Error | AxiosError
@@ -95,6 +97,8 @@ export const updateAvatar = (image: any): AppThunk => async (dispatch, getState)
         const res = await api.savePhoto(image)
         if (res.resultCode === 0) {
             dispatch(updateAvatarSuccess(res.data.photos))
+        } else {
+            dispatch(setServerError(res.messages[0]))
         }
     } catch (e) {
         const error = e as Error | AxiosError
@@ -103,9 +107,8 @@ export const updateAvatar = (image: any): AppThunk => async (dispatch, getState)
         dispatch(setIsLoading(false))
     }
 }
-export const updateContacts = (contacts?: ContactsType, fullName?: string): AppThunk => async (dispatch, getState) => {
-
-
+export const updateDateProfile = (contacts?: ContactsType, fullName?: string): AppThunk => async (dispatch, getState) => {
+    
     const data = {
         aboutMe: getState().profilePage.userProfile.aboutMe,
         lookingForAJobDescription: getState().profilePage.userProfile.lookingForAJobDescription,
@@ -119,6 +122,8 @@ export const updateContacts = (contacts?: ContactsType, fullName?: string): AppT
         if (res.resultCode === 0) {
             const paramsURL = getState().app.authorizedProfileUser.userId
             dispatch(fetchUserProfileData(paramsURL))
+        } else {
+            dispatch(setServerError(res.messages[0]))
         }
     } catch (e) {
         const error = e as Error | AxiosError

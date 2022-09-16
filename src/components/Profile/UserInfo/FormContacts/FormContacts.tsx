@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from '../../../../utils/hooks/hooks';
 import {useFormik} from 'formik';
-import {updateContacts} from '../../../../redux/profileReducer';
+import {updateDateProfile} from '../../../../redux/profileReducer';
 import {Input} from '../../../common/Input/Input';
 import Button from '../../../common/Button/Button';
 import React from 'react';
@@ -24,7 +24,7 @@ export const FormContacts = (props: FormContactsType) => {
         },
 
         onSubmit: (values,) => {
-            dispatch(updateContacts(values));
+            dispatch(updateDateProfile(values));
             props.setEditMode(false)
         },
     });

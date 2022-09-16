@@ -109,6 +109,7 @@ export const fetchAuthorization = (email: string, password: string, setStatus: a
         } else if (res.resultCode === 10) {
             dispatch(fetchCaptchaURL())
         } else if (res.resultCode !== 0) {
+            dispatch(setServerError(res.messages[0]))
             setStatus(res.messages[0])
         }
     } catch (e) {
@@ -124,6 +125,8 @@ export const fetchLogout = (): AppThunk => async dispatch => {
         let res = await api.logout()
         if (res.resultCode === 0) {
             dispatch(fetchAuthorizedData())
+        } else {
+            dispatch(setServerError(res.messages[0]))
         }
     } catch (e) {
         const error = e as Error | AxiosError

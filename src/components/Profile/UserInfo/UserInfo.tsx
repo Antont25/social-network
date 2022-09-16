@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import {UserProfileType} from '../../../api/api';
 import {useAppDispatch} from '../../../utils/hooks/hooks';
-import {fetchStatusUpdates, updateContacts} from '../../../redux/profileReducer';
+import {fetchStatusUpdates, updateDateProfile} from '../../../redux/profileReducer';
 import {AvatarUser} from './Avatar/AvatarUser';
 import Button from '../../common/Button/Button';
 import {FormContacts} from './FormContacts/FormContacts';
@@ -36,7 +36,7 @@ const UserInfo: React.FC<UserInfoType> = (props) => {
     }
 
     const saveNameHandler = (fullName: string) => {
-        dispatch(updateContacts(undefined, fullName))
+        dispatch(updateDateProfile(undefined, fullName))
     }
 
     const closedEditMode = () => {

@@ -1,5 +1,5 @@
 import {api, FetchUserType, UserType} from '../api/api';
-import {setIsLoading} from './appReducer';
+import {setIsLoading, setServerError} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
 import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
@@ -85,9 +85,11 @@ export const fetchUserData = (currentPage: number): AppThunk => async dispatch =
 export const fetchFollowUser = (usersId: number): AppThunk => async dispatch => {
     try {
         dispatch(setUserSubscription(usersId, true))
-        let response = await api.followUser(usersId)
-        if (response.resultCode === 0) {
+        let res = await api.followUser(usersId)
+        if (res.resultCode === 0) {
             dispatch(follow(usersId))
+        } else {
+            dispatch(setServerError(res.messages[0]))
         }
     } catch (e) {
         const error = e as Error | AxiosError
@@ -99,9 +101,11 @@ export const fetchFollowUser = (usersId: number): AppThunk => async dispatch => 
 export const fetchUnFollowUser = (usersId: number): AppThunk => async dispatch => {
     try {
         dispatch(setUserSubscription(usersId, true))
-        let response = await api.unFollowUser(usersId)
-        if (response.resultCode === 0) {
+        let res = await api.unFollowUser(usersId)
+        if (res.resultCode === 0) {
             dispatch(unFollow(usersId))
+        } else {
+            dispatch(setServerError(res.messages[0]))
         }
     } catch (e) {
         const error = e as Error | AxiosError
