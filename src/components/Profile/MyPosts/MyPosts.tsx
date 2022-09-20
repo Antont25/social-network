@@ -3,14 +3,11 @@ import {MyPost} from './MyPost/MyPost';
 import {Paper} from '@material-ui/core';
 import style from './myPosts.module.css'
 import {addPost, PostsType} from '../../../redux/profileReducer';
-import {Textarea} from '../../common/Textarea/Textarea';
-import {validationPostAndDialog} from '../../../utils/validation/validation';
-import {useAppDispatch} from '../../../utils/hooks/hooks';
+import {Textarea} from '../../../common/components/Textarea/Textarea';
+import {validationPostAndDialog} from '../../../common/utils/validation/validation';
+import {useAppDispatch} from '../../../common/utils/hooks/hooks';
 
-type PostPageType = {
-    posts: Array<PostsType>
-    photoUser: string | null
-}
+
 export const MyPosts = (props: PostPageType) => {
     const dispatch = useAppDispatch()
     let newPost = props.posts.map(item => <MyPost key={item.id} massage={item.massage} likes={item.likes}
@@ -31,4 +28,9 @@ export const MyPosts = (props: PostPageType) => {
         </Paper>
     );
 };
+//type
+type PostPageType = {
+    posts: Array<PostsType>
+    photoUser: string | null
+}
 

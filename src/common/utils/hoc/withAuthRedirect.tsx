@@ -2,14 +2,10 @@ import React, {ComponentType} from 'react';
 
 import {connect} from 'react-redux';
 import {Navigate} from 'react-router-dom';
-import {AppStoreType} from '../../redux/store';
-import {StatusAuthorizedType} from '../../redux/appReducer';
+import {AppStoreType} from '../../../redux/store';
+import {StatusAuthorizedType} from '../../../redux/appReducer';
 
 
-type MSTPType = {
-    authorizedStatus: StatusAuthorizedType
-
-}
 const MSTP = (state: AppStoreType): MSTPType => {
     return {
         authorizedStatus: state.app.authorizedStatus
@@ -29,6 +25,12 @@ export function withAuthRedirect<T>(Component: ComponentType<T>) {
         return <Component {...restProps}/>
     }
     return connect(MSTP)(AuthRedirect)
+}
+
+//type
+type MSTPType = {
+    authorizedStatus: StatusAuthorizedType
+
 }
 
 

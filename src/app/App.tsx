@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
 import './App.css';
 import {fetchAuthorizedData} from '../redux/appReducer';
-import {ErrorSnackbar} from '../components/common/ErrorSnackbar/ErrorSnackbar';
-import {WitchRouting} from '../components/WitchRouting';
-import {useAppDispatch, useAppSelector} from '../utils/hooks/hooks';
-import {Loading} from '../components/common/Loading/Loading';
+import {ErrorSnackbar} from '../common/components/ErrorSnackbar/ErrorSnackbar';
+import {WitchRouting} from '../common/components/Routing/WitchRouting';
+import {useAppDispatch, useAppSelector} from '../common/utils/hooks/hooks';
+import {Loading} from '../common/components/Loading/Loading';
 
 
 const App = () => {

@@ -2,12 +2,12 @@ import React from 'react';
 import style from '../components/Dialogs/dialogs.module.css'
 import Message from '../components/Dialogs/Messages/Message';
 import {DialogItems} from '../components/Dialogs/DialogItems';
-import {Textarea} from '../components/common/Textarea/Textarea';
+import {Textarea} from '../common/components/Textarea/Textarea';
 import {connect} from 'react-redux';
 import {AppStoreType} from '../redux/store';
 import {addMessage, DialogsType, MessagesType} from '../redux/dialogsReducer';
-import {withAuthRedirect} from '../utils/hoc/withAuthRedirect';
-import {validationPostAndDialog} from '../utils/validation/validation';
+import {withAuthRedirect} from '../common/utils/hoc/withAuthRedirect';
+import {validationPostAndDialog} from '../common/utils/validation/validation';
 
 
 type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType

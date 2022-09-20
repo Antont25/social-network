@@ -1,17 +1,10 @@
 import React from 'react';
 import style from './myPost.module.css'
 import Paper from '@material-ui/core/Paper';
-import Avatar from "@material-ui/core/Avatar";
-import avatar from "../../../../assest/img/avatar.png";
+import Avatar from '@material-ui/core/Avatar';
+import avatar from '../../../../assest/img/avatar.png';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import IconButton from "@material-ui/core/IconButton";
-
-
-type MyPostPropsType = {
-    massage: string
-    likes: number
-    photoUser: string | null
-}
+import IconButton from '@material-ui/core/IconButton';
 
 
 export const MyPost: React.FC<MyPostPropsType> = ({massage, likes, photoUser}) => {
@@ -23,7 +16,7 @@ export const MyPost: React.FC<MyPostPropsType> = ({massage, likes, photoUser}) =
                 <span>{massage}</span>
 
                 <div className={style.likesBloc}>
-                    <IconButton color="secondary" size={"small"}>
+                    <IconButton color="secondary" size={'small'}>
                         <FavoriteIcon/>
                         <span className={style.likes}>{likes}</span>
 
@@ -33,4 +26,11 @@ export const MyPost: React.FC<MyPostPropsType> = ({massage, likes, photoUser}) =
         </Paper>
     );
 };
+//type
+type MyPostPropsType = {
+    massage: string
+    likes: number
+    photoUser: string | null
+}
+
 

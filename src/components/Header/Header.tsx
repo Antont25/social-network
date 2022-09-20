@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import imgIcon from '../../assest/img/logo.png'
 import {MenuOpen} from '@material-ui/icons';
 import style from './header.module.css'
-import NavBar from '../NavBar/NavBar';
+import NavBar from './NavBar/NavBar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import {NavLink, useNavigate} from 'react-router-dom';
@@ -16,7 +16,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {fetchLogout} from '../../redux/appReducer';
 import {showMenuHandler} from '../../redux/headerReducer';
-import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../common/utils/hooks/hooks';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Header: React.FC = () => {
+export const Header = () => {
         const dispatch = useAppDispatch()
         const classes = useStyles();
 
@@ -61,13 +61,13 @@ export const Header: React.FC = () => {
             setAnchorEl(null);
         };
 
-        function onclickLogoutHandler() {
+        const onclickLogoutHandler = () => {
             handleClose()
             dispatch(fetchLogout())
         }
 
 
-        function navBarMenuClicked(event: any) {
+        const navBarMenuClicked = (event: any) => {
             let path = event.path || (event.composedPath && event.composedPath())
             if (!path.includes(ref.current)) {
                 isShowNavBarMenu && isShowNavBarMenu(false)
@@ -140,7 +140,7 @@ export const Header: React.FC = () => {
                                       onClose={handleClose}
                                 >
                                     <NavLink to={'/Profile'}>
-                                        <MenuItem onClick={handleClose}>Мой рофиль</MenuItem>
+                                        <MenuItem onClick={handleClose}>Мой профиль</MenuItem>
                                     </NavLink>
                                     <NavLink to={'/Profile'}>
                                         <MenuItem onClick={onclickLogoutHandler}>Выйти</MenuItem>

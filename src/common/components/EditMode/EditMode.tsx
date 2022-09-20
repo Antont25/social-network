@@ -1,17 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import CreateIcon from '@material-ui/icons/Create';
-import style from '../Users/users.module.css';
+import style from '../../../components/Users/users.module.css';
 import TextField from '@material-ui/core/TextField/TextField';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-
-type EditModeParams = {
-    value: string | null
-    isOwner: boolean
-    label: string
-    length: number
-    callback: (value: string) => void
-};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -81,9 +73,7 @@ export const EditMode = (props: EditModeParams) => {
                                 )}
                             className={classes.root}
                             onChange={e => setValueInput(e.currentTarget.value)}
-
                         />
-
                         : <>
                             <SpanText value={props.value}
                                       className={style.textStatus}/>
@@ -100,15 +90,23 @@ export const EditMode = (props: EditModeParams) => {
     );
 };
 
-type SpanTextType = {
-    value: string | null
-    className?: string
-    callback?: () => void
-}
 const SpanText = (props: SpanTextType) => {
     return <span className={props.className}
                  onDoubleClick={props.callback}>
             {props.value || 'нету даных'}
         </span>
+}
+//type
+type EditModeParams = {
+    value: string | null
+    isOwner: boolean
+    label: string
+    length: number
+    callback: (value: string) => void
+};
+type SpanTextType = {
+    value: string | null
+    className?: string
+    callback?: () => void
 }
 

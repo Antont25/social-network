@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {MyPosts} from '../components/Profile/MyPosts/MyPosts';
 import UserInfo from '../components/Profile/UserInfo/UserInfo';
-import {Loading} from '../components/common/Loading/Loading';
+import {Loading} from '../common/components/Loading/Loading';
 import {useParams} from 'react-router';
 import {useNavigate} from 'react-router-dom';
 import {fetchUserProfileData,} from '../redux/profileReducer';
-import {useAppDispatch, useAppSelector} from '../utils/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../common/utils/hooks/hooks';
 
 
 export const Profile = () => {

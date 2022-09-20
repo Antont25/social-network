@@ -1,18 +1,20 @@
 import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
 import style from './login.module.css'
-import Button from '../common/Button/Button';
-import {Input} from '../common/Input/Input';
-import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
+import Button from '../../common/components/Button/Button';
+import {Input} from '../../common/components/Input/Input';
+import {useAppDispatch, useAppSelector} from '../../common/utils/hooks/hooks';
 import {fetchAuthorization} from '../../redux/appReducer';
 import {useNavigate} from 'react-router-dom';
-import {validationLogin} from '../../utils/validation/validation';
+import {validationLogin} from '../../common/utils/validation/validation';
 
 
 export const Login = () => {
     const dispatch = useAppDispatch()
+
     const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
     const captchaUrl = useAppSelector(state => state.app.captchaUrl)
+    
     const navigate = useNavigate()
 
     useEffect(() => {

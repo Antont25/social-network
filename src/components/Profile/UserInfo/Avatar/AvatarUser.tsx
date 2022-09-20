@@ -3,13 +3,10 @@ import IconButton from '@material-ui/core/IconButton/IconButton';
 import React, {ChangeEvent} from 'react';
 import style from '../userInfo.module.css';
 import {PhotoCamera} from '@material-ui/icons';
-import {useAppDispatch} from '../../../../utils/hooks/hooks';
+import {useAppDispatch} from '../../../../common/utils/hooks/hooks';
 import {updateAvatar} from '../../../../redux/profileReducer';
 
 
-type AvatarParams = {
-    src: string
-};
 export const AvatarUser = (props: AvatarParams) => {
 
     const dispatch = useAppDispatch()
@@ -42,5 +39,9 @@ export const AvatarUser = (props: AvatarParams) => {
 
         </div>
     );
+};
+//type
+type AvatarParams = {
+    src: string
 };
 

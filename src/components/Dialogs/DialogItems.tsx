@@ -1,13 +1,9 @@
 import React from 'react';
-import {NavLink, To} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import style from './dialogs.module.css';
 
-type DialogItemsPropsType = {
-    id: string
-    name: string
-}
 
-export const DialogItems: React.FC<DialogItemsPropsType> = (props) => {
+export const DialogItems = (props: DialogItemsPropsType) => {
     return (
         <li>
             <NavLink to={props.id}
@@ -17,4 +13,10 @@ export const DialogItems: React.FC<DialogItemsPropsType> = (props) => {
         </li>
     );
 };
+//type
+type DialogItemsPropsType = {
+    id: string
+    name: string
+}
+
 

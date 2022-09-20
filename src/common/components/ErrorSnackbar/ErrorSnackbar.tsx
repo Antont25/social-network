@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import {useAppDispatch, useAppSelector} from '../../../utils/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../utils/hooks/hooks';
 import {setServerError} from '../../../redux/appReducer';
 
 

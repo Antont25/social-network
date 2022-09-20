@@ -6,21 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import {UserProfileType} from '../../../api/api';
-import {useAppDispatch} from '../../../utils/hooks/hooks';
+import {useAppDispatch} from '../../../common/utils/hooks/hooks';
 import {fetchStatusUpdates, updateDateProfile} from '../../../redux/profileReducer';
 import {AvatarUser} from './Avatar/AvatarUser';
-import Button from '../../common/Button/Button';
+import Button from '../../../common/components/Button/Button';
 import {FormContacts} from './FormContacts/FormContacts';
-import {EditMode} from '../../EditMode/EditMode';
+import {EditMode} from '../../../common/components/EditMode/EditMode';
 
 
-type UserInfoType = {
-    userProfile: UserProfileType
-    authorizedUserId: number | null
-    userStatus: string | null
-
-}
-const UserInfo: React.FC<UserInfoType> = (props) => {
+const UserInfo = (props: UserInfoType) => {
 
     const dispatch = useAppDispatch()
 
@@ -111,5 +105,12 @@ const UserInfo: React.FC<UserInfoType> = (props) => {
 };
 
 export default UserInfo;
+//type
+type UserInfoType = {
+    userProfile: UserProfileType
+    authorizedUserId: number | null
+    userStatus: string | null
+
+}
 
 

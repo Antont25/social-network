@@ -4,28 +4,21 @@ import avatar from '../../assest/img/avatar.png'
 import {Button, Grid, Paper} from '@material-ui/core';
 import style from './users.module.css'
 import {NavLink} from 'react-router-dom';
-import {StatusAuthorizedType} from '../../redux/appReducer';
-import {UserType} from '../../api/api';
-import {useAppDispatch} from '../../utils/hooks/hooks';
+import {useAppDispatch} from '../../common/utils/hooks/hooks';
 import {fetchFollowUser, fetchUnFollowUser} from '../../redux/usersReducer';
+import {UserType} from '../../api/api';
+import {StatusAuthorizedType} from '../../redux/appReducer';
 
 
-type UserFCType = {
-    users: UserType
-    authorizedStatus: StatusAuthorizedType
-    userSubscription: Array<number>
-}
-export const User: React.FC<UserFCType> = React.memo((props) => {
+export const User = React.memo((props: UserFCType) => {
     const dispatch = useAppDispatch()
 
-    function onClickFollowedHandler() {
+    const onClickFollowedHandler = () => {
         if (props.users.followed) {
             dispatch(fetchUnFollowUser(props.users.id))
         } else {
             dispatch(fetchFollowUser(props.users.id))
         }
-
-
     }
 
     return (
@@ -57,6 +50,11 @@ export const User: React.FC<UserFCType> = React.memo((props) => {
             </Paper>
         </div>
     )
-        ;
 });
+//type
+type UserFCType = {
+    users: UserType
+    authorizedStatus: StatusAuthorizedType
+    userSubscription: Array<number>
+}
 

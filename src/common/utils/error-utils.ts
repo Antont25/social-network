@@ -1,5 +1,5 @@
 import axios, {AxiosError} from 'axios';
-import {setServerError} from '../redux/appReducer';
+import {setServerError} from '../../redux/appReducer';
 import {Dispatch} from 'redux';
 
 export const errorFromStatusCodeOrApplication = (error: Error | AxiosError, dispatch: Dispatch) => {

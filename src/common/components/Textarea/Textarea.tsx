@@ -5,12 +5,7 @@ import Button from '../Button/Button';
 import {useFormik} from 'formik';
 
 
-type TextareaPropsType = {
-    callback: (value: string) => void
-    validationSchema: any
-}
-
-export const Textarea: React.FC<TextareaPropsType> = (props) => {
+export const Textarea = (props: TextareaPropsType) => {
 
     const formik = useFormik({
         initialValues: {
@@ -48,4 +43,10 @@ export const Textarea: React.FC<TextareaPropsType> = (props) => {
         </form>
     );
 };
+//type
+type TextareaPropsType = {
+    callback: (value: string) => void
+    validationSchema: any
+}
+
 

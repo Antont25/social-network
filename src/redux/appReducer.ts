@@ -1,7 +1,7 @@
 import {api, AuthorizedUserType, UserProfileType} from '../api/api';
 import {AppThunk} from './store';
 import axios, {AxiosError} from 'axios';
-import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
+import {errorFromStatusCodeOrApplication} from '../common/utils/error-utils';
 import {updateAvatarSuccess} from './profileReducer';
 
 let initialStateApp = {

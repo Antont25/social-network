@@ -1,12 +1,6 @@
 import React from 'react'
 import style from './message.module.css'
 
-type MessageType = {
-    avatar?: string
-    name?: string
-    message: string
-    time?: string
-}
 
 function Message(props: MessageType) {
     return (
@@ -24,3 +18,10 @@ function Message(props: MessageType) {
 }
 
 export default Message
+//type
+type MessageType = {
+    avatar?: string
+    name?: string
+    message: string
+    time?: string
+}

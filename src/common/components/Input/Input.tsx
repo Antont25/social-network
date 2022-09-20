@@ -1,22 +1,8 @@
 import React, {ChangeEvent, FC} from 'react';
-import TextField from "@material-ui/core/TextField";
+import TextField from '@material-ui/core/TextField';
 import style from './input.module.css'
 
-type InputType = {
-    id: string
-    name: string
-    label?: string
-    value: string | null
-    type?: string
-    error?: string | undefined
-    autoFocus?: boolean
-    touched?: boolean | undefined
-    onChange: (e: ChangeEvent<any>) => void
-    onBlur?: () => void
-    className?: string
-}
-
-export const Input: FC<InputType> = (props) => {
+export const Input = (props: InputType) => {
     const finalClassName = props.className ? `${style.inputBloc} ${props.className}` : `${style.inputBloc}`
     return (
         <TextField
@@ -37,4 +23,18 @@ export const Input: FC<InputType> = (props) => {
 
 
     )
+}
+//type
+type InputType = {
+    id: string
+    name: string
+    label?: string
+    value: string | null
+    type?: string
+    error?: string | undefined
+    autoFocus?: boolean
+    touched?: boolean | undefined
+    onChange: (e: ChangeEvent<any>) => void
+    onBlur?: () => void
+    className?: string
 }

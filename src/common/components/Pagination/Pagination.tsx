@@ -4,18 +4,10 @@ import IconButton from '@material-ui/core/IconButton';
 import {ArrowBack, ArrowForward} from '@material-ui/icons';
 import List from '@material-ui/core/List';
 import {ListItem} from '@material-ui/core';
-import {useAppDispatch} from '../../../utils/hooks/hooks';
+import {useAppDispatch} from '../../utils/hooks/hooks';
 import {setCurrentPage, setPortionsNumber} from '../../../redux/usersReducer';
 
-
-type PaginationPropsType = {
-    totalCount: number
-    pageSize: number
-    currentPage: number
-    portionsNumber: number
-}
-
-export const Pagination: React.FC<PaginationPropsType> = React.memo((props) => {
+export const Pagination = React.memo((props: PaginationPropsType) => {
         const dispatch = useAppDispatch()
         let {portions, arrayPages} = useMemo((): { portions: number, arrayPages: Array<number>, } => {
             let pages = Math.ceil(props.totalCount / props.pageSize)
@@ -44,11 +36,11 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo((props) => {
             </ListItem>)
 
 
-        function onClickLeftHandler() {
+        const onClickLeftHandler = () => {
             dispatch(setPortionsNumber(props.portionsNumber - 1))
         }
 
-        function onClickRightHandler() {
+        const onClickRightHandler = () => {
             dispatch(setPortionsNumber(props.portionsNumber + 1))
         }
 
@@ -79,4 +71,11 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo((props) => {
         );
     }
 )
+//type
+type PaginationPropsType = {
+    totalCount: number
+    pageSize: number
+    currentPage: number
+    portionsNumber: number
+}
 

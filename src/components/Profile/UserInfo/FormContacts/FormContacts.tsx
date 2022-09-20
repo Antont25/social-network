@@ -1,8 +1,8 @@
-import {useAppDispatch, useAppSelector} from '../../../../utils/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../../common/utils/hooks/hooks';
 import {useFormik} from 'formik';
 import {updateDateProfile} from '../../../../redux/profileReducer';
-import {Input} from '../../../common/Input/Input';
-import Button from '../../../common/Button/Button';
+import {Input} from '../../../../common/components/Input/Input';
+import Button from '../../../../common/components/Button/Button';
 import React from 'react';
 import style from '../userInfo.module.css';
 
@@ -28,6 +28,7 @@ export const FormContacts = (props: FormContactsType) => {
             props.setEditMode(false)
         },
     });
+
     return (
         <>
             <form onSubmit={formik.handleSubmit}

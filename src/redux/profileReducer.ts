@@ -2,7 +2,7 @@ import {api, ContactsType, PhotosType, UserProfileType} from '../api/api';
 import {setIsLoading, setServerError} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
-import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
+import {errorFromStatusCodeOrApplication} from '../common/utils/error-utils';
 
 const initialSateProfile = {
     posts: [
@@ -108,7 +108,7 @@ export const updateAvatar = (image: any): AppThunk => async (dispatch, getState)
     }
 }
 export const updateDateProfile = (contacts?: ContactsType, fullName?: string): AppThunk => async (dispatch, getState) => {
-    
+
     const data = {
         aboutMe: getState().profilePage.userProfile.aboutMe,
         lookingForAJobDescription: getState().profilePage.userProfile.lookingForAJobDescription,

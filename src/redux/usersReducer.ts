@@ -2,7 +2,7 @@ import {api, FetchUserType, UserType} from '../api/api';
 import {setIsLoading, setServerError} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
-import {errorFromStatusCodeOrApplication} from '../utils/error-utils';
+import {errorFromStatusCodeOrApplication} from '../common/utils/error-utils';
 
 const initialStateUserPage = {
     items: [] as Array<UserType>,
