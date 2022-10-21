@@ -1,1 +1,1 @@
-Что бы работал сайт https://antont25.github.io/social-network/ нужно включать VPN
+
