@@ -3,6 +3,7 @@ import {AppThunk} from './store';
 import axios, {AxiosError} from 'axios';
 import {errorFromStatusCodeOrApplication} from '../common/utils/error-utils';
 import {updateAvatarSuccess} from './profileReducer';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 let initialStateApp = {
     isLoading: false,
@@ -19,63 +20,102 @@ let initialStateApp = {
     captchaUrl: null as null | string,
 }
 
-export const appReducer = (state = initialStateApp, action: ActionAppReducerType): InitialStateTypeApp => {
-    switch (action.type) {
-        case 'APP/IS_LOADING':
-            return {
-                ...state,
-                isLoading: action.payload
-            }
-        case 'APP/SET_AUTHORIZED_USER':
-            return {
-                ...state,
-                authorizedUser: {...action.user},
-            }
-        case 'APP/SET_AUTHORIZED_PROFILE_USER':
-            return {
-                ...state,
-                authorizedProfileUser: action.payload
-            }
-        case 'APP/SET_AUTHORIZED_STATUS':
-            return {
-                ...state,
-                authorizedStatus: action.payload
-            }
-        case 'APP/SET_SERVER_ERROR':
-            return {...state, serverError: action.payload}
-        case 'PROFILE/UPDATE_AVATAR_SUCCESS': {
-            const photos = {...action.payload}
-            return {
-                ...state,
-                authorizedProfileUser: {
-                    ...state.authorizedProfileUser,
-                    photos: photos
-                }
-            }
-        }
-        case 'APP/SET_CAPTCHA_URL':
-            return {
-                ...state,
-                captchaUrl: action.payload
-            }
-        default:
-            return state
+const appSlice = createSlice({
+    name: 'app',
+    initialState: initialStateApp,
+    reducers: {
+        setIsLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
+        },
+        setAuthorizedUser: (state, action: PayloadAction<AuthorizedUserType>) => {
+            state.authorizedUser = action.payload
+        },
+        setAuthorizedStatus: (state, action: PayloadAction<StatusAuthorizedType>) => {
+            state.authorizedStatus = action.payload
+        },
+        setAuthorizedProfileUser: (state, action: PayloadAction<UserProfileType>) => {
+            state.authorizedProfileUser = action.payload
+        },
+        setServerError: (state, action: PayloadAction<string | null>) => {
+            state.serverError = action.payload
+        },
+        setCaptchaURl: (state, action: PayloadAction<string | null>) => {
+            state.captchaUrl = action.payload
+        },
+    },
+    extraReducers: builder => {
+        builder.addCase(updateAvatarSuccess, (state, action) => {
+            state.authorizedProfileUser.photos = action.payload
+        })
     }
-}
+})
+export const appReducer = appSlice.reducer
+export const {
+    setIsLoading,
+    setAuthorizedUser,
+    setAuthorizedStatus,
+    setAuthorizedProfileUser,
+    setServerError,
+    setCaptchaURl
+} = appSlice.actions
+
+// export const appReducer = (state = initialStateApp, action: ActionAppReducerType): InitialStateTypeApp => {
+//     switch (action.type) {
+// case 'APP/IS_LOADING':
+//     return {
+//         ...state,
+//         isLoading: action.payload
+//     }
+// case 'APP/SET_AUTHORIZED_USER':
+//     return {
+//         ...state,
+//         authorizedUser: {...action.user},
+//     }
+// case 'APP/SET_AUTHORIZED_PROFILE_USER':
+//     return {
+//         ...state,
+//         authorizedProfileUser: action.payload
+//     }
+// case 'APP/SET_AUTHORIZED_STATUS':
+//     return {
+//         ...state,
+//         authorizedStatus: action.payload
+//     }
+// case 'APP/SET_SERVER_ERROR':
+//     return {...state, serverError: action.payload}
+// case 'PROFILE/UPDATE_AVATAR_SUCCESS': {
+//     const photos = {...action.payload}
+//     return {
+//         ...state,
+//         authorizedProfileUser: {
+//             ...state.authorizedProfileUser,
+//             photos: photos
+//         }
+//     }
+// }
+// case 'APP/SET_CAPTCHA_URL':
+//     return {
+//         ...state,
+//         captchaUrl: action.payload
+//     }
+//         default:
+//             return state
+//     }
+// }
 
 //action
-export const setIsLoading = (payload: boolean) =>
-    ({type: 'APP/IS_LOADING', payload} as const)
-export const setAuthorizedUser = (user: AuthorizedUserType) =>
-    ({type: 'APP/SET_AUTHORIZED_USER', user} as const)
-export const setAuthorizedStatus = (payload: StatusAuthorizedType) =>
-    ({type: 'APP/SET_AUTHORIZED_STATUS', payload} as const)
-export const setAuthorizedProfileUser = (payload: UserProfileType) =>
-    ({type: 'APP/SET_AUTHORIZED_PROFILE_USER', payload} as const)
-export const setServerError = (payload: string | null) =>
-    ({type: 'APP/SET_SERVER_ERROR', payload} as const)
-export const setCaptchaURl = (payload: string | null) =>
-    ({type: 'APP/SET_CAPTCHA_URL', payload} as const)
+// export const setIsLoading = (payload: boolean) =>
+//     ({type: 'APP/IS_LOADING', payload} as const)
+// export const setAuthorizedUser = (user: AuthorizedUserType) =>
+//     ({type: 'APP/SET_AUTHORIZED_USER', user} as const)
+// export const setAuthorizedStatus = (payload: StatusAuthorizedType) =>
+//     ({type: 'APP/SET_AUTHORIZED_STATUS', payload} as const)
+// export const setAuthorizedProfileUser = (payload: UserProfileType) =>
+//     ({type: 'APP/SET_AUTHORIZED_PROFILE_USER', payload} as const)
+// export const setServerError = (payload: string | null) =>
+//     ({type: 'APP/SET_SERVER_ERROR', payload} as const)
+// export const setCaptchaURl = (payload: string | null) =>
+//     ({type: 'APP/SET_CAPTCHA_URL', payload} as const)
 
 //thunk
 export const fetchAuthorizedData = (): AppThunk => async dispatch => {

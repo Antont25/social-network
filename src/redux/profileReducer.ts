@@ -2,7 +2,9 @@ import {api, ContactsType, PhotosType, UserProfileType} from '../api/api';
 import {setIsLoading, setServerError} from './appReducer';
 import {AppThunk} from './store';
 import {AxiosError} from 'axios';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {errorFromStatusCodeOrApplication} from '../common/utils/error-utils';
+import actions from 'redux-form/lib/actions';
 
 const initialSateProfile = {
     posts: [
@@ -15,47 +17,73 @@ const initialSateProfile = {
     userStatus: null as null | string
 }
 
-export const profileReducer = (state = initialSateProfile, action: ActionProfileReducerType): InitialSateProfileType => {
-    switch (action.type) {
-        case 'PROFILE/ADD_POST' :
+export const profileSlice = createSlice({
+    name: 'profile',
+    initialState: initialSateProfile,
+    reducers: {
+        addPost: (state, action: PayloadAction<string>) => {
             let newPost: PostsType = {
                 id: 23,
                 massage: action.payload,
                 likes: 0
             }
-            return {
-                ...state,
-                posts: [newPost, ...state.posts],
-            }
-        case 'PROFILE/SET_USER_PROFILE':
-            return {
-                ...state,
-                userProfile: action.payload
-            }
-        case 'PROFILE/SET_STATUS_UPDATES':
-            return {
-                ...state,
-                userStatus: action.payload
-            }
-        case 'PROFILE/UPDATE_AVATAR_SUCCESS':
-            return {
-                ...state,
-                userProfile: {...state.userProfile, photos: action.payload}
-            }
-        default:
-            return state
+            state.posts.unshift(newPost)
+        },
+        setUserProfile: (state, actions: PayloadAction<UserProfileType>) => {
+            state.userProfile = actions.payload
+        },
+        setStatusUpdates: (state, actions: PayloadAction<string | null>) => {
+            state.userStatus = actions.payload
+        },
+        updateAvatarSuccess: (state, actions: PayloadAction<PhotosType>) => {
+            state.userProfile.photos = actions.payload
+        },
     }
-};
+})
+export const profileReducer = profileSlice.reducer
+export const {addPost, setUserProfile, setStatusUpdates, updateAvatarSuccess} = profileSlice.actions
+
+// export const profileReducer = (state = initialSateProfile, action: ActionProfileReducerType): InitialSateProfileType => {
+//     switch (action.type) {
+// case 'PROFILE/ADD_POST' :
+//     let newPost: PostsType = {
+//         id: 23,
+//         massage: action.payload,
+//         likes: 0
+//     }
+//     return {
+//         ...state,
+//         posts: [newPost, ...state.posts],
+//     }
+// case 'PROFILE/SET_USER_PROFILE':
+//     return {
+//         ...state,
+//         userProfile: action.payload
+//     }
+// case 'PROFILE/SET_STATUS_UPDATES':
+//     return {
+//         ...state,
+//         userStatus: action.payload
+//     }
+//         case 'PROFILE/UPDATE_AVATAR_SUCCESS':
+//             return {
+//                 ...state,
+//                 userProfile: {...state.userProfile, photos: action.payload}
+//             }
+//         default:
+//             return state
+//     }
+// };
 
 //action
-export const addPost = (payload: string) =>
-    ({type: 'PROFILE/ADD_POST', payload} as const)
-export const setUserProfile = (payload: UserProfileType) =>
-    ({type: 'PROFILE/SET_USER_PROFILE', payload} as const)
-export const setStatusUpdates = (payload: string | null) =>
-    ({type: 'PROFILE/SET_STATUS_UPDATES', payload} as const)
-export const updateAvatarSuccess = (payload: PhotosType) =>
-    ({type: 'PROFILE/UPDATE_AVATAR_SUCCESS', payload} as const)
+// export const addPost = (payload: string) =>
+//     ({type: 'PROFILE/ADD_POST', payload} as const)
+// export const setUserProfile = (payload: UserProfileType) =>
+//     ({type: 'PROFILE/SET_USER_PROFILE', payload} as const)
+// export const setStatusUpdates = (payload: string | null) =>
+//     ({type: 'PROFILE/SET_STATUS_UPDATES', payload} as const)
+// export const updateAvatarSuccess = (payload: PhotosType) =>
+//     ({type: 'PROFILE/UPDATE_AVATAR_SUCCESS', payload} as const)
 
 //thunk
 export const fetchUserProfileData = (paramsURL: number): AppThunk => async dispatch => {
@@ -107,7 +135,7 @@ export const updateAvatar = (image: any): AppThunk => async (dispatch, getState)
         dispatch(setIsLoading(false))
     }
 }
-export const updateDateProfile = (contacts?: ContactsType, fullName?: string): AppThunk => async (dispatch, getState) => {
+export const updateDateProfile = (contacts?: ContactsType, fullName?: string): AppThunk => async (dispatch, getState: () => any) => {
 
     const data = {
         aboutMe: getState().profilePage.userProfile.aboutMe,
