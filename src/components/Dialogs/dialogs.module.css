@@ -1,9 +1,9 @@
-.dialogs{
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+.dialogs {
+    display: flex;
+
 }
 
-.dialogs ul>li{
+.dialogs ul > li {
     list-style-type: none
 }
 
@@ -12,7 +12,26 @@
     text-decoration: none;
 }
 
-.active{
+.message {
+    flex-grow: 1;
+}
+
+.active {
     color: red;
 
+}
+
+.dialogItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 600px;
+    overflow-y: auto;
+
+}
+
+.addMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

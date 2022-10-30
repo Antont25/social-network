@@ -1,32 +1,30 @@
+import {ChatApi, MessageType} from '../api/chat-api';
+import {AppThunk} from './store';
+import {Dispatch} from 'redux';
+
 type InitialStateType = typeof initialState
 export type DialogsType = {
     id: number
     name: string
 }
-export type MessagesType = {
-    id: number
-    message: string
-}
-export type ActionDialogsReducerType = ReturnType<typeof addMessage>
+
+export type ActionDialogsReducerType = ReturnType<typeof setMessage>
 
 const initialState = {
     dialogs: [
         {id: 1, name: 'Amdrey'},
         {id: 2, name: 'Any'}
     ] as Array<DialogsType>,
-    messages: [
-        {id: 1, message: 'yoooo'},
-        {id: 1, message: 'ysss'},
-    ] as Array<MessagesType>,
+    messages: [] as MessageType[],
 }
 
 export const dialogsReducer = (state = initialState, action: ActionDialogsReducerType): InitialStateType => {
     switch (action.type) {
         case  'DIALOGS/ADD_MESSAGE':
-            let newMessages: MessagesType = {id: 3, message: action.payload}
+            const newMessage = action.payload ? [...state.messages, ...action.payload] : []
             return {
                 ...state,
-                messages: [newMessages, ...state.messages]
+                messages: newMessage
             }
 
         default:
@@ -35,4 +33,23 @@ export const dialogsReducer = (state = initialState, action: ActionDialogsReduce
 };
 
 
-export const addMessage = (payload: string) => ({type: 'DIALOGS/ADD_MESSAGE', payload} as const)
+export const setMessage = (payload: MessageType[] | null) => ({type: 'DIALOGS/ADD_MESSAGE', payload} as const)
+
+
+const newMessage = (dispatch: Dispatch) => (message: MessageType[] | null) => {
+    dispatch(setMessage(message))
+}
+
+export const createChatWS = (): AppThunk => async dispatch => {
+    ChatApi.stop()
+    ChatApi.start()
+    ChatApi.subscriber(newMessage(dispatch))
+}
+
+export const addMessage = (message: string): AppThunk => async dispatch => {
+    ChatApi.setNewMessage(message)
+}
+
+export const removeChatWS = (): AppThunk => async dispatch => {
+    ChatApi.stop()
+}
