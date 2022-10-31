@@ -40,16 +40,16 @@ const newMessage = (dispatch: Dispatch) => (message: MessageType[] | null) => {
     dispatch(setMessage(message))
 }
 
-export const createChatWS = (): AppThunk => async dispatch => {
+export const createChatWS = (): AppThunk => dispatch => {
     ChatApi.stop()
     ChatApi.start()
     ChatApi.subscriber(newMessage(dispatch))
 }
 
-export const addMessage = (message: string): AppThunk => async dispatch => {
+export const addMessage = (message: string): AppThunk => dispatch => {
     ChatApi.setNewMessage(message)
 }
 
-export const removeChatWS = (): AppThunk => async dispatch => {
+export const removeChatWS = (): AppThunk => dispatch => {
     ChatApi.stop()
 }

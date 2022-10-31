@@ -1,50 +1,49 @@
-let ws: WebSocket | null = null
-let subscriber = [] as SubscriberType[]
-
-const messageHandler = (e: WebSocketEventMap['message']) => {
-    const newMessage = JSON.parse(e.data)
-    subscriber.forEach(el => el(newMessage))
-}
-
-let closeID: NodeJS.Timer
-
-const closeHandler = (e: WebSocketEventMap['close']) => {
-    clearInterval(closeID)
-    closeID = setInterval(() => ChatApi.start(), 3000)
-
-}
-
-const openHandler = () => {
-    clearInterval(closeID)
-    subscriber.forEach(el => el(null))
-
-}
+let _subscriber = [] as SubscriberType[];
 
 export const ChatApi = {
-    start: () => {
+    ws: null as null | WebSocket,
+    _subscriber: [] as SubscriberType[],
+    closeID: 0,
 
-        ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+    start() {
+        this.ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
 
+        this.ws?.addEventListener('message', this._messageHandler)
+        this.ws?.addEventListener('close', this._closeHandler)
+        this.ws?.addEventListener('open', this._openHandler)
 
-        ws?.addEventListener('message', messageHandler)
-        ws?.addEventListener('close', closeHandler)
-        ws?.addEventListener('open', openHandler)
 
     },
-    subscriber: (cb: SubscriberType) => {
-        subscriber.push(cb)
+    subscriber(cb: SubscriberType) {
+        _subscriber.push(cb)
 
     },
-    stop: () => {
-        if (ws) {
-            ws.close()
-            subscriber = []
+    stop() {
+        if (this.ws) {
+            this.ws.close()
+            _subscriber = []
         }
     },
-    setNewMessage: (message: string) => {
-        ws?.send(message)
-    }
+    setNewMessage(message: string) {
+        this.ws?.send(message)
+    },
+    _messageHandler(e: WebSocketEventMap['message']) {
+        const newMessage = JSON.parse(e.data)
+        _subscriber.forEach(el => el(newMessage))
+    },
 
+
+    _closeHandler(e: WebSocketEventMap['close']) {
+        clearInterval(this.closeID)
+        // @ts-ignore
+        this.closeID = setInterval(() => ChatApi.start(), 3000)
+
+    },
+
+    _openHandler() {
+        clearInterval(this.closeID)
+        _subscriber.forEach(el => el(null))
+    }
 }
 
 //type
