@@ -1,8 +1,7 @@
-import {fetchUnFollowUser, InitialStateUserPageType, setUserSubscription, unFollow} from "../usersReducer";
-import {api, ResponseType} from "../../api/api";
+import {fetchUnFollowUser, InitialStateUserPageType, setUserSubscription, unFollow} from "./usersReducer";
+import {api, ResponseType} from "../api/api";
 
-
-jest.mock("../../api/api")
+jest.mock("../api/api")
 
 const apiMock = api as jest.Mocked<typeof api>
 const res: ResponseType = {
@@ -37,6 +36,7 @@ beforeEach(() => {
 })
 
 test("un follow users", async () => {
+
   let dispatchMock = jest.fn()
   let getStateMock = jest.fn()
   apiMock.unFollowUser.mockReturnValue(Promise.resolve(res))

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState, UIEvent} from "react";
+import React, {useEffect, useRef, useState, UIEvent, useCallback, FC} from "react";
 import style from "../components/Dialogs/dialogs.module.css"
 import Message from "../components/Dialogs/Messages/Message";
 import {DialogItems} from "../components/Dialogs/DialogItems";

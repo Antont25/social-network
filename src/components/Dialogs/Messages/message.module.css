@@ -1,9 +1,9 @@
 .message {
-    background-color: chartreuse;
-    max-width: 300px;
+    background-color: #b4b4b7;
     display: grid;
     grid-template-columns: 80px 1fr;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .avatar {
@@ -19,7 +19,7 @@
 }
 
 .blockMessage {
-    background-color: #09593d;
+    background-color: #464e4b;
     margin: 5px 10px;
     position: relative;
     border-radius: 5px 5px 5px 0;
@@ -33,7 +33,7 @@
     width: 0;
     height: 0;
     border-top: 10px solid transparent;
-    border-right: 15px solid #09593d;
+    border-right: 15px solid #41484f;
     border-bottom: 0px solid transparent;
     position: absolute;
     left: -10px;
@@ -46,6 +46,7 @@
 
 .messageText {
     padding-right: 2px;
+    color: white;
 }
 
 .time {
