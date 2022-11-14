@@ -1,31 +1,31 @@
-import React, {useEffect} from 'react'
-import './App.css';
-import {fetchAuthorizedData} from '../redux/appReducer';
-import {ErrorSnackbar} from '../common/components/ErrorSnackbar/ErrorSnackbar';
-import {WitchRouting} from '../common/components/Routing/WitchRouting';
-import {useAppDispatch, useAppSelector} from '../common/utils/hooks/hooks';
-import {Loading} from '../common/components/Loading/Loading';
+import React, {useEffect} from "react"
+import "./App.css";
+import {fetchAuthorizedData} from "../redux/appSlice";
+import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
+import {WitchRouting} from "../common/components/Routing/WitchRouting";
+import {useAppDispatch, useAppSelector} from "../common/utils/hooks/hooks";
+import {Loading} from "../common/components/Loading/Loading";
 
 
 const App = () => {
-    const dispatch = useAppDispatch()
-    const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
+  const dispatch = useAppDispatch()
+  const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
 
-    useEffect(() => {
-        dispatch(fetchAuthorizedData())
-    }, [])
+  useEffect(() => {
+    dispatch(fetchAuthorizedData())
+  }, [])
 
 
-    if (authorizedStatus === 'initialization') {
-        return <Loading/>
-    }
+  if (authorizedStatus === "initialization") {
+    return <Loading/>
+  }
 
-    return (
-        <>
-            <WitchRouting/>
-            <ErrorSnackbar/>
-        </>
-    );
+  return (
+    <>
+      <WitchRouting/>
+      <ErrorSnackbar/>
+    </>
+  );
 }
 
 export default (App);

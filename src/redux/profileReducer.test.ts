@@ -2,10 +2,10 @@ import {
   addPost,
   InitialSateProfileType,
   PostsType,
-  profileReducer,
+  profileSlice,
   setStatusUpdates,
   setUserProfile
-} from "./profileReducer";
+} from "./profileSlice";
 import {UserProfileType} from "../api/api";
 
 let initialSateProfile = {} as InitialSateProfileType
@@ -24,7 +24,7 @@ beforeEach(() => {
 })
 
 test("Add post", () => {
-  const newState = profileReducer(initialSateProfile, addPost("New Post"))
+  const newState = profileSlice(initialSateProfile, addPost("New Post"))
 
   expect(newState.posts).toHaveLength(5)
   expect(newState.posts[ 0 ].id).toBe(23)
@@ -54,7 +54,7 @@ test("Adding information about the user", () => {
     }
   }
 
-  const newState = profileReducer(initialSateProfile, setUserProfile(user))
+  const newState = profileSlice(initialSateProfile, setUserProfile(user))
 
   expect(newState.userProfile.aboutMe).toBe(null)
   expect(newState.userProfile.contacts.vk).toBe(null)
@@ -66,7 +66,7 @@ test("Adding information about the user", () => {
   expect(newState.userProfile.userId).toBe(23)
 })
 test("Change status of user", () => {
-  const newState = profileReducer(initialSateProfile, setStatusUpdates("New Status"))
+  const newState = profileSlice(initialSateProfile, setStatusUpdates("New Status"))
 
   expect(newState.userStatus).toBe("New Status")
   expect(newState.userProfile).toEqual({})

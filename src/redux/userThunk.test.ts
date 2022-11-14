@@ -4,9 +4,9 @@ import {
   InitialStateUserPageType, setUsers,
   setUserSubscription,
   unFollow
-} from "./usersReducer";
+} from "./usersSlice";
 import {api, FetchUserType, ResponseType} from "../api/api";
-import {setIsLoading} from "./appReducer";
+import {setIsLoading} from "./appSlice";
 
 jest.mock("../api/api")
 
@@ -54,9 +54,9 @@ test("un follow users", async () => {
 
   expect(dispatchMock).toBeCalledTimes(3)
 
-  expect(dispatchMock).toHaveBeenNthCalledWith(1, setUserSubscription(3, true))
+  expect(dispatchMock).toHaveBeenNthCalledWith(1, setUserSubscription({ userId: 3, isFollowing: true }))
   expect(dispatchMock).toHaveBeenNthCalledWith(2, unFollow(3))
-  expect(dispatchMock).toHaveBeenNthCalledWith(3, setUserSubscription(3, false))
+  expect(dispatchMock).toHaveBeenNthCalledWith(3, setUserSubscription({ userId: 3, isFollowing: false }))
 
 })
 
@@ -71,9 +71,9 @@ test(" follow users", async () => {
 
   expect(dispatchMock).toBeCalledTimes(3)
 
-  expect(dispatchMock).toHaveBeenNthCalledWith(1, setUserSubscription(2, true))
+  expect(dispatchMock).toHaveBeenNthCalledWith(1, setUserSubscription({ userId: 2, isFollowing: true }))
   expect(dispatchMock).toHaveBeenNthCalledWith(2, unFollow(2))
-  expect(dispatchMock).toHaveBeenNthCalledWith(3, setUserSubscription(2, false))
+  expect(dispatchMock).toHaveBeenNthCalledWith(3, setUserSubscription({ userId: 2, isFollowing: false }))
 
 })
 

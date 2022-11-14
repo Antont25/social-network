@@ -1,13 +1,13 @@
 import {AuthorizedUserType, UserProfileType} from "../api/api";
 import {
-  appReducer,
+  appSlice,
   InitialStateTypeApp,
   setAuthorizedProfileUser,
   setAuthorizedStatus,
   setAuthorizedUser,
   setIsLoading,
   StatusAuthorizedType
-} from "./appReducer";
+} from "./appSlice";
 
 let initialState = {} as InitialStateTypeApp
 
@@ -30,7 +30,7 @@ beforeEach(() => {
 
 test("Checking is progress Loading", () => {
 
-  const newState = appReducer(initialState, setIsLoading(true))
+  const newState = appSlice(initialState, setIsLoading(true))
 
   expect(newState.isLoading).toBe(true)
 })
@@ -41,7 +41,7 @@ test("User authorization check", () => {
     login: "freeUser"
   }
 
-  const newState = appReducer(initialState, setAuthorizedUser(user))
+  const newState = appSlice(initialState, setAuthorizedUser(user))
 
   expect(newState.authorizedUser.id).toBe(23)
   expect(newState.authorizedUser.email).toBe("freeuser@gmail.com")
@@ -70,7 +70,7 @@ test("Add information of user", () => {
     }
   }
 
-  const newState = appReducer(initialState, setAuthorizedProfileUser(user))
+  const newState = appSlice(initialState, setAuthorizedProfileUser(user))
 
   expect(newState.authorizedProfileUser.aboutMe).toBe(null)
   expect(newState.authorizedProfileUser.contacts.vk).toBe(null)
@@ -84,7 +84,7 @@ test("Add information of user", () => {
 })
 test("Authorized status change", () => {
 
-  const newState = appReducer(initialState, setAuthorizedStatus("successfully"))
+  const newState = appSlice(initialState, setAuthorizedStatus("successfully"))
 
   expect(newState.authorizedStatus).toBe("successfully")
 })

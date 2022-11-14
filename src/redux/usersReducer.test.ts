@@ -5,8 +5,8 @@ import {
   setPortionsNumber,
   setUsers, setUserSubscription,
   unFollow,
-  usersReducer
-} from "./usersReducer";
+  usersSlice
+} from "./usersSlice";
 
 let initialStateUserPage = {} as InitialStateUserPageType
 
@@ -49,7 +49,7 @@ test("Adding array Users", () => {
     error: null
   }
 
-  const newState = usersReducer(initialStateUserPage, setUsers(arrayUser))
+  const newState = usersSlice(initialStateUserPage, setUsers(arrayUser))
 
   expect(newState.items).toHaveLength(1)
   expect(newState.items[ 0 ].status).toBe("Yo-Yo")
@@ -58,36 +58,36 @@ test("Adding array Users", () => {
 
 })
 test("Adding and deletions a user as a friend", () => {
-  const newStateFollow = usersReducer(initialStateUserPage, follow(25))
+  const newStateFollow = usersSlice(initialStateUserPage, follow(25))
 
   expect(newStateFollow.items).toHaveLength(1)
   expect(newStateFollow.items[ 0 ].followed).toBe(true)
 
-  const newStateUnFollow = usersReducer(initialStateUserPage, unFollow(25))
+  const newStateUnFollow = usersSlice(initialStateUserPage, unFollow(25))
 
   expect(newStateUnFollow.items).toHaveLength(1)
   expect(newStateUnFollow.items[ 0 ].followed).toBe(false)
 })
 test("Change current page and portion number", () => {
-  const newStateCurrentPage = usersReducer(initialStateUserPage, setCurrentPage(2))
+  const newStateCurrentPage = usersSlice(initialStateUserPage, setCurrentPage(2))
 
   expect(newStateCurrentPage.items).toHaveLength(1)
   expect(newStateCurrentPage.currentPage).toBe(2)
 
-  const newStatePortionsNumber = usersReducer(newStateCurrentPage, setPortionsNumber(3))
+  const newStatePortionsNumber = usersSlice(newStateCurrentPage, setPortionsNumber(3))
 
   expect(newStatePortionsNumber.items).toHaveLength(1)
   expect(newStatePortionsNumber.currentPage).toBe(2)
   expect(newStatePortionsNumber.portionsNumber).toBe(3)
 })
 test("Adding and deletions Users to the subscriber array", () => {
-  const newState = usersReducer(initialStateUserPage, setUserSubscription(2, true))
+  const newState = usersSlice(initialStateUserPage, setUserSubscription({ userId: 2, isFollowing: true }))
 
   expect(newState.items.length).toBe(1)
   expect(newState.userSubscription).toHaveLength(1)
   expect(newState.userSubscription[ 0 ]).toBe(2)
 
-  const newStateDeletionsUser = usersReducer(newState, setUserSubscription(2, false))
+  const newStateDeletionsUser = usersSlice(newState, setUserSubscription({ userId: 2, isFollowing: false }))
 
   expect(newStateDeletionsUser.items).toHaveLength(1)
   expect(newStateDeletionsUser.userSubscription).toHaveLength(0)
