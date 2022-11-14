@@ -54,10 +54,10 @@ export const usersSlice = slice.reducer
 export const { setUsers, follow, unFollow, setCurrentPage, setPortionsNumber, setUserSubscription } = slice.actions
 
 //thunk
-export const fetchUserData = ( currentPage: number ): AppThunk => async dispatch => {
+export const fetchUserData = ( currentPage: number, searchName?: string ): AppThunk => async dispatch => {
   try {
     dispatch(setIsLoading(true))
-    let response = await api.getUser(currentPage)
+    let response = await api.getUser(currentPage, searchName)
     dispatch(setUsers(response))
   } catch (e) {
     const error = e as Error | AxiosError
