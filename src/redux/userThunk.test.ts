@@ -1,5 +1,12 @@
-import {fetchUnFollowUser, InitialStateUserPageType, setUserSubscription, unFollow} from "./usersReducer";
-import {api, ResponseType} from "../api/api";
+import {
+  fetchUnFollowUser,
+  fetchUserData,
+  InitialStateUserPageType, setUsers,
+  setUserSubscription,
+  unFollow
+} from "./usersReducer";
+import {api, FetchUserType, ResponseType} from "../api/api";
+import {setIsLoading} from "./appReducer";
 
 jest.mock("../api/api")
 
@@ -69,3 +76,38 @@ test(" follow users", async () => {
   expect(dispatchMock).toHaveBeenNthCalledWith(3, setUserSubscription(2, false))
 
 })
+
+test("Fetch data of users  ",
+  async () => {
+    let dispatchMock = jest.fn()
+    let getStateMock = jest.fn()
+
+    const obj: FetchUserType = {
+      items: [
+        {
+          name: "anton",
+          id: 1,
+          status: "yo",
+          uniqueUrlName: null,
+          photos: { small: null, large: null },
+          followed: false
+        }
+      ],
+      totalCount: 10,
+      error: null
+    }
+
+    apiMock.getUser.mockReturnValue(Promise.resolve(obj))
+
+    let thunk = fetchUserData(10)
+
+    await thunk(dispatchMock, getStateMock, {})
+
+    expect(dispatchMock).toBeCalledTimes(3)
+
+    expect(dispatchMock).toHaveBeenNthCalledWith(1, setIsLoading(true))
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, setUsers(obj))
+    expect(dispatchMock).toHaveBeenNthCalledWith(3, setIsLoading(false))
+
+
+  })

@@ -4,6 +4,9 @@ import {MessageType} from "../../../api/chat-api";
 
 
 function Message( props: MessageType ) {
+  if (props.message.length < 1) {
+    return <div>Сообщений нет</div>
+  }
   return (
     <div className={style.message}>
       <div className={style.avatar}><img src={props.photo} alt="avatar"/></div>
