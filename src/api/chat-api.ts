@@ -12,7 +12,6 @@ export const ChatApi = {
     this.ws?.addEventListener("close", this._closeHandler.bind(this))
     this.ws?.addEventListener("open", this._openHandler)
 
-
   },
   subscriber( cb: SubscriberType ) {
     _subscriber.push(cb)
@@ -40,6 +39,7 @@ export const ChatApi = {
       // @ts-ignore
       this.closeID = setInterval(() => ChatApi.start(), 3000)
     }
+
 
   },
 
