@@ -1,24 +1,27 @@
-import React from "react"
-import style from "./message.module.css"
-import {MessageType} from "../../../api/chat-api";
+import React, { ReactElement } from 'react';
 
+import style from './message.module.css';
 
-function Message( props: MessageType ) {
-  if (props.message.length < 1) {
-    return <div>Сообщений нет</div>
+import { MessageType } from 'type';
+
+const Message = ({ message, photo, userName }: MessageType): ReactElement => {
+  if (message.length < 1) {
+    return <div>Сообщений нет</div>;
   }
+
   return (
     <div className={style.message}>
-      <div className={style.avatar}><img src={props.photo} alt="avatar"/></div>
+      <div className={style.avatar}>
+        <img src={photo} alt="avatar" />
+      </div>
       <div className={style.blockMessage}>
         <div>
-          <div className={style.name}>{props.userName}</div>
-          <div className={style.messageText}>{props.message}</div>
+          <div className={style.name}>{userName}</div>
+          <div className={style.messageText}>{message}</div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Message
-
+export default Message;
