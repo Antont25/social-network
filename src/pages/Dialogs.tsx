@@ -1,32 +1,36 @@
 import React, { ReactElement, UIEvent, useEffect, useRef, useState } from 'react';
 
 import style from '../components/Dialogs/dialogs.module.css';
-import Message from '../components/Dialogs/Messages/Message';
 
 import { Textarea } from 'common/components/Textarea/Textarea';
-import { useAppDispatch, useAppSelector } from 'common/utils/hooks/hooks';
-import { validationPostAndDialog } from 'common/utils/validation/validation';
-import { DialogItems } from 'components/Dialogs/DialogItems';
+import { DialogItems } from 'components/Dialogs';
+import { Message } from 'components/Dialogs/Messages';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { addMessage, createChatWS, removeChatWS } from 'redux/dialogsReducer';
+import { getDialogs, getMessages } from 'selectors';
+import { validationPostAndDialog } from 'validation/validation';
 
 const Dialogs = (): ReactElement => {
+  const dispatch = useAppDispatch();
+
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
   const [isScroll, setIsScroll] = useState(true);
 
-  const dispatch = useAppDispatch();
-  const dialogs = useAppSelector(state => state.dialogsPage.dialogs);
-  const messages = useAppSelector(state => state.dialogsPage.messages);
+  const dialogs = useAppSelector(getDialogs);
+  const messages = useAppSelector(getMessages);
 
-  const clickAddNewMessages = (value: string): void => {
+  const onAddNewMessagesClick = (value: string): void => {
     dispatch(addMessage(value));
   };
+
   const scrollToBottom = (): void => {
     if (isScroll) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const onScrollHandler = (e: UIEvent<HTMLElement>): void => {
+  const onDialogItemScroll = (e: UIEvent<HTMLElement>): void => {
     const maxScrollPosition = e.currentTarget.scrollHeight - e.currentTarget.clientHeight;
 
     // eslint-disable-next-line no-magic-numbers
@@ -55,7 +59,7 @@ const Dialogs = (): ReactElement => {
         ))}
       </ul>
       <div className={style.message}>
-        <ul className={style.dialogItem} onScroll={onScrollHandler}>
+        <ul className={style.dialogItem} onScroll={onDialogItemScroll}>
           {messages.length > 0 &&
             messages.map((item, index) => (
               <Message
@@ -71,7 +75,7 @@ const Dialogs = (): ReactElement => {
         </ul>
         <div className={style.addMessage}>
           <Textarea
-            callback={clickAddNewMessages}
+            callback={onAddNewMessagesClick}
             validationSchema={validationPostAndDialog}
           />
         </div>

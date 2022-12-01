@@ -5,18 +5,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 
-import { AvatarUser } from './Avatar/AvatarUser';
-import { FormContacts } from './FormContacts/FormContacts';
+import { AvatarUser } from './Avatar';
 import style from './userInfo.module.css';
 
 import avatar from 'assest/img/avatar.png';
-import Button from 'common/components/Button/Button';
-import { EditMode } from 'common/components/EditMode/EditMode';
-import { useAppDispatch } from 'common/utils/hooks/hooks';
+import { Button } from 'common/components/Button';
+import { EditMode } from 'common/components/EditMode';
+import { FormContacts } from 'components/Profile/UserInfo/FormContacts/FormContacts';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 import { fetchStatusUpdates, updateDateProfile } from 'redux/profileSlice';
 import { UserProfileType } from 'type';
 
-const UserInfo = ({
+export const UserInfo = ({
   authorizedUserId,
   userProfile,
   userStatus,
@@ -27,18 +27,18 @@ const UserInfo = ({
 
   const isOwner = authorizedUserId === userProfile.userId;
 
-  const setStatusHandler = (value: string): void => {
+  const handleSetStatus = (value: string): void => {
     dispatch(fetchStatusUpdates(value, userProfile.userId));
   };
-  const editModeHandler = (): void => {
+  const editModeHandle = (): void => {
     setEditMode(!editMode);
   };
 
-  const saveNameHandler = (fullName: string): void => {
+  const handleSaveName = (fullName: string): void => {
     dispatch(updateDateProfile(undefined, fullName));
   };
 
-  const closedEditMode = (): void => {
+  const handleClosedEditModeClick = (): void => {
     setEditMode(false);
   };
 
@@ -52,7 +52,7 @@ const UserInfo = ({
             <EditMode
               value={userProfile.fullName}
               isOwner={isOwner}
-              callback={saveNameHandler}
+              onSaveName={handleSaveName}
               label="name"
               length={10}
             />
@@ -62,7 +62,7 @@ const UserInfo = ({
             <span>Статус:</span>
             <EditMode
               value={userStatus}
-              callback={setStatusHandler}
+              onSaveName={handleSetStatus}
               isOwner={isOwner}
               label="status"
               length={80}
@@ -75,7 +75,10 @@ const UserInfo = ({
         <h2>contacts</h2>
         <Grid item className={style.contactItem}>
           {editMode ? (
-            <FormContacts setEditMode={setEditMode} closedEditMode={closedEditMode} />
+            <FormContacts
+              setEditMode={setEditMode}
+              onClosedEditModeClick={handleClosedEditModeClick}
+            />
           ) : (
             <>
               <ListItem>
@@ -103,7 +106,7 @@ const UserInfo = ({
           )}
         </Grid>
         {isOwner && !editMode && (
-          <Button className={style.btn} onClick={editModeHandler}>
+          <Button className={style.btn} onClick={editModeHandle}>
             редактировать форму
           </Button>
         )}
@@ -111,8 +114,6 @@ const UserInfo = ({
     </Paper>
   );
 };
-
-export default UserInfo;
 // type
 type UserInfoType = {
   userProfile: UserProfileType;

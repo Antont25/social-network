@@ -1,14 +1,15 @@
 import { ContactsType } from 'type/Contacts';
+import { Nullable } from 'type/nullable';
 
 export type UserType = {
   name: string;
   id: number;
   uniqueUrlName: null;
   photos: {
-    small: null | string;
-    large: null | string;
+    small: Nullable<string>;
+    large: Nullable<string>;
   };
-  status: null | string;
+  status: Nullable<string>;
   followed: boolean;
 };
 
@@ -19,15 +20,15 @@ export type FetchUserType = {
 };
 
 export type UserProfileType = {
-  aboutMe: string | null;
+  aboutMe: Nullable<string>;
   contacts: ContactsType;
   lookingForAJob: boolean;
-  lookingForAJobDescription: string | null;
-  fullName: string | null;
+  lookingForAJobDescription: Nullable<string>;
+  fullName: Nullable<string>;
   userId: number;
   photos: {
-    small: string | null;
-    large: string | null;
+    small: Nullable<string>;
+    large: Nullable<string>;
   };
 };
 
@@ -37,10 +38,10 @@ export type PhotosType = {
 };
 
 export type UpdateDateType = {
-  aboutMe: string | null;
+  aboutMe: Nullable<string>;
   contacts: ContactsType;
   lookingForAJob?: boolean;
-  lookingForAJobDescription: string | null;
-  fullName: string | null;
+  lookingForAJobDescription: Nullable<string>;
+  fullName: Nullable<string>;
   userId?: number;
 };

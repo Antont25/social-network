@@ -1,5 +1,7 @@
+import { Nullable } from 'type/nullable';
+
 export type AuthorizedUserType = {
-  id: null | number;
-  email: null | string;
-  login: null | string;
+  id: Nullable<number>;
+  email: Nullable<string>;
+  login: Nullable<string>;
 };

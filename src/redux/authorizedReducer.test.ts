@@ -8,7 +8,7 @@ import {
   StatusAuthorizedType,
 } from './appSlice';
 
-import { AuthorizedUserType, UserProfileType } from 'type';
+import { AuthorizedUserType, Nullable, UserProfileType } from 'type';
 
 let initialState = {} as InitialStateTypeApp;
 
@@ -24,7 +24,7 @@ beforeEach(() => {
     authorizedProfileUser: {
       photos: { small: null },
     } as UserProfileType,
-    serverError: null as null | string,
+    serverError: null as Nullable<string>,
     captchaUrl: null,
   };
 });

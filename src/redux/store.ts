@@ -1,14 +1,14 @@
-import {combineReducers} from "redux";
-import {configureStore} from "@reduxjs/toolkit"
-import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {ActionProfileReducerType, profileSlice} from "./profileSlice";
-import {ActionHeaderReducerType, headerReducer} from "./headerReducer";
-import {ActionAppReducerType, appSlice} from "./appSlice";
-import {ActionDialogsReducerType, dialogsReducer} from "./dialogsReducer";
-import {ActionUserReducerType, usersSlice} from "./usersSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
+import { ActionAppReducerType, appSlice } from './appSlice';
+import { ActionDialogsReducerType, dialogsReducer } from './dialogsReducer';
+import { ActionHeaderReducerType, headerReducer } from './headerReducer';
+import { ActionProfileReducerType, profileSlice } from './profileSlice';
+import { ActionUserReducerType, usersSlice } from './usersSlice';
 
-let rootReducer = combineReducers({
+const rootReducer = combineReducers({
   profilePage: profileSlice,
   dialogsPage: dialogsReducer,
   usersPage: usersSlice,
@@ -18,19 +18,24 @@ let rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
-})
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware),
+});
 
-//type
+// type
 export type ActionType =
-  ActionProfileReducerType
+  | ActionProfileReducerType
   | ActionHeaderReducerType
   | ActionAppReducerType
   | ActionDialogsReducerType
-  | ActionUserReducerType
+  | ActionUserReducerType;
 
-export type AppStoreType = ReturnType<typeof store.getState>
-export type AppDispatchType = typeof store.dispatch
+export type AppStoreType = ReturnType<typeof store.getState>;
+export type AppDispatchType = typeof store.dispatch;
 
-export type AppDispatch = ThunkDispatch<AppStoreType, unknown, ActionType>
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStoreType, unknown, ActionType>
+export type AppDispatch = ThunkDispatch<AppStoreType, unknown, ActionType>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppStoreType,
+  unknown,
+  ActionType
+>;

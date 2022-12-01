@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import style from './users.module.css';
 
 import avatar from 'assest/img/avatar.png';
-import { useAppDispatch } from 'common/utils/hooks/hooks';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 import { StatusAuthorizedType } from 'redux/appSlice';
 import { fetchFollowUser, fetchUnFollowUser } from 'redux/usersSlice';
 import { UserType } from 'type';
@@ -15,7 +15,7 @@ import { UserType } from 'type';
 export const User = memo((props: UserFCType) => {
   const dispatch = useAppDispatch();
 
-  const onClickFollowedHandler = (): void => {
+  const onFollowedClick = (): void => {
     if (props.users.followed) {
       dispatch(fetchUnFollowUser(props.users.id));
     } else {
@@ -44,7 +44,7 @@ export const User = memo((props: UserFCType) => {
                 props.authorizedStatus === 'fail' ||
                 props.userSubscription.some(item => item === props.users.id)
               }
-              onClick={onClickFollowedHandler}
+              onClick={onFollowedClick}
             >
               {props.users.followed ? 'Отписаться' : 'Подписаться'}
             </Button>

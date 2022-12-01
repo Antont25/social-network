@@ -1,36 +1,44 @@
-import React from "react";
-import {MyPost} from "./MyPost/MyPost";
-import {Paper} from "@material-ui/core";
-import style from "./myPosts.module.css"
-import {addPost, PostsType} from "../../../redux/profileSlice";
-import {Textarea} from "../../../common/components/Textarea/Textarea";
-import {validationPostAndDialog} from "../../../common/utils/validation/validation";
-import {useAppDispatch} from "../../../common/utils/hooks/hooks";
+import React, { ReactElement } from 'react';
 
+import { Paper } from '@material-ui/core';
 
-export const MyPosts = ( props: PostPageType ) => {
-  const dispatch = useAppDispatch()
-  let newPost = props.posts.map(item => <MyPost key={item.id} massage={item.massage} likes={item.likes}
-                                                photoUser={props.photoUser}/>)
-  const addPostHandler = ( newText: string ) => {
-    dispatch(addPost(newText))
-  }
+import { MyPost } from './MyPost';
+import style from './myPosts.module.css';
+
+import { Textarea } from 'common/components/Textarea/Textarea';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { addPost, PostsType } from 'redux/profileSlice';
+import { validationPostAndDialog } from 'validation/validation';
+
+export const MyPosts = ({ posts, photoUser }: PostPageType): ReactElement => {
+  const dispatch = useAppDispatch();
+
+  const newPost = posts.map(post => (
+    <MyPost
+      key={post.id}
+      massage={post.massage}
+      likes={post.likes}
+      photoUser={photoUser}
+    />
+  ));
+
+  const handleAddPost = (newText: string): void => {
+    dispatch(addPost(newText));
+  };
+
   return (
     <Paper elevation={3} className={style.postBloc}>
       <h2>Мои посты</h2>
       <div className={style.addPostBloc}>
-        <Textarea callback={addPostHandler}
-                  validationSchema={validationPostAndDialog}
-        />
+        <Textarea callback={handleAddPost} validationSchema={validationPostAndDialog} />
       </div>
 
       {newPost}
     </Paper>
   );
 };
-//type
+// type
 type PostPageType = {
-  posts: Array<PostsType>
-  photoUser: string | null
-}
-
+  posts: Array<PostsType>;
+  photoUser: string | null;
+};

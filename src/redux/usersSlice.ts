@@ -6,8 +6,8 @@ import { AppThunk } from './store';
 
 import { profileApi } from 'api/profileApi';
 import { userApi } from 'api/userApi';
-import { errorFromStatusCodeOrApplication } from 'common/utils/error-utils';
 import { FetchUserType, UserType } from 'type';
+import { errorFromStatusCodeOrApplication } from 'utils/error-utils';
 
 const initialStateUserPage = {
   items: [] as Array<UserType>,

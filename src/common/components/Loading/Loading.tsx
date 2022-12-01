@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
-import style from './loading.module.css'
 
+import style from './loading.module.css';
 
-export const Loading = () => {
-    return (
-        <div className={style.loadingBloc}>
-            <CircularProgress className={style.authorized}/>
-        </div>
-    );
+export const Loading = (): ReactElement => {
+  return (
+    <div className={style.loadingBloc}>
+      <CircularProgress className={style.authorized} />
+    </div>
+  );
 };
-

@@ -1,22 +1,25 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { ReactElement } from 'react';
+
+import { NavLink } from 'react-router-dom';
+
 import style from './dialogs.module.css';
 
-
-export const DialogItems = (props: DialogItemsPropsType) => {
-    return (
-        <li>
-            <NavLink to={props.id}
-                     className={(navData => navData.isActive ? style.active + ' ' + style.dialog : style.dialog)}>
-                {props.name}
-            </NavLink>
-        </li>
-    );
+export const DialogItems = ({ id, name }: DialogItemsPropsType): ReactElement => {
+  return (
+    <li>
+      <NavLink
+        to={id}
+        className={navData =>
+          navData.isActive ? `${style.active} ${style.dialog}` : style.dialog
+        }
+      >
+        {name}
+      </NavLink>
+    </li>
+  );
 };
-//type
+// type
 type DialogItemsPropsType = {
-    id: string
-    name: string
-}
-
-
+  id: string;
+  name: string;
+};

@@ -1,23 +1,33 @@
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 
-import { Loading } from '../common/components/Loading/Loading';
-import { Pagination } from '../common/components/Pagination/Pagination';
-import { useAppDispatch, useAppSelector } from '../common/utils/hooks/hooks';
-import useDebounce from '../common/utils/hooks/useDebounce';
-import Search from '../components/Users/search/Search';
-import { User } from '../components/Users/User';
-import { fetchUserData } from '../redux/usersSlice';
+import { Loading } from 'common/components/Loading';
+import { Pagination } from 'common/components/Pagination';
+import { User } from 'components/User';
+import { Search } from 'components/User/search/Search';
+import { useAppDispatch, useAppSelector, useDebounce } from 'hooks';
+import { fetchUserData } from 'redux/usersSlice';
+import {
+  getAuthorizedStatus,
+  getCurrentPage,
+  getIsLoading,
+  getPageSize,
+  getPortionsNumber,
+  getTotalCount,
+  getUsers,
+  getUserSubscription,
+} from 'selectors';
 
 const Users = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(state => state.usersPage.items);
-  const totalCount = useAppSelector(state => state.usersPage.totalCount);
-  const pageSize = useAppSelector(state => state.usersPage.pageSize);
-  const currentPage = useAppSelector(state => state.usersPage.currentPage);
-  const userSubscription = useAppSelector(state => state.usersPage.userSubscription);
-  const portionsNumber = useAppSelector(state => state.usersPage.portionsNumber);
-  const isLoading = useAppSelector(state => state.app.isLoading);
-  const authorizedStatus = useAppSelector(state => state.app.authorizedStatus);
+
+  const users = useAppSelector(getUsers);
+  const totalCount = useAppSelector(getTotalCount);
+  const pageSize = useAppSelector(getPageSize);
+  const currentPage = useAppSelector(getCurrentPage);
+  const userSubscription = useAppSelector(getUserSubscription);
+  const portionsNumber = useAppSelector(getPortionsNumber);
+  const isLoading = useAppSelector(getIsLoading);
+  const authorizedStatus = useAppSelector(getAuthorizedStatus);
 
   const [valueSearchInput, setValueSearchInput] = useState('');
 

@@ -6,8 +6,8 @@ import { AppThunk } from './store';
 
 import { authorizedApi } from 'api/authorizedApi';
 import { userApi } from 'api/userApi';
-import { errorFromStatusCodeOrApplication } from 'common/utils/error-utils';
-import { AuthorizedUserType, UserProfileType } from 'type';
+import { AuthorizedUserType, Nullable, UserProfileType } from 'type';
+import { errorFromStatusCodeOrApplication } from 'utils/error-utils';
 
 const initialStateApp = {
   isLoading: false,
@@ -20,8 +20,8 @@ const initialStateApp = {
   authorizedProfileUser: {
     photos: { small: null },
   } as UserProfileType,
-  serverError: null as null | string,
-  captchaUrl: null as null | string,
+  serverError: null as Nullable<string>,
+  captchaUrl: null as Nullable<string>,
 };
 
 const slice = createSlice({

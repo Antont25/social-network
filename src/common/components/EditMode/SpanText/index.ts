@@ -1,0 +1,1 @@
+export { SpanText } from './SpanText';

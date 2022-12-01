@@ -4,7 +4,7 @@ import style from './message.module.css';
 
 import { MessageType } from 'type';
 
-const Message = ({ message, photo, userName }: MessageType): ReactElement => {
+export const Message = ({ message, photo, userName }: MessageType): ReactElement => {
   if (message.length < 1) {
     return <div>Сообщений нет</div>;
   }
@@ -23,5 +23,3 @@ const Message = ({ message, photo, userName }: MessageType): ReactElement => {
     </div>
   );
 };
-
-export default Message;

@@ -1,52 +1,60 @@
-import React, {useEffect} from "react";
-import {MyPosts} from "../components/Profile/MyPosts/MyPosts";
-import UserInfo from "../components/Profile/UserInfo/UserInfo";
-import {Loading} from "../common/components/Loading/Loading";
-import {useParams} from "react-router";
-import {useNavigate} from "react-router-dom";
-import {fetchUserProfileData,} from "../redux/profileSlice";
-import {useAppDispatch, useAppSelector} from "../common/utils/hooks/hooks";
+import React, { ReactElement, useEffect } from 'react';
 
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
-export const Profile = () => {
-  const dispatch = useAppDispatch()
+import { Loading } from 'common/components/Loading';
+import { MyPosts } from 'components/Profile/MyPosts';
+import { UserInfo } from 'components/Profile/UserInfo';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { fetchUserProfileData } from 'redux/profileSlice';
+import {
+  getAuthorizedStatus,
+  getAuthorizedUser,
+  getIsLoading,
+  getPosts,
+  getUserProfile,
+  getUserStatus,
+} from 'selectors';
 
-  const authorizedStatus = useAppSelector(state => state.app.authorizedStatus)
-  const authorizedUser = useAppSelector(state => state.app.authorizedUser)
-  const isLoading = useAppSelector(state => state.app.isLoading)
-  const posts = useAppSelector(state => state.profilePage.posts)
-  const userProfile = useAppSelector(state => state.profilePage.userProfile)
-  const userStatus = useAppSelector(state => state.profilePage.userStatus)
+export const Profile = (): ReactElement => {
+  const params = useParams<'id'>();
+  const navigate = useNavigate();
 
-  let params = useParams<"id">()
-  let paramsURL = Number(params[ "id" ])
+  const dispatch = useAppDispatch();
 
-  const navigate = useNavigate()
+  const authorizedStatus = useAppSelector(getAuthorizedStatus);
+  const authorizedUser = useAppSelector(getAuthorizedUser);
+  const isLoading = useAppSelector(getIsLoading);
+  const posts = useAppSelector(getPosts);
+  const userProfile = useAppSelector(getUserProfile);
+  const userStatus = useAppSelector(getUserStatus);
+
+  let paramsURL = Number(params.id);
 
   useEffect(() => {
-    if (authorizedStatus === "successfully" && !params[ "id" ]) {
-      if (authorizedUser.id) paramsURL = authorizedUser.id
+    if (authorizedStatus === 'successfully' && !params.id) {
+      if (authorizedUser.id) paramsURL = authorizedUser.id;
     }
-    if (authorizedStatus === "successfully" || paramsURL) {
-      dispatch(fetchUserProfileData(paramsURL))
-    } else if (authorizedStatus === "fail") {
-      navigate("/Login")
+    if (authorizedStatus === 'successfully' || paramsURL) {
+      dispatch(fetchUserProfileData(paramsURL));
+    } else if (authorizedStatus === 'fail') {
+      navigate('/Login');
     }
-
-  }, [authorizedStatus, paramsURL])
+  }, [authorizedStatus, paramsURL]);
 
   if (Object.keys(userProfile).length === 0 || isLoading) {
-    return <Loading/>
+    return <Loading />;
   }
+
   return (
     <>
-      <UserInfo userProfile={userProfile}
-                authorizedUserId={authorizedUser.id}
-                userStatus={userStatus}/>
-      <MyPosts photoUser={userProfile.photos.small}
-               posts={posts}
+      <UserInfo
+        userProfile={userProfile}
+        authorizedUserId={authorizedUser.id}
+        userStatus={userStatus}
       />
-    </>);
+      <MyPosts photoUser={userProfile.photos.small} posts={posts} />
+    </>
+  );
 };
-
-

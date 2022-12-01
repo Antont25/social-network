@@ -1,10 +1,12 @@
+import { Nullable } from 'type/nullable';
+
 export type ContactsType = {
-  facebook: string | null;
-  website: string | null;
-  vk: string | null;
-  twitter: string | null;
-  instagram: string | null;
-  youtube: string | null;
-  github: string | null;
-  mainLink: string | null;
+  facebook: Nullable<string>;
+  website: Nullable<string>;
+  vk: Nullable<string>;
+  twitter: Nullable<string>;
+  instagram: Nullable<string>;
+  youtube: Nullable<string>;
+  github: Nullable<string>;
+  mainLink: Nullable<string>;
 };

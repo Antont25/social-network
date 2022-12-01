@@ -6,8 +6,8 @@ import { AppThunk } from './store';
 
 import { profileApi } from 'api/profileApi';
 import { userApi } from 'api/userApi';
-import { errorFromStatusCodeOrApplication } from 'common/utils/error-utils';
-import { ContactsType, PhotosType, UserProfileType } from 'type';
+import { ContactsType, Nullable, PhotosType, UserProfileType } from 'type';
+import { errorFromStatusCodeOrApplication } from 'utils/error-utils';
 
 const initialSateProfile = {
   posts: [
@@ -17,7 +17,7 @@ const initialSateProfile = {
     { id: 4, massage: 'Got a job of your dreams', likes: 12 },
   ] as Array<PostsType>,
   userProfile: {} as UserProfileType,
-  userStatus: null as null | string,
+  userStatus: null as Nullable<string>,
 };
 
 export const slice = createSlice({
